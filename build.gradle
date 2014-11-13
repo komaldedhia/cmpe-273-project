@@ -1,0 +1,60 @@
+buildscript {
+    repositories {
+	    maven { url "http://repo.spring.io/snapshot" }
+	    maven { url "http://repo.spring.io/milestone" }
+	    maven { url "http://repo.spring.io/release" }
+	    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+	    maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+            mavenCentral()
+	    mavenLocal()
+	    flatDir {
+       dirs 'library'
+   }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.6.RELEASE")
+		classpath("org.mongodb:casbah_2.11:2.7.3")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'scala'
+apply plugin: 'eclipse'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'bikeshare'
+    version =  '0.1.0'
+}
+
+bootRepackage {
+    mainClass = 'com.sjsu.bikeshare.HelloWebApplication'
+}
+
+repositories {
+    mavenCentral()
+    maven { url "http://repo.spring.io/snapshot" }
+    maven { url "http://repo.spring.io/milestone" }
+    maven { url "http://repo.spring.io/release" }
+    maven { url "http://repo.spring.io/libs-release" }
+ }
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    compile("org.scala-lang:scala-library:2.11.2")
+    compile("org.webjars:bootstrap:3.1.1")
+    testCompile("junit:junit")
+     compile ("org.springframework.data:spring-data-jpa:1.7.0.RELEASE")
+	compile("org.springframework.boot:spring-boot-starter-data-rest")
+	compile("org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final")
+	compile("org.mongodb:casbah_2.11:2.7.3")
+	compile("com.google.code.gson:gson:2.3")
+	compile("com.twilio.sdk:twilio-java-sdk:3.4.6")   
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.1'
+}
