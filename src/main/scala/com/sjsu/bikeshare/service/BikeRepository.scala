@@ -100,6 +100,8 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"))
     user_get.toString()
     
   } 
+ 
+ 
  def updateBikes(email:String,bike_id: String,bike:Bike)={
   
 val dbObject = MongoDBObject("bike_id"->bike_id)

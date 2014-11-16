@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.web.bind.annotation.{RequestMapping, RestController};
+import org.springframework.stereotype.Controller;
 
 
 
@@ -14,16 +15,26 @@ import org.springframework.web.bind.annotation.{RequestMapping, RestController};
  * @since 1.0
  */
 
-@RestController
+@Controller
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
 class HelloConfig {
-//@RequestMapping(Array("/"))
-def home()  = { 
-"Hello-World"
+
+  @RequestMapping(Array("/bikeshare"))
+  def home():String = { 
+ return "bikeshare"
+ 
+  }
   
+   @RequestMapping(Array("/SignUp"))
+  def signUp():String = { 
+ return "SignUp"
  
   }
 
+   @RequestMapping(Array("/login"))
+  def login():String = { 
+ return "login"
+  }
 }

@@ -1,25 +1,22 @@
-/**
- *
- */
 package com.sjsu.bikeshare.domain
 
 /**
- * @author Komal
+ * @author Swathi.m
  *
  */
+
 import javax.validation.constraints.NotNull
 import scala.beans._;
 import javax.persistence.Entity
 @Entity
 class User {
   
-    @BeanProperty
-      var userId :String = _ ;  
+@BeanProperty
+  var userId :String = _ ;  
   
  @NotNull
   @BeanProperty
   var email:String =_ ;
-   
  
  
  @NotNull
@@ -48,7 +45,5 @@ var created_at:String=_;
 
  @BeanProperty
 var updated_at:String=_;
-
-
 
 }

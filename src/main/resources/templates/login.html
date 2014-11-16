@@ -1,0 +1,70 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+     <!-- <link href="css/bootstrap.min.css" rel="stylesheet" >-->
+  </head>
+<body>
+<nav class="navbar navbar-blue" role="navigation">
+  	<div class="navbar-header">
+      <a class="navbar-brand" href="bikeshare.html">Bike Share</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	 <ul class="nav navbar-nav">
+        <li><a href="MakeAReservation.html">Reserve/Cancel Bike</a></li>
+        <li><a href="Locations.html">Locations</a></li>
+      </ul>
+       
+      <ul class="nav navbar-nav navbar-right">
+       <li><a href="AboutUs.html">About Us</a></li>
+      </ul>
+      
+    </div>
+</nav>
+<!--<img src="C:\Users\swathi\Desktop\bootstrap-3.2.0-dist\taiwan_Bicycle_Ride_hd_wallpaper_8.jpg" class="img-responsive" alt="Responsive image">-->
+<!--style="margin-top:-250px;background: none repeat scroll 0 0 #FFffff;opacity: 0.5;"-->
+<form id="accountForm"  role="form">
+  <div class="form-group">
+    <label for="email">Email address</label>
+    <input type="email" class="form-control" id="email" placeholder="Enter email"/>
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" id="password" placeholder="Password"/>
+  </div>
+  <button id="submit" type="submit" class="btn btn-default">Submit</button>
+</form>
+
+   <!-- <script src ="js/jquery-1.11.1.min.js"></script>
+  <script src ="js/bootstrap.min.js"></script>-->
+  <script src ="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src ="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+  <script>
+ $(document).ready(function(){
+
+  $("button").click(function(){
+	  var emailVal = $(email).val();
+	  var passwordVal = $(password).val();
+	  alert(emailVal);
+	  
+	  $.ajax({
+		  type: "POST",
+		  url: "http://localhost:8080/api/v1/users/userval",
+		  contentType: 'application/json',
+		  data:JSON.stringify({email : emailVal,password :passwordVal}),
+		  dataType: "json"
+})
+  .done(function( msg ) {
+    alert( "Data Saved: " + msg );
+  });
+    
+	return false;
+  });
+});
+  </script>
+</body>
+</html>

@@ -52,7 +52,8 @@ dependencies {
 	compile("org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final")
 	compile("org.mongodb:casbah_2.11:2.7.3")
 	compile("com.google.code.gson:gson:2.3")
-	compile("com.twilio.sdk:twilio-java-sdk:3.4.6")   
+	compile("com.twilio.sdk:twilio-java-sdk:3.4.6")
+	compile("org.springframework.boot:spring-boot-starter-thymeleaf")  
 }
 
 task wrapper(type: Wrapper) {
