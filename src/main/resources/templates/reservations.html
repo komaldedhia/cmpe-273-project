@@ -1,0 +1,133 @@
+
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head> 
+    <title>Community Bike Share Web Application</title> 
+    <meta charset="UTF-8" />
+   	<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+	
+	
+</head>
+
+<body>
+
+<nav class="navbar navbar-default navbar-blue" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+
+    <div class="navbar-header">
+      <a class="navbar-brand" href="bikeshare.html">Bike Share</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+     
+	 <ul class="nav navbar-nav">
+        <li><a href="reservations.html">Reservations</a></li>
+        <li><a href="Locations.html">Locations</a></li>
+      </ul>
+       
+      <ul class="nav navbar-nav navbar-right">
+
+        <li><a href="AboutUs.html">About Us</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+
+</nav>
+
+<ul class="nav nav-tabs" role="tablist" id="myTab">
+  <li class="active"><a href="#reserve" role="tab" data-toggle="tab">Rent a Bike</a></li>
+  <li><a href="#cancel" role="tab" data-toggle="tab">Cancel a Bike</a></li>
+</ul>
+
+<form id="accountForm" role="form" method="post">
+	<div class="tab-content">
+		<div role="tabpanel" class="tab-pane active" id="reserve">
+			<div class="form-group">
+				<label for="fromdate">From Date</label>
+				<input type="date" class="form-control" id="fromdate" placeholder="Enter Date to rent a bike"></input>
+			</div>
+			<div class="form-group">
+				<label for="todate">To Date</label>
+				<input type="date" class="form-control" id="todate" placeholder="Enter Date to return the bike"></input>
+			</div>
+			<div class="form-group">
+				<label for="contact">Contact Number</label>
+				<input type="contact" class="form-control" id="contact" placeholder="Enter your contact number"></input>
+			</div>
+			<div class="form-group">
+				<label for="location">Bike Location</label>
+				<input type="text" class="form-control" id="location" placeholder="Enter bike location"></input>
+			</div>
+			<div class="form-group">
+				<label for="type" >Bike Type</label>
+				<input type="text" class="form-control" id="type" placeholder="Enter bike type"></input>
+
+			</div>
+			<button type="submit" class="btn btn-default">Submit</button>
+		</div>
+
+		<div role="tabpanel" class="tab-pane" id="cancel">
+			<div class="form-group">
+				<label for="InputEmail">Email</label>
+				<input type="email" class="form-control" id="InputEmail" placeholder="Enter email"></input>
+			</div>
+			<div class="form-group">
+				<label for="location">Bike Location</label>
+				<input type="text" class="form-control" id="location" placeholder="Enter bike location"></input>
+			</div>
+			<div class="form-group">
+				<label for="contact">Contact Number</label>
+				<input type="contact" class="form-control" id="contact" placeholder="contact"></input>
+			</div>
+				<button type="submit" class="btn btn-default">Submit</button>
+		</div>
+  
+	</div>
+</form>
+
+<script>
+ $(function () {
+    $('#myTab a:last').tab('show')
+  })
+</script>
+    
+ <script src ="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src ="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+
+
+<!--<script>
+ $(document).ready(function(){
+
+  $("button").click(function(){
+	  var fromdateVal = $(fromdate).val();
+	  var todateVal = $(todate).val();
+	  var contactVal = $(contact).val();
+	  var locationVal = $(location).val();
+	  var contactVal = $(contact).val();
+	  var typeVal = $(type).val();
+	
+	  
+	$.ajax({
+  type: "POST",
+  url: "http://localhost:8080/api/v1/users/bike",
+  contentType: 'application/json',
+ 
+  data:JSON.stringify({fromDate:fromdateVal,toDate:todateVal,:contactVal,address: locationVal,bikeType :typeVal}),
+  dataType: "json"
+})
+  .done(function( msg ) {
+    alert( "Data Saved: " + msg );
+  });
+    
+	return false;
+  });
+});
+  </script>-->
+</body>
+
+
+</html>
