@@ -65,4 +65,9 @@ var toDate: String = dateFormat.format(new Date)
 @BeanProperty
 var bikeReviews: ArrayList[String]  = _
 
+//TODOadded for bike Range
+//@BeanProperty
+//val bikeRange = _
+
+
 }
