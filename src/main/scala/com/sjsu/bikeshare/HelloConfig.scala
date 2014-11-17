@@ -33,8 +33,13 @@ class HelloConfig {
  
   }
 
-   @RequestMapping(Array("/login"))
+  @RequestMapping(Array("/login"))
   def login():String = { 
  return "login"
+  }
+
+  @RequestMapping(Array("/reservations"))
+  def reservations():String = { 
+ return "reservations"
   }
 }

@@ -40,6 +40,7 @@
 <ul class="nav nav-tabs" role="tablist" id="myTab">
   <li class="active"><a href="#reserve" role="tab" data-toggle="tab">Rent a Bike</a></li>
   <li><a href="#cancel" role="tab" data-toggle="tab">Cancel a Bike</a></li>
+ 
 </ul>
 
 <form id="accountForm" role="form" method="post">
@@ -53,10 +54,13 @@
 				<label for="todate">To Date</label>
 				<input type="date" class="form-control" id="todate" placeholder="Enter Date to return the bike"></input>
 			</div>
-			 <div class="form-group">
-                                <label for="bikerange">Bike Range</label>
-                                <input type="text" class="form-control" id="Bike Range" placeholder="Enter your range in miles"></input>
-                        </div>
+
+<!-- ======= -->
+			<div class="form-group">
+				<label for="contact">Bike Range</label>
+				<input type="contact" class="form-control" id="contact" placeholder="Enter the range in miles"></input>
+			</div>
+<!-- >>>>>>> Stashed changes -->
 			<div class="form-group">
 				<label for="location">Bike Location</label>
 				<input type="text" class="form-control" id="location" placeholder="Enter bike location"></input>
@@ -93,6 +97,9 @@
 			</div>
 				<button type="submit" class="btn btn-default">Submit</button>
 		</div>
+
+
+
   
 	</div>
 </form>
@@ -108,44 +115,7 @@
 
 
 
-<script>
- $(document).ready(function(){
 
-  $("button").click(function(){
-	  var theForm = document.getElementById('accountForm');
-	  var fromdateVal = theForm.fromdate.value;
-	  var todateVal = theForm.todate.value;
-	  var bikeRangeVal = theForm.bikerange.value;
-	  var bikeRangeMetersVal=bikeRangeVal*1609.344;
-	  var locationVal = theForm.location.value;
-	  var typeVal = theForm.type.value;
-	   alert ("form="  + theForm);
-	
-	//var theForm = document.getElementById('accountForm');
-	  //var fromdateVal = theForm.$("input[name='fromdate']").val();
-	  //var todateVal = $("input[name='todate']").val();
-	  //var bikeRangeVal = $("input[name='bikerange']").val();
-	  //var bikeRangeMetersVal=bikeRangeVal*1609.344;
-	  //var locationVal = $("input[name='location']").val();
-	  //var typeVal = $("input[name='type']").val();
-	  //document.writeln(bikeRangeVal);--!>
-	  
-	$.ajax({
-  type: "POST",
-  url: "http://localhost:8080/api/v1/users/bike",
-  contentType: 'application/json',
- 
-  data:JSON.stringify({fromDate:fromdateVal,toDate:todateVal,bikeRange:bikeRangeMetersVal,address: locationVal,bikeType :typeVal}),
-  dataType: "json"
-})
-  .done(function( msg ) {
-    alert( "Data Saved: " + msg );
-  });
-    
-	return false;
-  });
-});
-  </script>
 </body>
 
 
