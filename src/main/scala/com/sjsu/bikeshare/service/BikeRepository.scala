@@ -14,7 +14,7 @@ import java.lang._
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.lang.Double
-
+import com.sjsu.bikeshare.domain.Review;
 
 object BikeRepository {
   val dateFormat:DateFormat   = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
@@ -124,4 +124,54 @@ val userUpdt= MongoFactory.BikesCollection.update(dbObject,MongoDBObject("bikeId
  user_get.toString()
 
  }
+
+//Get a particular bike
+def getBike(bike_id: String) = {
+    println("Shwetha, Trying to get a bike")
+    val bikeQuery = MongoDBObject("bikeId"->bike_id)
+    val bikeObj = MongoFactory.BikesCollection.findOne(bikeQuery).get
+    bikeObj
+}
+
+
+//add review to bike
+def addReviewToBike(bike_id: String, review:Review) = {
+    val fetch_bike = MongoDBObject("bikeId" -> bike_id)
+    val bike =  MongoFactory.BikesCollection.findOne(fetch_bike).get
+    var newReviews : String = ""
+    
+    /*
+    val myreviews = MongoFactory.BikesCollection.findOne(fetch_bike, params).get("bikeReviews").as[String]
+    println(bike.as[String]("bikeReviews"))
+    var params = MongoDBObject("_id" -> 0, "bikeReviews" -> 1)
+    println("printing inside for loop")
+    
+    var myreviews = MongoFactory.BikesCollection.findOne(fetch_bike, params).get("bikeReviews")
+    for( r <- myreviews) {
+        println(r)
+    } 
+    println("sh code")
+    println(myreviews)
+    */
+    if (bike != null) {
+        var params = MongoDBObject("_id" -> 0, "bikeReviews" -> 1)
+        val oldReviews = MongoFactory.BikesCollection.findOne(fetch_bike, params).get("bikeReviews").toString()
+        newReviews = newReviews.concat(review.toString())
+        newReviews = newReviews.concat(oldReviews)
+        println("New reviews for bike " + bike_id + newReviews)
+        val userUpdt= MongoFactory.BikesCollection.update(fetch_bike, MongoDBObject(
+            "bikeId" -> bike_id,
+            "address" -> bike.get("address"),
+            "accessories" -> bike.get("accessories"),
+            "fromDate" ->bike.get("fromDate"),
+            "toDate" -> bike.get("toDate"), 
+            "userEmail" -> bike.get("userEmail"),
+            "bikeCode"->bike.get("bikeCode"),
+            "bikeReviews" -> newReviews
+            ))
+        
+    }
+    getBike(bike_id)
+}
+
   }

@@ -3,6 +3,7 @@ package com.sjsu.bikeshare.web
 import org.springframework.web.bind.annotation.RequestMapping
 import com.sjsu.bikeshare.service._
 import com.sjsu.bikeshare.domain.Bike
+import com.sjsu.bikeshare.domain.Review
 import com.sjsu.bikeshare.exception.UserNotFoundException
 import org.springframework.http.{ ResponseEntity, HttpStatus }
 import org.springframework.web.bind.annotation._
@@ -50,4 +51,25 @@ BikeRepository.InsertBikes(bike)
 def updateBikes(@PathVariable email:String,@PathVariable bike_id:String,@RequestBody bike:Bike) = {
 BikeRepository.updateBikes(email,bike_id,bike)
 }
+
+    //GET BIKE 
+    @RequestMapping(value = Array("/{bike_id}"), method = Array(RequestMethod.GET))
+    @ResponseBody
+    def getBike(@PathVariable bike_id:String) = {
+         var bike = BikeRepository.getBike(bike_id)
+         println(bike)
+         bike
+    }
+
+
+    // Put Review to Bike 
+    @RequestMapping(value=Array("/{bike_id}/review"),method = Array(RequestMethod.PUT))
+    def updateBikes(@PathVariable bike_id:String,
+                    @RequestBody review:Review) = {
+        var bike = BikeRepository.addReviewToBike(bike_id,review)
+        bike
+    }
+
+
+
 }

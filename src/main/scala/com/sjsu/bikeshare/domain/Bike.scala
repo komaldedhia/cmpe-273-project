@@ -63,7 +63,8 @@ var fromDate: String = dateFormat.format(new Date)
 var toDate: String = dateFormat.format(new Date)
 
 @BeanProperty
-var bikeReviews: ArrayList[String]  = _
+//var bikeReviews: ArrayList[Review]  = _
+var bikeReviews: String = _
 
 //TODOadded for bike Range
 //@BeanProperty
