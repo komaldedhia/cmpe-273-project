@@ -31,17 +31,27 @@ object UserRepository {
     }
   
   def validateUser(userLogin:UserLogin)={
+     println("In Repo1")
       val q = MongoDBObject("_id"->0)
       val r = MongoDBObject("email"->userLogin.email)
-      val printUser = MongoFactory.userCollection.findOne(r,q).get
-      val originalPassword =printUser.get("password").toString()
-      if(printUser !=null)
-      {
+     val printUser = MongoFactory.userCollection.findOne(r,q)match {
+  case Some(printUser) => {
+       
+        val originalPassword =printUser.get("password").toString()
        if(userLogin.password.equalsIgnoreCase(originalPassword))
        {
-          new ResponseEntity(HttpStatus.OK)
+          //new ResponseEntity(HttpStatus.OK)
+         "Success"
+       }else
+       {
+         "Invalid User or password"
+       }}
+  case None => 
+       {
+         "Invalid User or password"
        }
-      }
+}
+      
   }
   
 }

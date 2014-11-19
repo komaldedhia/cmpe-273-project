@@ -31,8 +31,8 @@
   <li><a href="#cancel" role="tab" data-toggle="tab">Cancel a Bike</a></li>
  
 </ul>
-
-<form id="accountForm" role="form" method="post">
+<p th:text="'email: ' + ${userLogin.email}"/>
+<form id="reserveForm" role="form" method="post">
 	<div class="tab-content">
 		<div role="tabpanel" class="tab-pane active" id="reserve">
 			<div class="form-group">
