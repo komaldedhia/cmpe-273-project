@@ -18,7 +18,7 @@
           src="/images/taiwan_Bicycle_Ride_hd_wallpaper_8.jpg" class="img-responsive" alt="Responsive image"/>
 
 <!--style="margin-top:-250px;background: none repeat scroll 0 0 #FFffff;opacity: 0.5;"-->
-<form action="#" th:action="@{/api/v1/users/userval}" th:object="${userLogin}" method="get" role="form">
+<form action="#" th:action="@{/api/v1/users/userval}" th:object="${userLogin}" method="post" role="form">
   <div class="form-group">
     <label for="email" >Email address</label>
     <input type="email" class="form-control" id="email" placeholder="Enter email" th:field="*{email}"/>
