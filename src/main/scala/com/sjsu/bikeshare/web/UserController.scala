@@ -44,7 +44,7 @@ def createUser(@Valid @RequestBody user:User) = {
  if (UserRepository.validateUser(userLogin) == "Success") {
     model.addAttribute("userLogin", userLogin)
     model.addAttribute("bike", new Bike())
-    "newpage"
+    "reservations"
  }
      else {
         println("Else part @@@@@")
