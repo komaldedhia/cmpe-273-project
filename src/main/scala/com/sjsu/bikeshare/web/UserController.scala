@@ -38,18 +38,18 @@ def createUser(@Valid @RequestBody user:User) = {
    model.addAttribute("userLogin", new UserLogin())
   "login"}  
   
- @RequestMapping(value=Array("/userval"),method = Array(RequestMethod.GET))
+ @RequestMapping(value=Array("/userval"),method = Array(RequestMethod.POST))
   def getUser(@ModelAttribute userLogin:UserLogin,model:Model) = {
  println("In controller")
- if (UserRepository.validateUser(userLogin) == "Success") {
-    model.addAttribute("userLogin", userLogin)
+ //if (UserRepository.validateUser(userLogin) == "Success") {
+   // model.addAttribute("userLogin", userLogin)
     model.addAttribute("bike", new Bike())
-    "reservations"
- }
-      else {
+    "newpage"
+ //}
+    /*  else {
         println("Else part @@@@@")
         model.addAttribute("userLogin", new UserLogin())
-       "login"}
+       "login"}*/
   } 
    
 @RequestMapping(value=Array("/{email}/bike"),method = Array(RequestMethod.GET))
