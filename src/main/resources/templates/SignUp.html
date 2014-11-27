@@ -1,4 +1,5 @@
 
+
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
@@ -16,77 +17,83 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
      
-	
+  
        
       <ul class="nav navbar-nav navbar-right">
 
         <li><a href="AboutUs.html">About Us</a></li>
-      </ul>
+        </ul>
     </div>
 </nav>
 
 
 <!--<img src="C:\Users\swathi\Desktop\bootstrap-3.2.0-dist\taiwan_Bicycle_Ride_hd_wallpaper_8.jpg" class="img-responsive" alt="Responsive image">-->
-<!--style="margin-top:-250px;background: none repeat scroll 0 0 #FFffff;opacity: 0.5;"-->
-<form id="accountForm" action="Locations.html" role="form">
+<!--style="margin-top:-250px;background: none repeat scroll 0 0 #FFffff;opacity: 0.5;"
+<form id="accountForm" action="Locations.html" role="form">-->
 
-	<div class="form-group">
+  <form action="#" th:action="@{/api/v1/users/signupnow}" th:object="${User}" method="post" role="form">
+  <div class="form-group">
     <label for="fname">First Name</label>
-    <input type="text" class="form-control" id="fname" placeholder="Enter your first name"/>
-	</div>
+    <input type="text" class="form-control" id="fname" placeholder="Enter your first name" th:field="*{firstName}" />
+  </div>
 
-	<div class="form-group">
+  <div class="form-group">
     <label for="lname">Last Name</label>
-    <input type="text" class="form-control" id="lname" placeholder="Enter your last name"/>
-	</div>
-	
+    <input type="text" class="form-control" id="lname" placeholder="Enter your last name" th:field="*{lastName}"/>
+  </div>
+  
   <div class="form-group">
     <label for="email">Email address</label>
-    <input type="email" class="form-control" id="email" placeholder="Enter email"/>
+    <input type="email" class="form-control" id="email" placeholder="Enter email" th:field="*{email}"/>
   </div>
   <div class="form-group">
     <label for="password">Password</label>
-    <input type="password" class="form-control" id="password" placeholder="Password"/>
+    <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}"/>
   </div>
   <div class="form-group">
     <label for="contact">Contact Number</label>
-    <input type="number" class="form-control" id="contact" placeholder="Phone Number"/>
+    <input type="text" class="form-control" id="contact" placeholder="Phone Number" th:field="*{contactNo}" />
   </div>
-  <button id="submit" type="submit" class="btn btn-default">Submit</button>
+   <div>
+  <label for="option">check me to get verification code</label> <input id="option"
+  type="checkbox" onclick="sendCode()"/>
+  </div>  
+  <div class="form-group">
+    <label for="twiliocode">verification code</label>
+    <input type="text" class="form-control" id="code" placeholder="Verification code" th:field="*{twiliocode}"   />
+  </div>
+ 
+  
+    <button id="submit" type="submit" class="btn btn-default">Submit</button>
 </form>
   
   <script src ="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src ="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script src ="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
      <!-- <script src ="js/jquery-1.11.1.min.js"></script>
   <script src ="js/bootstrap.min.js"></script>-->
   
 
   <script>
- $(document).ready(function(){
-
-  $("button").click(function(){
-	  var emailVal = $(email).val();
-	  var passwordVal = $(password).val();
-	  var first_name = $(fname).val();
-	  var last_name = $(lname).val();
-	  var contact = $(contact).val();
-	  alert(emailVal);
-	  
-	$.ajax({
-  type: "POST",
-  url: "http://localhost:8080/api/v1/users",
-  contentType: 'application/json',
- 
-  data:JSON.stringify({firstName:first_name,lastName:last_name,contactNo:contact,email : emailVal,password :passwordVal}),
-  dataType: "json"
-})
-  .done(function( msg ) {
-    alert( "Data Saved: " + msg );
-  });
+  function sendCode() {
     
-	return false;
-  });
-});
+    $('#code').enabled
+    var contactno = $('#contact').val();
+    alert ("verification code has been sent to your mobile.");
+    
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:8080/api/v1/users/sendcode",
+      contentType: 'application/json',
+     
+      data:JSON.stringify({contactNo:contactno}),
+      dataType: "json"
+    })
+      .done(function( msg ) {
+        alert( "Data Saved: ");
+      });
+    
+  }
+    
   </script>
 </body>
 

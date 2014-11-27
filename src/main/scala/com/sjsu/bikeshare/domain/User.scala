@@ -37,7 +37,8 @@ class User {
   @BeanProperty
  var contactNo:String =_ ;
    
- 
+  @BeanProperty
+ var twiliocode:Int =_ ;
  
  @BeanProperty
 var created_at:String=_;
