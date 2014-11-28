@@ -1,0 +1,108 @@
+body {
+	background: #FF9933;
+}
+
+header {
+	font-family: 'Droid Serif', Georgia, serif;
+	font-size:  1.2em;
+	padding: 0 10%;
+}
+
+header h1 {
+	font-family: "Lobster two",georgia, serif;
+	color: #37372D;
+}
+
+header p {
+	margin-bottom: 25px;
+}
+
+.carousel {
+	border: 10px solid #FFF;
+	-webkit-transform: rotate(1deg);
+	-moz-transform: rotate(1deg);
+	-ms-transform: rotate(1deg);
+	-o-transform: rotate(1deg);
+	transform: rotate(1deg);
+	filter: progid:DXImageTransform.Microsoft.Matrix( M11=0.9986295347545738, M12=-0.05233595624294383, M21=0.05233595624294383, M22=0.9986295347545738, sizingMethod='auto expand');
+	zoom: 1;
+	-webkit-box-shadow: 10px 10px 20px #002624;
+	-moz-box-shadow: 10px 10px 20px #002624;
+	box-shadow: 10px 10px 20px #002624;
+}
+
+.carousel .item {
+	max-height: 450px;
+     
+}
+
+.carshow {
+	font-family: 'Droid Serif', Georgia, serif;
+}
+
+.carshow h2 {
+	font-family: "Lobster two";
+	font-weight: normal;
+	color: white;
+	margin: 0;
+	padding: 0;
+	padding-top: 10px;
+	color: #FF9933;
+	font-size: 1.9em;
+	height: 30px;
+}
+	
+.carshow h3 {
+	font-size: 1.2em;
+	margin: 0;
+	padding: 0;
+	color: #FF9933;
+	height: auto;
+}
+
+.carshow p {
+	font-size:  1.2em;
+	line-height: 1.5em;
+}
+
+.carshow img {
+	border: 5px solid #FFF;
+	-webkit-box-shadow: 5px 5px 10px #002624;
+	-moz-box-shadow: 5px 5px 10px #002624;
+	box-shadow: 5px 5px 10px #002624;
+	margin-top: 20px;
+}
+
+.navbar-inner {
+	background-color: #FF9933;
+	background-image: -moz-linear-gradient(top, #0E3D43, #082327) !important;
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0E3D43), to(#082327)) !important;
+	background-image: -webkit-linear-gradient(top, #0E3D43, #082327) !important;
+	background-image: -o-linear-gradient(top, #0E3D43, #E2E6AC) !important;
+	background-image: linear-gradient(to bottom, #0E3D43, #114B53) !important;
+}
+
+.navbar .brand {
+	font-family: "Lobster two";
+	font-size: 2.2em;
+	line-height: 1em;
+	color: white;
+}
+
+.navbar .nav > li > a {
+	margin-top: 22px;
+	padding: 5px 20px;
+	-webkit-border-radius: 10px 10px 0 0;
+	-moz-border-radius: 10px 10px 0 0;
+	border-radius: 10px 10px 0 0;
+}
+
+.navbar-inverse .nav > li > a {
+	color: #FFF;
+}
+
+.navbar-inverse .nav .active > a,
+.navbar-inverse .nav .active > a:hover,
+.navbar-inverse .nav .active > a:focus {
+	background-color: #666699;
+}

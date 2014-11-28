@@ -1,30 +1,45 @@
 package com.sjsu.bikeshare.web
 
-import org.springframework.web.bind.annotation.RequestMapping
-import com.sjsu.bikeshare.service._
-import com.sjsu.bikeshare.domain.Bike
-import com.sjsu.bikeshare.domain.Review
-import com.sjsu.bikeshare.exception.UserNotFoundException
-import org.springframework.http.{ ResponseEntity, HttpStatus }
-import org.springframework.web.bind.annotation._
-import org.springframework.context.annotation.{ ComponentScan, Configuration }
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import java.io._
+import com.sjsu.bikeshare.service._
+import com.sjsu.bikeshare.domain._
+import org.springframework.web.context.request._
+import org.springframework.web.bind.annotation._
 import javax.validation.Valid
 import javax.persistence.Entity
-import org.springframework.web.context.request._
 import java.util.{ List, ArrayList }
+import org.springframework.ui.Model
+import com.sjsu.bikeshare.exception.UserNotFoundException
+import org.springframework.http.{ ResponseEntity, HttpStatus }
+import org.springframework.context.annotation.{ ComponentScan, Configuration }
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration
+import org.springframework.stereotype.Controller
 
-
-@RestController 
-@RequestMapping(value = Array("/api/v1/bike"),consumes = Array("application/json"), produces = Array("application/json"))
+@Controller
+@RequestMapping(value = Array("/api/v1/bike"))
 class BikeController {
+@RequestMapping(value=Array("/save"),method = Array(RequestMethod.POST))
+def createBikes(@ModelAttribute bike:Bike, model:Model,@ModelAttribute userLogin:UserLogin) = {
+   println("I am in save api ")
+   println("got hidden value"+bike.userEmail);
+   //model.addAttribute("userLogin",userLogin)
+   println("bike values from html"+bike.longitude)
+   println("bike date"+bike.fromDate)
+   println("bike location"+bike.latitude)
+  BikeRepository.InsertBikes(bike)
+   "homepage"
 
-@RequestMapping(method = Array(RequestMethod.POST))
-@ResponseStatus(value = HttpStatus.CREATED)
-def createBikes(@Valid @RequestBody bike:Bike) = {
-BikeRepository.InsertBikes(bike)
 }
+ @RequestMapping(value=Array("/List"),method = Array(RequestMethod.POST))
+  def userLoginForm( model:Model,@ModelAttribute bike:Bike) = {
+      println("here I am in list api ")
+  // println("got user email before list bike page here"+userLogin.email);
+   model.addAttribute("Bike", new Bike())
+   model.addAttribute("userEmail", bike.userEmail)
+   println("got user email before list bike page here"+bike.userEmail);
+ //model.addAttribute("userLogin",userLogin),@ModelAttribute userLogin:UserLogin
+  "ListBike"
+   }  
 
   
  @RequestMapping(value = Array("/{latitude}/{longitude}/{bikeType}/{range}/{fromDate}/{toDate}"),method = Array(RequestMethod.GET))

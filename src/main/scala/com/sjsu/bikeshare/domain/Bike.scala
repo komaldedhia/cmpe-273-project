@@ -15,8 +15,8 @@ import org.hibernate.validator.constraints.NotEmpty
 @Entity
 class Bike {
  
-val dateFormat:DateFormat   = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"))
+val dateFormat:DateFormat   = new SimpleDateFormat("MM-dd-yyyy");
+//dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"))
 
 @BeanProperty
 var bikeId: String =_
@@ -33,19 +33,19 @@ var accessories: String = _
 
 
 @BeanProperty
-@NotEmpty
+//@NotEmpty
 var latitude: String = _
 
 //@Column(nullable = true)
 @BeanProperty
-@NotEmpty
+//@NotEmpty
 var longitude: String = _
 
 @BeanProperty
 var description: String = _
 
 @BeanProperty
-@NotEmpty
+//@NotEmpty
 var bikeType: String = _
 
 @BeanProperty
@@ -55,11 +55,11 @@ var image: String = _
 var bikeCode: String = _
 
 @BeanProperty
-@NotEmpty
+//@NotEmpty
 var fromDate: String = dateFormat.format(new Date)
 
 @BeanProperty
-@NotEmpty
+//@NotEmpty
 var toDate: String = dateFormat.format(new Date)
 
 @BeanProperty

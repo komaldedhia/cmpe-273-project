@@ -69,14 +69,20 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"))
     val bike_id = create_id.toString()
  
      println("create_id" + create_id)
-      
+     val longitude=Double.parseDouble(bike.longitude)
+     val latitude=  Double.parseDouble(bike.latitude)
+      val loc=MongoDBObject("geometry" ->MongoDBObject("type" -> "Point","coordinates" ->(GeoCoords(longitude,latitude))))
+     println("this is geosphere "+loc)
      
-     val bike_info = MongoDBObject("bikeId" -> bike_id,"address" -> bike.address, "accessories" -> bike.accessories,"fromDate" ->bike.fromDate,
-      "toDate"->bike.toDate, "userEmail" -> bike.userEmail,"bikeCode"->bike.bikeCode)
+     val bike_info = MongoDBObject("bikeId" -> bike_id,"userEmail" -> bike.userEmail, "accessories" -> bike.accessories,"address" -> bike.address,
+                  "bikeType"->bike.bikeType,"description"->bike.description,"fromDate" ->bike.fromDate,
+                   "toDate"->bike.toDate,"bikeCode"->bike.bikeCode)
       
+      //yet to fix this issue loc->loc thrws error
+                   
      MongoFactory.BikesCollection.insert( bike_info )
-     println("Saved")
-     bike_info.toString()
+     println("Saved this"+bike_info.toString())
+    bike_info.toString()
 
  }
  

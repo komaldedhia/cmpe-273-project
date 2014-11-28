@@ -50,7 +50,8 @@ def createUser(@Valid @RequestBody user:User) = {
  @RequestMapping(value=Array("/signup"),method = Array(RequestMethod.GET))
   def SignUpForm( model:Model) = {
   model.addAttribute("User", new User())
-  "SignUp"} 
+  "SignUp"
+  } 
  
  
  @RequestMapping(value=Array("/signupnow"),method = Array(RequestMethod.POST))
@@ -94,25 +95,30 @@ def createUser(@Valid @RequestBody user:User) = {
    "redirect:/Signup"
  }
  
-  @RequestMapping(value=Array("/userlogin"),method = Array(RequestMethod.GET))
+ @RequestMapping(value=Array("/userlogin"),method = Array(RequestMethod.GET))
   def userLoginForm( model:Model) = {
    model.addAttribute("userLogin", new UserLogin())
   "login"}  
+ 
   
- @RequestMapping(value=Array("/userval"),method = Array(RequestMethod.GET))
+ @RequestMapping(value=Array("/userval"),method = Array(RequestMethod.POST))
   def getUser(@ModelAttribute userLogin:UserLogin,model:Model) = {
- println("In controller")
- if (UserRepository.validateUser(userLogin) == "Success") {
+ 
+  if (UserRepository.validateUser(userLogin).equalsIgnoreCase("Success"))
+   {
     model.addAttribute("userLogin", userLogin)
-    model.addAttribute("bike", new Bike())
-    "reservations"
- }
-      else {
-        println("Else part @@@@@")
-        model.addAttribute("userLogin", new UserLogin())
-       "login"}
+   "homepage"
+   }
+  else 
+  {
+    println("Not a success case,so returning to login page again")
+    model.addAttribute("userLogin", new UserLogin())
+    "login"
+        
+  }
   } 
    
+ 
 @RequestMapping(value=Array("/{email}/bike"),method = Array(RequestMethod.GET))
 def getBikes(@PathVariable email:String) = {
   println (email)

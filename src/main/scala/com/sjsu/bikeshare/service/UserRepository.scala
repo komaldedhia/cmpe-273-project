@@ -30,28 +30,39 @@ object UserRepository {
       printUser
     }
   
-  def validateUser(userLogin:UserLogin)={
-     println("In Repo1")
+  /* This method validates if the email and the password
+   * entered during the login is vaid
+   */
+  def validateUser(userLogin:UserLogin):String={
       val q = MongoDBObject("_id"->0)
-      val r = MongoDBObject("email"->userLogin.email)
-     val printUser = MongoFactory.userCollection.findOne(r,q)match {
-  case Some(printUser) => {
+      val r = MongoDBObject("email"->userLogin.email);
+     
+      var returnValue:String=""
+     val printUser = MongoFactory.userCollection.findOne(r,q)match
+     {
+     
+     case Some(printUser) => {
        
         val originalPassword =printUser.get("password").toString()
-       if(userLogin.password.equalsIgnoreCase(originalPassword))
-       {
-          //new ResponseEntity(HttpStatus.OK)
-         "Success"
-       }else
-       {
-         "Invalid User or password"
-       }}
+        println(userLogin.password);
+           if(userLogin.password.equalsIgnoreCase(originalPassword))
+           {
+             println("Success");
+            returnValue= "Success"
+           }
+           else
+           {
+             println("Invalid User or password")
+             returnValue="Invalid User or password"
+           }
+       }
   case None => 
        {
-         "Invalid User or password"
+         println("In case none Invalid User or password")
+         returnValue="Invalid User or password"
        }
-}
-      
+    }
+     returnValue
   }
   
 }

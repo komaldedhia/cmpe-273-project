@@ -1,0 +1,130 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+  <title>Community Bike Share Web Application</title> 
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+  </head>
+<body>
+<nav class="navbar navbar-default" role="navigation">
+ 		<div class="container-fluid">
+    			<div class="navbar-header">
+     			 <a class="navbar-brand" href="#">Bike Share</a>
+    	</div>
+    		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">    
+      		<ul class="nav navbar-nav navbar-right">
+		        <li><a href="AboutUs.html">About Us</a></li>
+		        <li><a href="SignUp.html">Sign up</a></li>
+      		</ul>
+    		</div>
+  		</div>
+  	</nav>
+<!-- <img src="/images/taiwan_Bicycle_Ride_hd_wallpaper_8.jpg" class="img-responsive" alt="Responsive image"></img> -->
+<!--style="margin-top:-250px;background: none repeat scroll 0 0 #FFffff;opacity: 0.5;"-->
+
+<!-- <p th:text="'email: ' + ${bike.userEmail}"/> -->
+<p th:text="'email: ' + ${userEmail}"/>
+<form action="#" th:action="@{/api/v1/bike/save/}" th:object="${Bike}" method="post" role="form">
+  <div class="form-group">
+    <label for="address" >Address/Zip Code</label>
+    <input type="text" class="form-control" id="location" placeholder="Enter address" th:field="*{address}"/>
+  </div>
+
+<div>
+	<label for="option">Verify Address</label> <input id="option" type="checkbox" onclick="codeAddress()"/>
+				
+</div>
+		
+  <div class="form-group">
+    <label for="accessories">Accessories</label>
+    <input type="text" class="form-control" id="accessories" placeholder="accessories" th:field="*{accessories}"/>
+  </div>
+  
+   <div class="form-group">
+  <input type="hidden" name="userEmail" id="userEmail" th:value="${userEmail}"/>
+   </div>
+ 
+   <div class="form-group">
+    <label for="description">Description</label>
+    <input type="text" class="form-control" id="description" placeholder="description" th:field="*{description}"/>
+  </div>
+  
+   <div class="form-group">
+    <label for="bikeCode">Bike Code</label>
+    <input type="text" class="form-control" id="bikeCode" placeholder="bikeCode" th:field="*{bikeCode}"/>
+  </div>
+  
+     <div class="form-group">
+    <label for="fromDate">From Date</label>
+    <input type="date" class="form-control" id="fromDate" placeholder="MM/DD/YYYY" th:field="*{fromDate}"/>
+  </div>
+  
+   <div class="form-group">
+    <label for="todate">To date</label>
+    <input type="todate" class="form-control" id="todate" placeholder="todate" th:field="*{todate}"/>
+  </div>
+  
+  <div class="form-group">
+ <label for="bikeType">Bike Type</label>
+ <select class="form-control" name="bikeType" id="bikeType" th:field="*{bikeType}">
+ 	<option value="">Select your bike type</option>
+     <option value="mountainbike">Mountain Bike</option>
+     <option value="RoadBike">Road Bike</option>
+     <option value="CruiserBike">Cruiser Bike</option>
+     <option value="FixedGear">Fixed Gear</option>
+     <option value="FoldingBike">Folding Bike</option>
+     <option value="TandemBike">Tandem Bike</option>
+     <option value="TriathlonBike">Triathlon Bike</option>
+     <option value="TricycleBike">Tricycle Bike</option>
+ </select>
+</div>
+  
+  <div class="form-group">
+<label for="latitude"></label>
+<input type="hidden"
+class="form-control" id="latitude" placeholder="Latitude" th:field="*{latitude}"></input>
+</div>
+
+<div class="form-group">
+<label for="longitude"></label>
+<input type="hidden" class="form-control" id="Longitude" placeholder="Longitude" th:field="*{longitude}"></input>
+</div>
+  
+  <button id="submit" type="submit" class="btn btn-default">Submit</button>
+</form>
+<script src ="/js/jquery-1.11.1.min.js"></script>
+<script src ="/js/bootstrap.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+
+ <script>
+ var geocoder;
+ var map;
+ geocoder = new google.maps.Geocoder();
+ 
+function codeAddress() {
+
+var address = document.getElementById('location').value;
+var fromdate = $('#fromdate').val();
+var toDate = $('#todate').val();
+	  geocoder.geocode( { 'address': address}, function(results, status) {
+	    if (status == google.maps.GeocoderStatus.OK) {
+	    	
+	    	var latitude = results[0].geometry.location.lat();
+	    	var longitude = results[0].geometry.location.lng();
+	    	document.getElementById("latitude").value = latitude;
+	    	document.getElementById("Longitude").value = longitude;
+
+		  alert("User Address "+results[0].geometry.location);
+	    } else {
+	      alert('Geocode was not successful for the following reason: ' + status);
+	    }
+	  });
+	}
+</script>
+ 
+  
+</body>
+</html>
