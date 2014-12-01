@@ -107,14 +107,14 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"))
     
   } 
  
- 
- def updateBikes(email:String,bike_id: String,bike:Bike)={
+ //removed the param email id as user will have logged in user id
+ def updateBikes(bike:Bike)={
   
-val dbObject = MongoDBObject("bike_id"->bike_id)
+val dbObject = MongoDBObject("bike_id"->bike.getBikeId)
 
 if(dbObject!=null)
 {
-val userUpdt= MongoFactory.BikesCollection.update(dbObject,MongoDBObject("bikeId" -> bike_id,
+val userUpdt= MongoFactory.BikesCollection.update(dbObject,MongoDBObject("bikeId" -> bike.bikeId,
     "address" -> bike.address,
     "accessories" -> bike.accessories,
     "fromDate" ->bike.fromDate,
@@ -122,12 +122,12 @@ val userUpdt= MongoFactory.BikesCollection.update(dbObject,MongoDBObject("bikeId
     "userEmail" -> bike.userEmail,
     "bikeCode"->bike.bikeCode))
 }
- val fetch_user = MongoDBObject("bike_id" -> bike_id)
+ /*val fetch_user = MongoDBObject("bike_id" -> bike_id)
  println(fetch_user)
  println(bike_id)
  val user_get=  MongoFactory.BikesCollection.findOne(fetch_user)
  println(user_get)
- user_get.toString()
+ user_get.toString()*/
 
  }
 

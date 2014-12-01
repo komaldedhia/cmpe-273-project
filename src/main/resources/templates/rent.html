@@ -1,0 +1,119 @@
+
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Community Bike Share Web Application</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+<script
+	th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js}"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/js/rent.js}"
+	src="../static/js/rent.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+	<nav class="navbar navbar-default navbar-blue" role="navigation">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+
+			<div class="navbar-header">
+				<a class="navbar-brand" href="bikeshare.html">Bike Share</a> <a
+					class="navbar-brand" href="#">Hi User! Rent a Bike</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+
+		</div>
+		<!-- /.container-fluid -->
+
+	</nav>
+
+	<form action="#" th:action="@{'/api/v1/bike'}" th:object="${bike}"
+		th:method="put" role="form">
+
+		<div class="form-group">
+			<label for="fromdate">From Date</label> <input type="date"
+				class="form-control" id="fromdate"
+				placeholder="Enter Date to rent a bike" th:field="*{fromDate}"></input>
+				<p th:if="${#fields.hasErrors('fromDate')}" th:errors="*{fromDate}">Name Error</p>
+		</div>
+		<div class="form-group">
+			<label for="todate">To Date</label> <input type="date"
+				class="form-control" id="todate"
+				placeholder="Enter Date to return the bike" th:field="*{toDate}"></input>
+				<p th:if="${#fields.hasErrors('toDate')}" th:errors="*{toDate}">Name Error</p>
+		</div>
+		<div class="form-group">
+			<label for="searchRange">Bike Range</label> <input type="text"
+				class="form-control" id="searchRange"
+				placeholder="Enter the range in miles" th:field="*{searchRange}"></input>
+				<p th:if="${#fields.hasErrors('searchRange')}" th:errors="*{searchRange}">Name Error</p>
+		</div>
+		<div class="form-group">
+			<label for="location">Bike Location</label> <input type="text"
+				class="form-control" id="location" placeholder="Enter bike location"
+				th:field="*{address}"></input>
+				<p th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Name Error</p>
+		</div>
+	<!--	<div class="form-group">
+			<label for="type">Bike Type</label> <input type="text"
+				class="form-control" id="type" placeholder="Enter bike type"
+				th:field="*{bikeType}"></input>
+		</div>-->
+
+		 <div class="form-group">
+			<label for="type">Bike Type</label> <select name="bikeType"
+				th:field="*{bikeType}">
+				<option th:value="mountain">Mountain Bike</option>
+				<option th:value="Road">Road Bike</option>
+				 <option th:value="cruiser" >Cruiser Bike</option>
+				<option th:value="fixedGear" >Fixed Gear</option>
+				<option th:value="folding" >Folding Bike</option>
+				<option th:value="tandem" >Tandem Bike</option>
+				<option th:value="triathlon" >Triathlon Bike</option>
+				<option th:value="tricycle" >Tricycle Bike</option>
+			</select>
+			<p th:if="${#fields.hasErrors('bikeType')}" th:errors="*{bikeType}">Name Error</p>
+
+		</div>
+ 
+		<label for="latitude"></label> <input type="hidden"
+				class="form-control" id="latitude" placeholder="Latitude"
+				th:field="*{latitude}"></input>
+		
+
+		<label for="longitude"></label> <input type="hidden"
+				class="form-control" id="Longitude" placeholder="Longitude"
+				th:field="*{longitude}"></input>
+		
+		<div>
+			<label for="option">Verify Location</label> <input id="option"
+				type="checkbox" onclick="codeAddress()" />
+				
+		</div>
+
+		<div>
+		<label for="option">Verification Result</label>
+			 <input class="form-control" id="VerifyError" type="text" th:readonly="readonly" placeholder="Verification Result" />
+			 <p th:if="${#fields.hasErrors('longitude')}" th:errors="*{longitude}">Please Verify Location</p>
+		</div>
+
+		<button type="submit" class="btn btn-default">Submit</button>
+	</form>
+
+
+
+
+
+</body>
+
+
+</html>

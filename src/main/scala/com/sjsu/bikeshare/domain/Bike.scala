@@ -22,8 +22,13 @@ val dateFormat:DateFormat   = new SimpleDateFormat("MM-dd-yyyy");
 var bikeId: String =_
 
 @BeanProperty
+var searchRange: String =_
+
+@BeanProperty
 var userEmail: String =_
 
+@BeanProperty
+var requesterEmail: String =_
 
 @BeanProperty
 var address: String = _
