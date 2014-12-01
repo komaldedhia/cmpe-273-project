@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Community Bike Share Web Application</title> 
+    <meta charset="UTF-8" />
+   	<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+<style>
+      html, body, #map-canvas {
+        height: 90%;
+        margin: 0px;
+        padding: 0px
+      }
+      #panel {
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        margin-left: -180px;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+      }
+    </style>
+    <script th:src="@{https://maps.googleapis.com/maps/api/js?v=3.exp}" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+     <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js}" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/rentBikeLocation.js}"
+	src="../static/js/rentBikeLocation.js"></script> 
+ </head>
+  
+ <body>
+    <input type="hidden" id="bikeList" th:value="${bikeList}"/>
+    <input type="hidden" id="userLatitude" th:value="${userLatitude}"/>
+    <input type="hidden" id="userLongitude" th:value="${userLongitude}"/>
+    <input type="hidden" id="userFromDate" th:value="${userFromDate}"/>
+    <input type="hidden" id="userToDate" th:value="${userToDate}"/>
+	<div id="map-canvas"></div>
+	<form action="#" th:action="@{'/api/v1/bike/rent'}"	th:object="${rentedBike}" th:method="put" role="form">
+
+		<div class="form-group">
+			<p>Click on the bike marker on map to select it</p>
+		</div>
+		<div class="form-group">
+			<label for="address"  >Bike Location</label> <input type="text"
+				class="form-control" id="address"
+				placeholder="Bike Location" th:field="${rentedBike.address}" th:value="${rentedBike.address}" th:readonly="readonly" ></input>
+		</div>
+		<div class="form-group">
+			<label >Bike Rented Dates</label> 
+			<input type="text" class="form-control" id="dateRange" placeholder="Date rent" th:readonly="readonly"></input>
+		</div>
+		<label for="bikeId"></label> <input type="hidden" class="form-control" id="bikeId" 
+		th:field="*{bikeId}"></input>
+		<button type="submit" class="btn btn-default">Submit</button>
+		</form>
+  </body>
+</html>
+

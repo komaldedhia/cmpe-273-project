@@ -41,17 +41,31 @@ def createBikes(@ModelAttribute bike:Bike, model:Model,@ModelAttribute userLogin
   "ListBike"
    }  
 
+     @RequestMapping(value = Array("/rent"), method = Array(RequestMethod.GET))
+  def getRentForm(model: Model) = {
+    model.addAttribute("bike", new Bike())
+    println("In rent")
+    "rent"
+  }
   
- @RequestMapping(value = Array("/{latitude}/{longitude}/{bikeType}/{range}/{fromDate}/{toDate}"),method = Array(RequestMethod.GET))
-  @ResponseStatus(value = HttpStatus.CREATED  )
- def getAllBikes(@PathVariable("latitude") latitude: String,
-		  		  @PathVariable("longitude") longitude: String,
-		  		  @PathVariable("bikeType") bikeType: String,
-		  		  @PathVariable("range") range: String,
-		  		  @PathVariable("fromDate") fromDate: String,
-		  		  @PathVariable("toDate") toDate: String) = {
-  var bikeList = BikeRepository.getAllBikes(latitude,longitude,bikeType,range,fromDate,toDate)
-    bikeList
+    @RequestMapping(method = Array(RequestMethod.PUT))
+  @ResponseStatus(value = HttpStatus.CREATED)
+  def getAllBikes(@Valid bike: Bike, bindingResult: BindingResult, model: Model) = {
+    println("In get All bikes")
+    if (bindingResult.hasErrors()) {
+      "rent"
+    } else {
+      var bikeList = BikeRepository.getAllBikes(bike.getLatitude, bike.getLongitude, bike.getBikeType, bike.getSearchRange, bike.getFromDate, bike.getToDate)
+      println("After get All bikes")
+      model.addAttribute("bikeList", bikeList)
+      model.addAttribute("userLatitude", bike.getLatitude)
+      model.addAttribute("userLongitude", bike.getLongitude)
+      model.addAttribute("userFromDate", bike.getFromDate)
+      model.addAttribute("userToDate", bike.getToDate)
+      model.addAttribute("rentedBike", new Bike())
+      "distance"
+    }
+
   }
 
 
