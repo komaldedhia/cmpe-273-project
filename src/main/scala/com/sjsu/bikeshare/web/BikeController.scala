@@ -18,6 +18,7 @@ import java.text.DateFormat
 import java.util.Date
 import java.util.Calendar
 import java.text.SimpleDateFormat
+import org.springframework.validation.BindingResult
 
 @Controller
 @RequestMapping(value = Array("/api/v1/bike"))
@@ -43,7 +44,8 @@ def createBikes(@ModelAttribute bike:Bike, model:Model,@ModelAttribute userLogin
    println("got user email before list bike page here"+bike.userEmail);
  //model.addAttribute("userLogin",userLogin),@ModelAttribute userLogin:UserLogin
   "ListBike"
-   }  
+   }
+
 
      @RequestMapping(value = Array("/rent"), method = Array(RequestMethod.GET))
   def getRentForm(model: Model) = {
@@ -52,7 +54,8 @@ def createBikes(@ModelAttribute bike:Bike, model:Model,@ModelAttribute userLogin
     "rent"
   }
   
-    @RequestMapping(method = Array(RequestMethod.PUT))
+//shwetha cod e
+   @RequestMapping(value = Array("/getAllBikes"),method = Array(RequestMethod.PUT))
   @ResponseStatus(value = HttpStatus.CREATED)
   def getAllBikes(@Valid bike: Bike, bindingResult: BindingResult, model: Model) = {
     println("In get All bikes")
@@ -80,10 +83,41 @@ def createBikes(@ModelAttribute bike:Bike, model:Model,@ModelAttribute userLogin
        bikeTypeList  
   }
  
-@RequestMapping(value=Array("/{bike_id}"),method = Array(RequestMethod.PUT))
-def updateBikes(@PathVariable email:String,@PathVariable bike_id:String,@RequestBody bike:Bike) = {
-BikeRepository.updateBikes(email,bike_id,bike)
-}
+//UPDATE BIKE-SHwetha code
+/**@RequestMapping(value=Array("/{bike_id}"),method = Array(RequestMethod.PUT))
+@ResponseStatus(value = HttpStatus.CREATED)
+def updateBikes(@PathVariable bike_id:String,@RequestBody bike:Bike) = {
+BikeRepository.updateBikes(bike_id,bike)
+}**/
+
+@RequestMapping(value=Array("/update/{bike_id}"),method = Array(RequestMethod.GET))
+def updateBikeForm( @PathVariable bike_id:String,model:Model) = {
+      print("update bike id api called ")
+      println(bike_id)
+      var bike = getBike(bike_id)
+      //get bike from bike id
+      model.addAttribute("Bike", bike)
+      "UpdateBike"
+  } 
+
+@RequestMapping(value = Array("/updateBike"),method = Array(RequestMethod.POST))
+@ResponseStatus(value = HttpStatus.CREATED)
+def updateBikes(@Valid bike: Bike,bindingResult: BindingResult, model: Model) = {
+      println("In update bike")
+      println(bike.toString())
+      
+     // var returnedBike = BikeRepository.updateBikes(bike.bikeId, bike)
+      println("returned bike",returnedBike)
+      //model.addAttribute("bikeList", bike.address)
+      //model.addAttribute("userLatitude", bike.getLatitude)
+      //model.addAttribute("userLongitude", bike.getLongitude)
+      //model.addAttribute("userFromDate", bike.getFromDate)
+      //model.addAttribute("userToDate", bike.getToDate)
+      //model.addAttribute("rentedBike", new Bike())
+     "redirect:/homepage"
+    }
+
+
 
     //GET BIKE 
     @RequestMapping(value = Array("/{bike_id}"), method = Array(RequestMethod.GET))
@@ -97,7 +131,7 @@ BikeRepository.updateBikes(email,bike_id,bike)
 
     // Put Review to Bike 
    @RequestMapping(value=Array("/{bike_id}/review"),method = Array(RequestMethod.PUT))
-    def updateBikes(@PathVariable bike_id:String,
+    def reviewBikes(@PathVariable bike_id:String,
                     @RequestBody review:Review) = {
         var bike = BikeRepository.addReviewToBike(bike_id,review)
         bike
@@ -114,6 +148,7 @@ BikeRepository.updateBikes(email,bike_id,bike)
                 var fromDate: Date = dateFormat.parse(bike.getToDate)
                 println(fromDate)
                 println(bike.bikeId)
+		var bikeId=bike.bikeId
                 val c = Calendar.getInstance()
                 c.setTime(fromDate)
                 c.add(Calendar.DATE,1)
@@ -124,7 +159,7 @@ BikeRepository.updateBikes(email,bike_id,bike)
                 
                 //bike.setBikeId(bike.bikeId)
                 //bike.setAccessories(bike.accessories)
-              BikeRepository.updateBikes(bike)
+              BikeRepository.updateBikes(bikeId,bike)
               
               var notification:Notification = new Notification
               notification.setFromDate(bike.getFromDate)
