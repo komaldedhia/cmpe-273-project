@@ -47,9 +47,10 @@ def createBikes(@ModelAttribute bike:Bike, model:Model,@ModelAttribute userLogin
    }  
 
      @RequestMapping(value = Array("/rent"), method = Array(RequestMethod.GET))
-  def getRentForm(model: Model) = {
-   // println("In rent "+ bike.getUserEmail)
+  def getRentForm(model: Model,@ModelAttribute bike:Bike) = {
+   // added to get the user email
        model.addAttribute("bike", new Bike())
+       model.addAttribute("userEmail", bike.userEmail)
     println("In rent")
     "rent"
   }

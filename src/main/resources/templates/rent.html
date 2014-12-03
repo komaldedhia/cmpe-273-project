@@ -35,7 +35,8 @@
 		<!-- /.container-fluid -->
 
 	</nav>
-
+<!-- passing the user email --> 
+   <p th:text="'email: ' + ${userEmail}"/>
 	<form action="#" th:action="@{'/api/v1/bike'}" th:object="${bike}"
 		th:method="put" role="form">
 
