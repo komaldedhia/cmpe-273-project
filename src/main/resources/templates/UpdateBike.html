@@ -1,0 +1,96 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+  <title>Community Bike Share Web Application</title> 
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+  </head>
+<body>
+<nav class="navbar navbar-default" role="navigation">
+ 		<div class="container-fluid">
+    			<div class="navbar-header">
+     			 <a class="navbar-brand" href="#">Bike Share</a>
+    	</div>
+    		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">    
+      		<ul class="nav navbar-nav navbar-right">
+		        <li><a href="AboutUs.html">About Us</a></li>
+		        <li><a href="SignUp.html">Sign up</a></li>
+      		</ul>
+    		</div>
+  		</div>
+  	</nav>
+<!-- <img src="/images/taiwan_Bicycle_Ride_hd_wallpaper_8.jpg" class="img-responsive" alt="Responsive image"></img> -->
+<!--style="margin-top:-250px;background: none repeat scroll 0 0 #FFffff;opacity: 0.5;"-->
+ 
+<p th:text="'email: ' + ${Bike.address}"/> 
+<!-- <p th:text="'email: ' + ${userEmail}"/> -->
+<form action="#" th:action="@{/api/v1/bike/updateBike}" th:object="${Bike}" method="post" role="form">
+
+ <div class="form-group">
+    <label for="bikeId" >Bike Id</label>
+    <!-- <input type="text" class="form-control" id="bikeId" th:field="${bike.bikeId}" th:value="${Bike.address}" readonly/> -->
+  </div>
+
+  <div class="form-group">
+    <label for="address" >Address/Zip Code</label>
+     <input type="text" class="form-control" id="address"/>  <!--th:field="*{address}"/> -->
+  </div>
+		
+  <div class="form-group">
+    <label for="accessories">Accessories</label>
+    <input type="text" class="form-control" id="accessories" th:value="${Bike.accessories}" /> <!-- th:field="*{accessories}"/>-->
+  </div>
+  
+   <div class="form-group">
+   <!-- <input type="hidden" name="userEmail" id="userEmail" th:value="${userEmail}"/> -->
+   </div>
+ 
+   <div class="form-group">
+    <label for="description">Description</label>
+    <input type="text" class="form-control" id="description" th:value="${Bike.description}" /> <!-- th:field="*{description}"/>-->
+  </div>
+  
+   <div class="form-group">
+    <label for="bikeCode">Bike Code</label>
+    <input type="text" class="form-control" id="bikeCode" th:value="${Bike.bikeCode}" /> <!--th:field="*{bikeCode}"/>-->
+  </div>
+  
+  <button id="submit" type="submit" class="btn btn-default">Update</button>
+</form>
+
+<script src ="/js/jquery-1.11.1.min.js"></script>
+<script src ="/js/bootstrap.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+
+ <script>
+ var geocoder;
+ var map;
+ geocoder = new google.maps.Geocoder();
+ 
+function codeAddress() {
+
+var address = document.getElementById('location').value;
+var fromdate = $('#fromdate').val();
+var toDate = $('#todate').val();
+	  geocoder.geocode( { 'address': address}, function(results, status) {
+	    if (status == google.maps.GeocoderStatus.OK) {
+	    	
+	    	var latitude = results[0].geometry.location.lat();
+	    	var longitude = results[0].geometry.location.lng();
+	    	document.getElementById("latitude").value = latitude;
+	    	document.getElementById("Longitude").value = longitude;
+
+		  alert("User Address "+results[0].geometry.location);
+	    } else {
+	      alert('Geocode was not successful for the following reason: ' + status);
+	    }
+	  });
+	}
+</script>
+ 
+  
+</body>
+</html>
