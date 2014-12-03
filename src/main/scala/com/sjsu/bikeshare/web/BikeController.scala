@@ -18,6 +18,7 @@ import java.text.DateFormat
 import java.util.Date
 import java.util.Calendar
 import java.text.SimpleDateFormat
+import org.springframework.validation.BindingResult
 
 @Controller
 @RequestMapping(value = Array("/api/v1/bike"))
@@ -47,7 +48,8 @@ def createBikes(@ModelAttribute bike:Bike, model:Model,@ModelAttribute userLogin
 
      @RequestMapping(value = Array("/rent"), method = Array(RequestMethod.GET))
   def getRentForm(model: Model) = {
-    model.addAttribute("bike", new Bike())
+   // println("In rent "+ bike.getUserEmail)
+       model.addAttribute("bike", new Bike())
     println("In rent")
     "rent"
   }
@@ -82,7 +84,8 @@ def createBikes(@ModelAttribute bike:Bike, model:Model,@ModelAttribute userLogin
  
 @RequestMapping(value=Array("/{bike_id}"),method = Array(RequestMethod.PUT))
 def updateBikes(@PathVariable email:String,@PathVariable bike_id:String,@RequestBody bike:Bike) = {
-BikeRepository.updateBikes(email,bike_id,bike)
+//BikeRepository.updateBikes(email,bike_id,bike) -- Commented by Komal due to giving compilation error
+  BikeRepository.updateBikes(bike)
 }
 
     //GET BIKE 
