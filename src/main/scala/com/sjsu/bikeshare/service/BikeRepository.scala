@@ -17,7 +17,7 @@ import java.lang.Double
 import com.sjsu.bikeshare.domain.Review;
 
 object BikeRepository {
-  val dateFormat:DateFormat   = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+  val dateFormat:DateFormat   = new SimpleDateFormat("MM-dd-yyyy");
 dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"))
   
  
