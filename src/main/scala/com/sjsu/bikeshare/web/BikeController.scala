@@ -85,13 +85,13 @@ def createBikes(@ModelAttribute bike:Bike, model:Model,@ModelAttribute userLogin
        bikeTypeList  
   }
  
-<<<<<<< HEAD
+
 @RequestMapping(value=Array("/{bike_id}"),method = Array(RequestMethod.PUT))
 def updateBikes(@PathVariable email:String,@PathVariable bike_id:String,@RequestBody bike:Bike) = {
 //BikeRepository.updateBikes(email,bike_id,bike) -- Commented by Komal due to giving compilation error
   BikeRepository.updateBikes(bike)
 }
-=======
+
 //UPDATE BIKE-SHwetha code
 /**@RequestMapping(value=Array("/{bike_id}"),method = Array(RequestMethod.PUT))
 @ResponseStatus(value = HttpStatus.CREATED)
@@ -116,7 +116,7 @@ def updateBikes(@Valid bike: Bike,bindingResult: BindingResult, model: Model) = 
       println(bike.toString())
       
      // var returnedBike = BikeRepository.updateBikes(bike.bikeId, bike)
-      println("returned bike",returnedBike)
+     // println("returned bike",returnedBike)
       //model.addAttribute("bikeList", bike.address)
       //model.addAttribute("userLatitude", bike.getLatitude)
       //model.addAttribute("userLongitude", bike.getLongitude)
@@ -127,7 +127,7 @@ def updateBikes(@Valid bike: Bike,bindingResult: BindingResult, model: Model) = 
     }
 
 
->>>>>>> FETCH_HEAD
+
 
     //GET BIKE 
     @RequestMapping(value = Array("/{bike_id}"), method = Array(RequestMethod.GET))
@@ -169,7 +169,7 @@ def updateBikes(@Valid bike: Bike,bindingResult: BindingResult, model: Model) = 
                 
                 //bike.setBikeId(bike.bikeId)
                 //bike.setAccessories(bike.accessories)
-              BikeRepository.updateBikes(bikeId,bike)
+              //BikeRepository.updateBikes(bikeId,bike)
               
               var notification:Notification = new Notification
               notification.setFromDate(bike.getFromDate)
