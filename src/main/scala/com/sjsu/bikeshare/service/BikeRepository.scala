@@ -2,6 +2,7 @@ package com.sjsu.bikeshare.service
 
 import org.springframework.data.repository.CrudRepository
 import com.sjsu.bikeshare.domain.Bike
+import com.sjsu.bikeshare.domain.Notification
 import scala.collection.mutable._
 import java.util.{ List, ArrayList }
 import com.mongodb.casbah.Imports._
@@ -195,5 +196,58 @@ def addReviewToBike(bike_id: String, review:Review) = {
     }
     getBike(bike_id)
 }
+//Goudamy
 
+
+def rentedBikes(email : String,notification:Notification) ={  
+    var list:List[DBObject] = new ArrayList()
+    val fetch_user = MongoDBObject("ownerId" -> email ,"status" -> "0")
+    println(fetch_user)
+    val user_get=  MongoFactory.notificationCollection.find(fetch_user)
+    for(doc <- user_get) {
+      list.add(doc)
+          }
+    println(list)
+    list
+  }  
+ 
+ def returnBikes(email : String,notification:Notification) ={  
+    var list:List[DBObject] = new ArrayList()
+    val fetch_user = MongoDBObject("requesterId" -> email ,"status" -> "0")
+    println(fetch_user)
+    val user_get=  MongoFactory.notificationCollection.find(fetch_user)
+    for(doc <- user_get) {
+      list.add(doc)
+          }
+    println(list)
+    list
+  } 
+ 
+  def listingBikes(email : String,bike:Bike) ={  
+    var list:List[DBObject] = new ArrayList()
+    println(email+"i have come a long way")
+    val fetch_user = MongoDBObject("userEmail" -> email )
+    println(fetch_user)
+    val user_get=  MongoFactory.BikesCollection.find(fetch_user)
+    for(doc <- user_get) {
+      list.add(doc)
+          }
+    println(list)
+    list
+  } 
+ 
+ def returning(note:Notification) ={  
+   println(note.bikeId)
+   println(note.status)
+   println(note.fromDate)
+   println(note.toDate)
+   /*val initial = MongoDBObject("bikeId"-> note.bikeId)
+   println(initial)
+   val result = MongoFactory.notificationCollection.update(MongoDBObject("bikeId"-> note.bikeId), $set("status" -> "1") )
+   println(result)*/
+   val query = MongoDBObject("bikeId"-> note.bikeId)
+   val update = $set("status" ->"1")
+   val res1 = MongoFactory.notificationCollection.findAndModify(query = query, update = update)
+   println("findAndModify: " + res1)
+  } 
   }

@@ -176,7 +176,48 @@ def updateBikes(@Valid bike: Bike,bindingResult: BindingResult, model: Model) = 
               NotificationRepository.save(notification)
               }
     
+//Goudamy
+//listing bikes
+ @RequestMapping(value = Array("/getListedBike"), method = Array(RequestMethod.GET))
+ def List(@ModelAttribute bike:Bike, model:Model) = {
+       println("here I am ")
+       val  email = "test1@gmail.com"
+        println(email)
+       val list =  BikeRepository.listingBikes(email,bike)       
+       model.addAttribute("bike",list) 
+       model.addAttribute("bike1", new Bike())
+       println(list)
+      "bikeList"
+    }
+  @RequestMapping(value = Array("/listing"), method = Array(RequestMethod.POST))
+  def listingBike(@ModelAttribute @RequestBody  bike1:Bike, model:Model ) = {
+       println("here I am ")
+       println(bike1.bikeId)
+     
+   //Kiran plz start from here
+       "homepage"  
+    }
+//Returning
+ @RequestMapping(value = Array("/return"), method = Array(RequestMethod.GET))
+ def returnBike(@ModelAttribute notification:Notification, model:Model) = {
+       println("here I am ")
+       val  email = "ram"
+       val list =  BikeRepository.returnBikes(email,notification)
+       val rented =  BikeRepository.rentedBikes(email,notification)
+       model.addAttribute("notification",list)
+       model.addAttribute("owner",rented)
+       model.addAttribute("note", new Notification())
+       println(list)
+      "bikeReturn"
+    }
 
+ @RequestMapping(value = Array("/returning"), method = Array(RequestMethod.POST))
+ def returningBike(@ModelAttribute @RequestBody  note:Notification, model:Model ) = {
+       println("here I am ")
+       println(note.bikeId)     
+       val ret =  BikeRepository.returning(note)
+       "homepage"  
+    }
 
 
 }
