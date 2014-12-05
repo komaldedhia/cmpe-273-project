@@ -27,22 +27,16 @@ class BikeController {
 def createBikes(@ModelAttribute bike:Bike, model:Model,@ModelAttribute userLogin:UserLogin) = {
    println("I am in save api ")
    println("got hidden value"+bike.userEmail);
-   //model.addAttribute("userLogin",userLogin)
-   println("bike values from html"+bike.longitude)
-   println("bike date"+bike.fromDate)
-   println("bike location"+bike.latitude)
-  BikeRepository.InsertBikes(bike)
+   BikeRepository.InsertBikes(bike)
    "homepage"
 
 }
  @RequestMapping(value=Array("/List"),method = Array(RequestMethod.POST))
   def userLoginForm( model:Model,@ModelAttribute bike:Bike) = {
-      println("here I am in list api ")
-  // println("got user email before list bike page here"+userLogin.email);
+      println("here I am in list bike api ")
    model.addAttribute("Bike", new Bike())
    model.addAttribute("userEmail", bike.userEmail)
    println("got user email before list bike page here"+bike.userEmail);
- //model.addAttribute("userLogin",userLogin),@ModelAttribute userLogin:UserLogin
   "ListBike"
    }
 

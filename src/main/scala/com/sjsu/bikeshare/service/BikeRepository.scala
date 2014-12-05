@@ -44,9 +44,18 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"))
    
   }
 
+//yet to fix generating sequential bikeid's
  def InsertBikes(bike:Bike) = {
 
-    var create_id :Int = 0; 
+   val formatter:DateFormat = new SimpleDateFormat("yyyy-MM-dd")
+   formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
+   
+   val frmdate:Date = formatter.parse(bike.fromDate)
+   val todate:Date = formatter.parse(bike.toDate)
+   val longitude=Double.parseDouble(bike.longitude)
+   val latitude=  Double.parseDouble(bike.latitude)
+    
+    /*var create_id :Int = 0; 
     var id : String = null
     val fetch = MongoDBObject("bike_id" -> "1")
     println(fetch)   
@@ -68,20 +77,27 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"))
     }
     val bike_id = create_id.toString()
  
-     println("create_id" + create_id)
-     val longitude=Double.parseDouble(bike.longitude)
-     val latitude=  Double.parseDouble(bike.latitude)
-      val loc=MongoDBObject("geometry" ->MongoDBObject("type" -> "Point","coordinates" ->(GeoCoords(longitude,latitude))))
+     println("create_id" + create_id)*/
+    
+    
+     var dbObject = MongoDBObject("bikeId" -> "1")
+     val fieldsMDBO = MongoDBObject("seq" -> 1, "_id" -> 0)
+     val counterRes = MongoFactory.BikesCollection.findAndModify(dbObject, update = $inc("seq" -> 1), 
+       upsert = true, fields = fieldsMDBO, sort = null, remove = false, returnNew = true).get
+   
+   val id = counterRes.get("seq").asInstanceOf[Int].toString()
+   bike.setBikeId(id) 
+     println("bikeid is"+bike.getBikeId())
+ 
+    val loc=MongoDBObject("geometry" ->MongoDBObject("type" -> "Point","coordinates" ->(GeoCoords(longitude,latitude))))
      println("this is geosphere "+loc)
      
-     val bike_info = MongoDBObject("bikeId" -> bike_id,"userEmail" -> bike.userEmail, "accessories" -> bike.accessories,"address" -> bike.address,
-                  "bikeType"->bike.bikeType,"description"->bike.description,"fromDate" ->bike.fromDate,
-                   "toDate"->bike.toDate,"bikeCode"->bike.bikeCode)
+     val bike_info = MongoDBObject("bikeId" -> bike.bikeId,"userEmail" -> bike.userEmail, "accessories" -> bike.accessories,"address" -> bike.address,
+                  "bikeType"->bike.bikeType,"description"->bike.description,"fromDate" ->frmdate,
+                   "toDate"->todate,"bikeCode"->bike.bikeCode,"loc"->MongoDBObject("type" -> "Point","coordinates" ->(GeoCoords(longitude,latitude))))
       
-      //yet to fix this issue loc->loc thrws error
-                   
-     MongoFactory.BikesCollection.insert( bike_info )
-     println("Saved this"+bike_info.toString())
+    MongoFactory.BikesCollection.insert(bike_info)
+    println("Bike Listed successfully and added to db "+bike_info.toString())
     bike_info.toString()
 
  }

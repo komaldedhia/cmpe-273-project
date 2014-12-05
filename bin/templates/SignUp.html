@@ -1,10 +1,12 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
+  <title>Community Bike Share Web Application</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
       <!-- <link href="css/bootstrap.min.css" rel="stylesheet" >-->
+      
   </head>
 <body>
 
@@ -23,44 +25,70 @@
 
 
 <!--<img src="C:\Users\swathi\Desktop\bootstrap-3.2.0-dist\taiwan_Bicycle_Ride_hd_wallpaper_8.jpg" class="img-responsive" alt="Responsive image">-->
-<!--style="margin-top:-250px;background: none repeat scroll 0 0 #FFffff;opacity: 0.5;"
-<form id="accountForm" action="Locations.html" role="form">-->
+<!--style="margin-top:-250px;background: none repeat scroll 0 0 #FFffff;opacity: 0.5;"-->
 
+<div class="col-md-6 col-md-offset-3">
+  <div class="panel panel-default">
+    <div class="panel-heading">Sign Up</div>
+     <div class="panel-body">
   <form action="#" th:action="@{/api/v1/users/signupnow}" th:object="${User}" method="post" role="form">
-  <div class="form-group">
-    <label for="fname">First Name</label>
-    <input type="text" class="form-control" id="fname" placeholder="Enter your first name" th:field="*{firstName}" />
+  <div class="row">
+	  <div class="col-xs-6 col-md-offset-3">
+	    <label for="fname">First Name</label>
+	    <input type="text" class="form-control" id="fname" placeholder="Enter your first name" th:field="*{firstName}" />
+	  </div>
   </div>
-
-  <div class="form-group">
-    <label for="lname">Last Name</label>
-    <input type="text" class="form-control" id="lname" placeholder="Enter your last name" th:field="*{lastName}"/>
+	<br></br>
+  <div class="row">
+	  <div class="col-xs-6 col-md-offset-3">
+	    <label for="lname">Last Name</label>
+	    <input type="text" class="form-control" id="lname" placeholder="Enter your last name" th:field="*{lastName}"/>
+	  </div>
   </div>
-  
-  <div class="form-group">
-    <label for="email">Email address</label>
-    <input type="email" class="form-control" id="email" placeholder="Enter email" th:field="*{email}"/>
+	<br></br>
+  <div class="row">
+	  <div class="col-xs-6 col-md-offset-3">
+	    <label for="email">Email address</label>
+	    <input type="email" class="form-control" id="email" placeholder="Enter email" th:field="*{email}"/>
+	  </div>
   </div>
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}"/>
+	<br></br>
+  <div class="row">
+	  <div class="col-xs-6 col-md-offset-3">
+	    <label for="password">Password</label>
+	    <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}"/>
+	  </div>
   </div>
-  <div class="form-group">
-    <label for="contact">Contact Number</label>
-    <input type="text" class="form-control" id="contact" placeholder="Phone Number" th:field="*{contactNo}" />
+	<br></br>
+  <div class="row">
+	  <div class="col-xs-6 col-md-offset-3">
+	    <label for="contact">Contact Number</label>
+	    <input type="text" class="form-control" id="contact" placeholder="Phone Number" th:field="*{contactNo}" />
+	  </div>
   </div>
-   <div>
-  <label for="option">check me to get verification code</label> <input id="option"
-  type="checkbox" onclick="sendCode()"/>
-  </div>  
-  <div class="form-group">
-    <label for="twiliocode">verification code</label>
-    <input type="text" class="form-control" id="code" placeholder="Verification code" th:field="*{twiliocode}"   />
-  </div>
- 
-  
+	<br></br>
+  <div class="row">
+	   <div class="col-xs-6 col-md-offset-3">
+		  <label for="option">check me to get verification code  </label> <input id="option" type="checkbox" onclick="sendCode()"/>
+	  </div>
+   </div>
+	<br></br>
+  <div class="row">
+	  <div class="col-xs-6 col-md-offset-3">
+	    <label for="twiliocode">verification code</label>
+	    <input type="text" class="form-control" id="code" placeholder="Verification code" th:field="*{twiliocode}"   />
+	  </div>
+ </div>
+	<br></br>
+  <div class="col-xs-6 col-sm-4 col-md-offset-4">
     <button id="submit" type="submit" class="btn btn-default">Submit</button>
+  </div>
+    
 </form>
+
+</div>
+</div>
+</div>
   
   <script src ="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src ="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>

@@ -17,8 +17,9 @@
       		<ul class="nav navbar-nav navbar-right">
 		        <li><a href="AboutUs.html">About Us</a></li>
 		        <li><a href="SignUp.html">Sign up</a></li>
-      		</ul>
-    		</div>
+		        <li class="active"><a href="#" th:href="@{/api/v1/users/logout}">LogOut</a></li>
+     		 </ul>
+   	 		</div>   
   		</div>
   	</nav>
 <!-- <img src="/images/taiwan_Bicycle_Ride_hd_wallpaper_8.jpg" class="img-responsive" alt="Responsive image"></img> -->
@@ -26,7 +27,7 @@
 
 <!-- <p th:text="'email: ' + ${bike.userEmail}"/> -->
 <p th:text="'email: ' + ${userEmail}"/>
-<form action="#" th:action="@{/api/v1/bike/save/}" th:object="${Bike}" method="post" role="form">
+<form action="#" th:action="@{/api/v1/bike/save/}" th:object="${Bike}" method="post" id="form" role="form">
   <div class="form-group">
     <label for="address" >Address/Zip Code</label>
     <input type="text" class="form-control" id="location" placeholder="Enter address" th:field="*{address}"/>
@@ -56,14 +57,14 @@
     <input type="text" class="form-control" id="bikeCode" placeholder="bikeCode" th:field="*{bikeCode}"/>
   </div>
   
-     <div class="form-group">
+   <div class="form-group">
     <label for="fromDate">From Date</label>
     <input type="date" class="form-control" id="fromDate" placeholder="MM/DD/YYYY" th:field="*{fromDate}"/>
   </div>
   
    <div class="form-group">
-    <label for="todate">To date</label>
-    <input type="todate" class="form-control" id="todate" placeholder="todate" th:field="*{todate}"/>
+    <label for="toDate">To date</label>
+    <input type="date" class="form-control" id="toDate" placeholder="To date" th:field="*{toDate}"/>
   </div>
   
   <div class="form-group">
@@ -89,13 +90,14 @@ class="form-control" id="latitude" placeholder="Latitude" th:field="*{latitude}"
 
 <div class="form-group">
 <label for="longitude"></label>
-<input type="hidden" class="form-control" id="Longitude" placeholder="Longitude" th:field="*{longitude}"></input>
+<input type="hidden" class="form-control" id="longitude" placeholder="Longitude" th:field="*{longitude}"></input>
 </div>
   
   <button id="submit" type="submit" class="btn btn-default">Submit</button>
 </form>
 <script src ="/js/jquery-1.11.1.min.js"></script>
 <script src ="/js/bootstrap.min.js"></script>
+<!-- <script type="text/javascript" src="/js/resetForm.js"></script> -->
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 
 
@@ -115,7 +117,7 @@ var toDate = $('#todate').val();
 	    	var latitude = results[0].geometry.location.lat();
 	    	var longitude = results[0].geometry.location.lng();
 	    	document.getElementById("latitude").value = latitude;
-	    	document.getElementById("Longitude").value = longitude;
+	    	document.getElementById("longitude").value = longitude;
 
 		  alert("User Address "+results[0].geometry.location);
 	    } else {

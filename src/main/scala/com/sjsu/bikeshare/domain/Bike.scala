@@ -15,7 +15,8 @@ import org.hibernate.validator.constraints.NotEmpty
 @Entity
 class Bike {
  
-val dateFormat:DateFormat   = new SimpleDateFormat("MM-dd-yyyy");
+val dateFormat:DateFormat   = new SimpleDateFormat("yyyy-MM-dd")
+//val dateFormat:DateFormat   = new SimpleDateFormat("MM-dd-yyyy");
 //dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"))
 
 @BeanProperty
@@ -61,11 +62,11 @@ var bikeCode: String = _
 
 @BeanProperty
 //@NotEmpty
-var fromDate: String = dateFormat.format(new Date)
+var fromDate: String = _//dateFormat.format(new Date)
 
 @BeanProperty
 //@NotEmpty
-var toDate: String = dateFormat.format(new Date)
+var toDate: String = _//dateFormat.format(new Date)
 
 @BeanProperty
 //var bikeReviews: ArrayList[Review]  = _
