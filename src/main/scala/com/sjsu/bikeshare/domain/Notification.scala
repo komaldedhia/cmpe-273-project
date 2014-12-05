@@ -42,4 +42,10 @@ var fromDate: String = dateFormat.format(new Date)
 @NotEmpty
 var toDate: String = dateFormat.format(new Date)
 
+@BeanProperty
+var bikeId: String = _
+
+@BeanProperty
+var status: String = _
+
 }
