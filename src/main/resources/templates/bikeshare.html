@@ -3,27 +3,32 @@
 <head> 
     <title>Community Bike Share Web Application</title> 
     <meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width,initial-scale=1.0"/>	
-    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" href="../../static/css/bootstrap.css" /> 
-	<link rel="stylesheet" th:href="@{/css/application.css}" href="../../static/css/application.css" />    
+	<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+	
+    <link href="/css/bootstrap.css" rel="stylesheet"/>
+	<link rel="stylesheet" th:href="@{/css/application.css}" href="/css/application.css" />   
 	<link rel="stylesheet" th:href="@{/css/bootstrap-responsive.css}" href="../static/css/bootstrap-responsive.css"  />		
 	<style type="text/css">
-      body {
-        padding-top: 50px;
+      body {       
         padding-bottom: 50px;
         background: #FF8C00; 
       }
     </style>	
 </head>
 <body>	 
-    <nav class="navbar navbar-blue" role="navigation">
-	<div class="container">	 			
+    <nav class="navbar navbar-default" role="navigation">
+ 		<div class="container-fluid">
+    			<div class="navbar-header">
+     			 <a class="navbar-brand" href="#">Bike Share</a>
+    		</div>
 
     		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">    
 	 			
-             <ul class="nav ">
-		    <li><a href="#" th:href="@{/api/v1/users/signup}">Sign up</a>
-		    <a href="#" th:href="@{/api/v1/users/userlogin}">Login</a></li>
+       
+      		<ul class="nav navbar-nav navbar-right">
+
+		        <li><a href="#" th:href="@{/api/v1/users/signup}">Sign Up</a></li>
+		        <li><a href="#" th:href="@{/api/v1/users/userlogin}">Login</a></li>
       		</ul>
     		</div>
   		</div>
