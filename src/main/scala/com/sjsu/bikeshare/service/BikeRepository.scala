@@ -125,13 +125,17 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"))
   } 
  
  //removed the param email id as user will have logged in user id
- def updateBikes(bike:Bike)={
-  
-val dbObject = MongoDBObject("bike_id"->bike.getBikeId)
+ //NOT WORKING
+ def updateBikes(bike_id: String,bike:Bike)={
+   println("---in bike repo---")
+   println(bike_id)
+   println("get bike id "+ bike.getBikeId)
+   println("db object bike address"+ bike.address)
+  val dbObject = MongoDBObject("bike_id"->bike.getBikeId)
 
-if(dbObject!=null)
-{
-val userUpdt= MongoFactory.BikesCollection.update(dbObject,MongoDBObject("bikeId" -> bike.bikeId,
+  if(dbObject!=null)
+   {
+    val userUpdt= MongoFactory.BikesCollection.update(dbObject,MongoDBObject("bikeId" -> bike.bikeId,
     "address" -> bike.address,
     "accessories" -> bike.accessories,
     "fromDate" ->bike.fromDate,
@@ -139,14 +143,40 @@ val userUpdt= MongoFactory.BikesCollection.update(dbObject,MongoDBObject("bikeId
     "userEmail" -> bike.userEmail,
     "bikeCode"->bike.bikeCode))
 }
- /*val fetch_user = MongoDBObject("bike_id" -> bike_id)
- println(fetch_user)
- println(bike_id)
+println("updated bike")
+val fetch_user = MongoDBObject("bike_id" -> bike_id)
+ println("user"+fetch_user)
+ println("bike id "+bike_id)
  val user_get=  MongoFactory.BikesCollection.findOne(fetch_user)
- println(user_get)
- user_get.toString()*/
+ println("--end of ---getting user get-- "+user_get)
+ //user_get.toString()
 
  }
+def updateBikesv1(bike_id: String,bike:Bike)={
+   println("---in bike repo---")
+   println("bike id " +bike_id)
+   println("bike string"+bike.toString)
+   println("bike code "+bike.bikeCode)
+   println("bike get codde"+bike.getBikeCode)
+   
+   val fetch_bike_query = MongoDBObject("bikeId" -> bike_id)
+   val dbBike =  MongoFactory.BikesCollection.findOne(fetch_bike_query).get
+
+   if(dbBike!=null)
+    {
+        println(dbBike.toString)
+        val userUpdt= MongoFactory.BikesCollection.update(fetch_bike_query,MongoDBObject("bikeId" -> bike_id,
+          "address" -> bike.address,
+           "accessories" -> bike.accessories,
+          "fromDate" ->bike.fromDate,
+          "toDate" -> bike.toDate, 
+          "userEmail" -> bike.userEmail,
+          "bikeCode"->bike.bikeCode))
+     }
+    
+   println("updated bike")
+ }
+
 
 //Get a particular bike
 def getBike(bike_id: String) = {
@@ -194,7 +224,7 @@ def addReviewToBike(bike_id: String, review:Review) = {
             ))
         
     }
-    getBike(bike_id)
+    // getBike(bike_id)
 }
 //Goudamy
 

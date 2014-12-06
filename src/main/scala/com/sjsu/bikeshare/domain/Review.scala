@@ -17,10 +17,12 @@ class Review {
   @BeanProperty
   var userEmail: String =_
  
+  @BeanProperty
+  var bikeId: String =_
  
   @NotNull
   @BeanProperty
-  var comments:String =_ 
+  var comment:String =_ 
 
-  override def toString(): String = "{ " + userEmail + " : " + comments + "} "   
+  override def toString(): String = "{ " + userEmail + " : " + comment + "} "   
 }

@@ -12,6 +12,8 @@ import org.springframework.boot.SpringApplication
 import scala.beans._
 import org.hibernate.validator.constraints.NotEmpty
 
+import javax.validation.constraints.NotNull
+
 @Entity
 class Bike {
  
@@ -31,7 +33,9 @@ var userEmail: String =_
 @BeanProperty
 var requesterEmail: String =_
 
+//chnaged-shwetha
 @BeanProperty
+ @NotNull
 var address: String = _
 
 @BeanProperty
@@ -69,8 +73,8 @@ var fromDate: String = _//dateFormat.format(new Date)
 var toDate: String = _//dateFormat.format(new Date)
 
 @BeanProperty
-//var bikeReviews: ArrayList[Review]  = _
-var bikeReviews: String = _
+var bikeReviews: ArrayList[Review]  = _
+//var bikeReviews: String = _
 
 //TODOadded for bike Range
 //@BeanProperty

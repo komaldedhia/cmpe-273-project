@@ -3,15 +3,18 @@
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+      
+    </link>
      <!-- <link href="css/bootstrap.min.css" rel="stylesheet" >-->
      <!--FROM HERE ADDED NEW CODE-->
      <title>Bootstrap Rating Input Demo</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet"></link>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"></link>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <!--script src="../js/bootstrap-rating-input.js"></script-->
+    <!--<script  th:src="@{../js/bootstrap-rating-input.js}"></script>-->
     <script src="../js/bootstrap-rating-input.min.js"></script>
     <style>
       body {
@@ -19,13 +22,13 @@
         padding: 50px;
       }
     </style>
-    <script>
+    <!--<script>
       $(function(){
         $('input').on('change', function(){
           alert("Changed: " + $(this).val())
         });
       });
-    </script>
+    </script>-->
 
 <!--TILL HERE ADDED NEW CODE-->
   </head>
@@ -50,31 +53,30 @@
 </nav>
 <!--<img src="taiwan_Bicycle_Ride_hd_wallpaper_8.jpg" class="img-responsive" alt="Responsive image">-->
 <!--style="margin-top:-250px;background: none repeat scroll 0 0 #FFffff;opacity: 0.5;"-->
-<form id="accountForm"  role="form">
+<p th:text="'email: ' + ${oldBike.userEmail}"/> 
+
+<form id="reviewForm" role="form"  method="post" th:action="@{/api/v1/bike/reviewBike}" th:object="${review}"  ><!--method="post" th:action="@{/api/v1/bike/reviewBike}" th:object="${review}" action="#"-->
   <div class="form-group">
-    <label for="UserId">User Name</label>
-    <input type="userId" class="form-control" id="userId" placeholder="Enter User Name"/>
+    <label for="userEmail">User Email</label>
+    <input type="text" class="form-control" id="userEmail"  name="userEmail" th:field="*{userEmail}" /> <!--th:field="*{bikeId}" th:field="*{userEmail}" th:value="${oldBike.userEmail}"   th:value="${oldBike.bikeId}"-->
   </div>
-  <div class="form-group">
+
+ <div class="form-group">
     <label for="bikeId">Bike Id</label>
-    <input type="bikeId" class="form-control" id="bikeId" placeholder="Bike Id"/>
+    <input type="text" class="form-control" id="bikeId"  name="bikeId"  th:field="*{bikeId}"/><!--th:value="${oldBike.bikeId}" th:field="*{bikeId}" -->
   </div>
 
-  <!--<div class="form-group">
-    <input type="number" name="your_awesome_parameter" id="some_id" class="rating" data-clearable="remove"/>
-  </div>-->
-
   <div class="form-group">
-    <label for="review">Review</label><br>
+    <label for="comment">Comments</label><br/>
       <div class="form-group">
         <input type="number" name="your_awesome_parameter" id="some_id" class="rating" />
         </div>
 
-    <textarea name="review" cols="100" rows="1" style="width:500px; height:200px;" id="review" placeholder="Review"></textarea>
-    <!--<input align="top" type="review" style="text-align: front;height:200px" class="form-control" id="review" placeholder="Review"/>-->
+    <textarea name="comment" cols="100" rows="1" style="width:500px; height:200px;" id="comment" th:field="*{comment}"></textarea>
+  <!-- <input align="top" type="review" style="text-align: front;height:200px" class="form-control" id="review" placeholder="Review" th:value="${review.comment}"/>-->
   </div>
 
-  <button id="submit" type="submit" class="btn btn-default">Submit</button>
+  <button id="submit" type="submit" class="btn btn-default" >Submit</button><!-- onclick="reviewBikeAjax()"-->
 </form>
 
    <!-- <script src ="js/jquery-1.11.1.min.js"></script>
@@ -82,28 +84,26 @@
   <script src ="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src ="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
- <!-- <script>
- $(document).ready(function(){
-
-  $("button").click(function(){
-	  var emailVal = $(email).val();
-	  var passwordVal = $(password).val();
-	  alert(emailVal);
-	  
-	  $.ajax({
-		  type: "POST",
-		  url: "http://localhost:8080/api/v1/users/userval",
-		  contentType: 'application/json',
-		  data:JSON.stringify({email : emailVal,password :passwordVal}),
-		  dataType: "json"
-})
-  .done(function( msg ) {
-    alert( "Data Saved: " + msg );
-  });
+ <script>
+ function reviewBikeAjax() {  
+    var bikeId = $('#bikeId').val();
+    var userEmail = $('#userEmail').val();
+    var comment = $('#comment').val();
+    alert ("verification code has been sent to your mobile.");
     
-	return false;
-  });
-});
-  </script>-->
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:8080/api/v1/bike/reviewBike",
+      contentType: 'application/json',
+     
+      data:JSON.stringify({bikeId:bikeId,userEmail:userEmail,comment:comment}),
+      dataType: "json"
+     })
+      .done(function( msg ) {
+        alert( "Data Saved: ");
+      });
+    
+  }
+  </script>
 </body>
 </html>
