@@ -49,7 +49,7 @@ def InsertBikes(bike:Bike) = {
 
    val formatter:DateFormat = new SimpleDateFormat("yyyy-MM-dd")
    formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
-   
+  
    val frmdate:Date = formatter.parse(bike.fromDate)
    val todate:Date = formatter.parse(bike.toDate)
    val longitude=Double.parseDouble(bike.longitude)
@@ -142,7 +142,21 @@ def updateBikesv1(bike_id: String,bike:Bike)={
    println("bike string"+bike.toString)
    println("bike code "+bike.bikeCode)
    println("bike get codde"+bike.getBikeCode)
-   
+   println("bike from date"+bike.fromDate)
+   //added for date format
+   val shformat:DateFormat   = new SimpleDateFormat("MM-dd-yyyy");
+   shformat.setTimeZone(TimeZone.getTimeZone("GMT"))
+   //var formatter:DateFormat = new SimpleDateFormat("yyyy-MM-dd")
+   //formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
+   val frmdate:Date = shformat.parse(bike.fromDate)
+   println("shwetha bike from date"+ frmdate)
+   val todate:Date = shformat.parse(bike.toDate)
+   println("shwetha bike from date"+ todate)
+  /*val dateStr = bike.fromDate
+    val formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy")
+    val date = formatter.parse(dateStr).asInstanceOf[Date]
+    println("date parsed "+date)*/
+
    val fetch_bike_query = MongoDBObject("bikeId" -> bike_id)
    val dbBike =  MongoFactory.BikesCollection.findOne(fetch_bike_query)
    if(dbBike!=null)
@@ -151,8 +165,8 @@ def updateBikesv1(bike_id: String,bike:Bike)={
         val userUpdt= MongoFactory.BikesCollection.update(fetch_bike_query,MongoDBObject("bikeId" -> bike_id,
           "address" -> bike.address,
            "accessories" -> bike.accessories,
-          "fromDate" ->bike.fromDate,
-          "toDate" -> bike.toDate, 
+          "fromDate" -> frmdate,
+          "toDate" -> todate, 
           "userEmail" -> bike.userEmail,
           "bikeCode"->bike.bikeCode,
           "bikeReviews"->dbBikeReview))
