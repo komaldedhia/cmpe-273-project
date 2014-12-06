@@ -24,9 +24,9 @@
 <!-- <img src="/images/taiwan_Bicycle_Ride_hd_wallpaper_8.jpg" class="img-responsive" alt="Responsive image"></img> -->
 <!--style="margin-top:-250px;background: none repeat scroll 0 0 #FFffff;opacity: 0.5;"-->
  
-<p th:text="'address: ' + ${oldBike.address}"/> 
+<!-- <p th:text="'address: ' + ${oldBike.address}"/> 
 <p th:text="'bikeCode: ' + ${oldBike.bikeCode}"/> 
- <p th:text="'email: ' + ${userEmail}"/> 
+ <p th:text="'email: ' + ${userEmail}"/> --> 
 <form action="#"  th:object="${newBike}"  role="form"><!--method="post" th:action="@{/api/v1/bike/updateBike}" -->
 
  <div class="form-group">
@@ -45,18 +45,18 @@
   </div>
   
    <div class="form-group">
-   <label for="userEmail">User Email</label>
+   <label for="userEmail">User Email</label> <br/>
   <input type="text" name="userEmail" id="userEmail"  th:value="${oldBike.userEmail}"  /><!--th:field="*{userEmail}" -->
    </div>
  
    <div class="form-group">
     <label for="fromDate">From Date</label>
-   <input type="text" class="form-control" id="fromDate" th:value="${oldBike.fromDate}" /> <!-- th:field="*{fromDate}" th:field="*{description}"/>-->
+   <input type="text" class="form-control" id="fromDate" placeholder="MM-dd-yyyy"/> <!--th:value="${oldBike.fromDate}" --> <!-- th:field="*{fromDate}" th:field="*{description}"/>-->
   </div>
 
   <div class="form-group">
     <label for="toDate">To Date</label>
-    <input type="text" class="form-control" id="toDate" th:value="${oldBike.toDate}"/> <!-- th:field="*{description}"  th:field="*{toDate}"/>-->
+    <input type="text" class="form-control" id="toDate" placeholder="MM-dd-yyyy"/> <!-- th:field="*{description}"  th:field="*{toDate}" th:value="${oldBike.toDate}"/>-->
   </div>
   
    <div class="form-group">
@@ -75,9 +75,11 @@
     var bikeId = $('#bikeId').val();
     var accessories = $('#accessories').val();
     var userEmail = $('#userEmail').val();
-     var fromDate = $('#fromDate').val();
-      var toDate = $('#toDate').val();
-       var bikeCode = $('#bikeCode').val();
+    var fromDate = $('#fromDate').val();
+    var toDate = $('#toDate').val();
+    var bikeCode = $('#bikeCode').val();
+
+    //var formatedfromDate=fromDate.getMonth()+1 + "-" + fromDate.getDate() + "-" + fromDate.getYear();
     //alert ("verification code has been sent to your mobile.");
     
     $.ajax({
