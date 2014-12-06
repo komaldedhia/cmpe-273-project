@@ -160,18 +160,18 @@ def updateBikesv1(bike_id: String,bike:Bike)={
    println("bike get codde"+bike.getBikeCode)
    
    val fetch_bike_query = MongoDBObject("bikeId" -> bike_id)
-   val dbBike =  MongoFactory.BikesCollection.findOne(fetch_bike_query).get
-
+   val dbBike =  MongoFactory.BikesCollection.findOne(fetch_bike_query)
    if(dbBike!=null)
     {
-        println(dbBike.toString)
+        val dbBikeReview = dbBike.get("bikeReviews")
         val userUpdt= MongoFactory.BikesCollection.update(fetch_bike_query,MongoDBObject("bikeId" -> bike_id,
           "address" -> bike.address,
            "accessories" -> bike.accessories,
           "fromDate" ->bike.fromDate,
           "toDate" -> bike.toDate, 
           "userEmail" -> bike.userEmail,
-          "bikeCode"->bike.bikeCode))
+          "bikeCode"->bike.bikeCode,
+          "bikeReviews"->dbBikeReview))
      }
     
    println("updated bike")
