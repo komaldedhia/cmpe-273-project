@@ -208,7 +208,11 @@ def addReviewToBike(bike_id: String, review:Review) = {
     */
     if (bike != null) {
         var params = MongoDBObject("_id" -> 0, "bikeReviews" -> 1)
-        val oldReviews = MongoFactory.BikesCollection.findOne(fetch_bike, params).get("bikeReviews").toString()
+        var oldReviews = ""
+        val oldrevObj = MongoFactory.BikesCollection.findOne(fetch_bike, params)
+        if( oldrevObj.toString.contains("bikeReviews")) {
+            oldReviews = oldrevObj.get("bikeReviews").toString()
+        }
         newReviews = newReviews.concat(review.toString())
         newReviews = newReviews.concat(oldReviews)
         println("New reviews for bike " + bike_id + newReviews)
