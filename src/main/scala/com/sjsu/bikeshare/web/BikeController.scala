@@ -27,6 +27,7 @@ class BikeController {
 def createBikes(@ModelAttribute bike:Bike, model:Model,@ModelAttribute userLogin:UserLogin) = {
    println("I am in save api ")
    println("got hidden value"+bike.userEmail);
+   model.addAttribute("userEmail", bike.userEmail)
    BikeRepository.InsertBikes(bike)
    "homepage"
 

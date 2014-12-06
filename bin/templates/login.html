@@ -24,7 +24,7 @@
 <nav class="navbar navbar-default" role="navigation">
  		<div class="container-fluid">
     			<div class="navbar-header">
-     			 <a class="navbar-brand" href="#">Bike Share</a>
+     			 <a class="navbar-brand" href="#" th:href="@{/api/v1/users/bikeshare}">Bike Share</a>
     		</div>
 
     		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">    
@@ -33,7 +33,7 @@
       		<ul class="nav navbar-nav navbar-right">
 
 		        <li><a href="AboutUs.html">About Us</a></li>
-		        <li><a href="SignUp.html">Sign up</a></li>
+		        <li><a href="#" th:href="@{/api/v1/users/signup}">Sign up</a></li>
       		</ul>
     		</div>
   		</div>
@@ -75,8 +75,9 @@
 </div>
 </div>
 </div>
-  <script src ="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src ="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+ <script src ="/js/jquery-1.11.1.min.js"></script>
+<script src ="/js/bootstrap.min.js"></script>
+ 
 
 </body>
 </html>

@@ -1,31 +1,47 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
-  <title>Community Bike Share Web Application</title>
+ <title>Community Bike Share Web Application</title> 
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
-      <!-- <link href="css/bootstrap.min.css" rel="stylesheet" >-->
-      
+   <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap.min.css}" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+	<link rel="stylesheet" th:href="@{/css/application.css}" href="/css/application.css" />
+	 <style>
+   
+   body {
+     margin: 0;
+     background: url('/images/generic_bg_img.jpg');
+     background-size: 100%;
+     background-repeat:no-repeat;
+     display: compact;
+     font: 13px/18px "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+</style>
   </head>
 <body>
 
-<nav class="navbar navbar-blue" role="navigation">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="bikeshare.html">Bike Share</a>
-    </div>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	 <ul class="nav navbar-nav navbar-right">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#" th:href="@{/api/v1/users/bikeshare}">Bike Share</a>
+      <a class="navbar-brand">Welcome User</a>
+    </div>
+    
+     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+     
+      <ul class="nav navbar-nav navbar-right">
 
         <li><a href="AboutUs.html">About Us</a></li>
-        </ul>
-    </div>
+        <li><a href="#" th:href="@{/api/v1/users/userlogin}">Login</a></li>
+      </ul>
+    </div>   
+    
+ </div><!-- /.container-fluid -->
+
 </nav>
 
-
-<!--<img src="C:\Users\swathi\Desktop\bootstrap-3.2.0-dist\taiwan_Bicycle_Ride_hd_wallpaper_8.jpg" class="img-responsive" alt="Responsive image">-->
-<!--style="margin-top:-250px;background: none repeat scroll 0 0 #FFffff;opacity: 0.5;"-->
 
 <div class="col-md-6 col-md-offset-3">
   <div class="panel panel-default">
@@ -89,14 +105,9 @@
 </div>
 </div>
 </div>
-  
-  <script src ="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src ="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-     <!-- <script src ="js/jquery-1.11.1.min.js"></script>
-  <script src ="js/bootstrap.min.js"></script>-->
-  
-
-  <script>
+	<script src ="/js/jquery-1.11.1.min.js"></script>
+	<script src ="/js/bootstrap.min.js"></script>
+   <script>
   function sendCode() {
     
     $('#code').enabled

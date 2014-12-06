@@ -20,21 +20,27 @@
 
 <body>
 
-	<nav class="navbar navbar-default navbar-blue" role="navigation">
-		<div class="container-fluid">
-			<!-- Brand and toggle get grouped for better mobile display -->
+  <nav class="navbar navbar-default navbar-blue" role="navigation">
+    <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
 
-			<div class="navbar-header">
-				<a class="navbar-brand" href="bikeshare.html">Bike Share</a> <a
-					class="navbar-brand" href="#">Hi User! Rent a Bike</a>
-			</div>
+	    <div class="navbar-header">
+	       <a class="navbar-brand" href="#">Bike Share</a>
+	      <a class="navbar-brand">Welcome User</a>
+	    </div>
+    
+     	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+     
+	      <ul class="nav navbar-nav navbar-right">
+	
+	        <li><a href="AboutUs.html">About Us</a></li>
+	        <li class="active"><a href="#" th:href="@{/api/v1/users/logout}">LogOut</a></li>
+	      </ul>
+    	</div>   
+    
+	 </div><!-- /.container-fluid -->
 
-			<!-- Collect the nav links, forms, and other content for toggling -->
-
-		</div>
-		<!-- /.container-fluid -->
-
-	</nav>
+ </nav>
 <!-- passing the user email --> 
    <p th:text="'email: ' + ${userEmail}"/>
 	<form action="#" th:action="@{'/api/v1/bike'}" th:object="${bike}"

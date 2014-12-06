@@ -118,18 +118,33 @@ def createUser(@Valid @RequestBody user:User) = {
   }
   } 
    
- @RequestMapping(value=Array("/logout"),method = Array(RequestMethod.GET))
+
+@RequestMapping(value=Array("/{email}/bike"),method = Array(RequestMethod.GET))
+def getBikes(@PathVariable email:String) = {
+  println (email)
+BikeRepository.getBikes(email)
+}
+
+@RequestMapping(value=Array("/logout"),method = Array(RequestMethod.GET))
   def userLogOut(model:Model) = 
+  {
+  "redirect:/bikeshare"
+   }  
+ 
+@RequestMapping(value=Array("/dashboard"),method = Array(RequestMethod.GET))
+  def dashboard(model:Model) = 
+  {
+  "redirect:/homepage"
+   }  
+
+@RequestMapping(value=Array("/bikeshare"),method = Array(RequestMethod.GET))
+  def bikesharePageRedirect(model:Model) = 
   {
   "redirect:/bikeshare"
    }  
  
  
  
-@RequestMapping(value=Array("/{email}/bike"),method = Array(RequestMethod.GET))
-def getBikes(@PathVariable email:String) = {
-  println (email)
-BikeRepository.getBikes(email)
-}
-   
+ 
+
 }

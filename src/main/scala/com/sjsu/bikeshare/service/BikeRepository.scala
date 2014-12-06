@@ -45,8 +45,7 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"))
    
   }
 
-//yet to fix generating sequential bikeid's
- def InsertBikes(bike:Bike) = {
+def InsertBikes(bike:Bike) = {
 
    val formatter:DateFormat = new SimpleDateFormat("yyyy-MM-dd")
    formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
@@ -56,44 +55,29 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"))
    val longitude=Double.parseDouble(bike.longitude)
    val latitude=  Double.parseDouble(bike.latitude)
     
-    /*var create_id :Int = 0; 
-    var id : String = null
-    val fetch = MongoDBObject("bike_id" -> "1")
-    println(fetch)   
-    val u1= MongoFactory.BikesCollection.findOne(fetch)
-    println(u1)
-    u1 match{
-    case None => create_id = 1
-    case Some(message) => 
-         val doc =MongoFactory.BikesCollection.find().sort(Map("bike_id" -> -1)).limit(1)  
-
-    for( doc1 <- doc) {
-      println(doc1.get("bike_id"))
-       //create_id =doc1.as[Int]("bike_id")    
-      id = doc1.get("bike_id").toString()     
-     }
-     println(create_id) 
-     create_id = id.toInt
-     create_id = create_id +1; 
-    }
-    val bike_id = create_id.toString()
- 
-     println("create_id" + create_id)*/
-    
-    
-     var dbObject = MongoDBObject("bikeId" -> "1")
-     val fieldsMDBO = MongoDBObject("seq" -> 1, "_id" -> 0)
-     val counterRes = MongoFactory.BikesCollection.findAndModify(dbObject, update = $inc("seq" -> 1), 
-       upsert = true, fields = fieldsMDBO, sort = null, remove = false, returnNew = true).get
+   var create_id :Int = 0;
+   val fetch = MongoDBObject("bikeId"->"1")
+   val u1= MongoFactory.BikesCollection.findOne(fetch)
    
-   val id = counterRes.get("seq").asInstanceOf[Int].toString()
-   bike.setBikeId(id) 
-     println("bikeid is"+bike.getBikeId())
- 
+   u1 match{
+   case None => 
+     create_id = 1
+   case Some(message) => 
+       println("case some"+message)
+        val doc = MongoFactory.BikesCollection.find().sort(Map("bikeId" -> -1)).limit(1)
+        
+   for( doc1 <- doc) {
+     var newOne=doc1.get("bikeId")
+     create_id = Integer.valueOf(newOne.toString())
+    }
+    println("id is"+create_id)     
+    create_id = create_id +1;
+   }
+   
     val loc=MongoDBObject("geometry" ->MongoDBObject("type" -> "Point","coordinates" ->(GeoCoords(longitude,latitude))))
      println("this is geosphere "+loc)
      
-     val bike_info = MongoDBObject("bikeId" -> bike.bikeId,"userEmail" -> bike.userEmail, "accessories" -> bike.accessories,"address" -> bike.address,
+     val bike_info = MongoDBObject("bikeId" ->create_id.toString(),"userEmail" -> bike.userEmail, "accessories" -> bike.accessories,"address" -> bike.address,
                   "bikeType"->bike.bikeType,"description"->bike.description,"fromDate" ->frmdate,
                    "toDate"->todate,"bikeCode"->bike.bikeCode,"loc"->MongoDBObject("type" -> "Point","coordinates" ->(GeoCoords(longitude,latitude))))
       
@@ -102,7 +86,7 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"))
     bike_info.toString()
 
  }
- 
+
  def getBikes(email :String) ={  
    /* val q = MongoDBObject("_id"->0)
     val r = MongoDBObject("user_email" -> email)

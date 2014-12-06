@@ -22,37 +22,31 @@
         padding: 50px;
       }
     </style>
-    <!--<script>
-      $(function(){
-        $('input').on('change', function(){
-          alert("Changed: " + $(this).val())
-        });
-      });
-    </script>-->
-
-<!--TILL HERE ADDED NEW CODE-->
+   
   </head>
 <body>
-<nav class="navbar navbar-blue" role="navigation">
-  	<div class="navbar-header">
-      <a class="navbar-brand" href="bikeshare.html">Bike Share</a>
-    </div>
+<nav class="navbar navbar-default navbar-blue" role="navigation">
+    <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	 <ul class="nav navbar-nav">
-        <li><a href="reservations.html">Reservations</a></li>
-        <li><a href="Locations.html">Locations</a></li>
-      </ul>
-       
-      <ul class="nav navbar-nav navbar-right">
-       <li><a href="AboutUs.html">About Us</a></li>
-       <li><a href="#" th:href="@{/api/v1/users/logout}">LogOut</a></li>
-      </ul>
-      
-    </div>
-</nav>
-<!--<img src="taiwan_Bicycle_Ride_hd_wallpaper_8.jpg" class="img-responsive" alt="Responsive image">-->
-<!--style="margin-top:-250px;background: none repeat scroll 0 0 #FFffff;opacity: 0.5;"-->
+	    <div class="navbar-header">
+	       <a class="navbar-brand" href="#" th:href="@{/api/v1/users/dashboard}">Bike Share</a>
+	      <a class="navbar-brand">Welcome User</a>
+	    </div>
+    
+     	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+     
+	      <ul class="nav navbar-nav navbar-right">
+	
+	        <li><a href="AboutUs.html">About Us</a></li>
+	        <li class="active"><a href="#" th:href="@{/api/v1/users/logout}">LogOut</a></li>
+	      </ul>
+    	</div>   
+    
+	 </div><!-- /.container-fluid -->
+
+ </nav>
+
 <p th:text="'email: ' + ${oldBike.userEmail}"/> 
 
 <form id="reviewForm" role="form"  method="post" th:action="@{/api/v1/bike/reviewBike}" th:object="${review}"  ><!--method="post" th:action="@{/api/v1/bike/reviewBike}" th:object="${review}" action="#"-->
@@ -79,10 +73,8 @@
   <button id="submit" type="submit" class="btn btn-default" >Submit</button><!-- onclick="reviewBikeAjax()"-->
 </form>
 
-   <!-- <script src ="js/jquery-1.11.1.min.js"></script>
-  <script src ="js/bootstrap.min.js"></script>-->
-  <script src ="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src ="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+   <script src ="/js/jquery-1.11.1.min.js"></script>
+<script src ="/js/bootstrap.min.js"></script>
 
  <script>
  function reviewBikeAjax() {  

@@ -8,89 +8,102 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
   </head>
 <body>
-<nav class="navbar navbar-default" role="navigation">
- 		<div class="container-fluid">
-    			<div class="navbar-header">
-     			 <a class="navbar-brand" href="#">Bike Share</a>
-    	</div>
-    		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">    
-      		<ul class="nav navbar-nav navbar-right">
-		        <li><a href="AboutUs.html">About Us</a></li>
-		        <li><a href="SignUp.html">Sign up</a></li>
-      		</ul>
-    		</div>
-  		</div>
-  	</nav>
-<!-- <img src="/images/taiwan_Bicycle_Ride_hd_wallpaper_8.jpg" class="img-responsive" alt="Responsive image"></img> -->
-<!--style="margin-top:-250px;background: none repeat scroll 0 0 #FFffff;opacity: 0.5;"-->
+<nav class="navbar navbar-default navbar-blue" role="navigation">
+    <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+
+	    <div class="navbar-header">
+	       <a class="navbar-brand" href="#" th:href="@{/api/v1/users/dashboard}">Bike Share</a>
+	      <a class="navbar-brand">Welcome User</a>
+	    </div>
+    
+     	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+     
+	      <ul class="nav navbar-nav navbar-right">
+	
+	        <li><a href="AboutUs.html">About Us</a></li>
+	        <li class="active"><a href="#" th:href="@{/api/v1/users/logout}">LogOut</a></li>
+	      </ul>
+    	</div>   
+    
+	 </div><!-- /.container-fluid -->
+
+ </nav>
  
-<p th:text="'email: ' + ${Bike.address}"/> 
-<!-- <p th:text="'email: ' + ${userEmail}"/> -->
-<form action="#" th:action="@{/api/v1/bike/updateBike}" th:object="${Bike}" method="post" role="form">
+<p th:text="'address: ' + ${oldBike.address}"/> 
+<p th:text="'bikeCode: ' + ${oldBike.bikeCode}"/> 
+ <p th:text="'email: ' + ${userEmail}"/> 
+<form action="#"  th:object="${newBike}"  role="form"><!--method="post" th:action="@{/api/v1/bike/updateBike}" -->
 
  <div class="form-group">
     <label for="bikeId" >Bike Id</label>
-    <!-- <input type="text" class="form-control" id="bikeId" th:field="${bike.bikeId}" th:value="${Bike.address}" readonly/> -->
+   <input type="text" class="form-control" id="bikeId"  th:value="${oldBike.bikeId}" /> <!--th:field="*{bikeId}"-->
   </div>
 
   <div class="form-group">
     <label for="address" >Address/Zip Code</label>
-     <input type="text" class="form-control" id="address"/>  <!--th:field="*{address}"/> -->
+     <input type="text" class="form-control" id="address" th:value="${oldBike.address}"  /> <!--th:field="*{address}" th:field= "${newBike.address}"/> -->
   </div>
 		
   <div class="form-group">
     <label for="accessories">Accessories</label>
-    <input type="text" class="form-control" id="accessories" th:value="${Bike.accessories}" /> <!-- th:field="*{accessories}"/>-->
+   <input type="text" class="form-control" id="accessories" th:value="${oldBike.accessories}"   /> <!-- th:field="*{accessories}" th:field="*{accessories}"/>-->
   </div>
   
    <div class="form-group">
-   <!-- <input type="hidden" name="userEmail" id="userEmail" th:value="${userEmail}"/> -->
+   <label for="userEmail">User Email</label>
+  <input type="text" name="userEmail" id="userEmail"  th:value="${oldBike.userEmail}"  /><!--th:field="*{userEmail}" -->
    </div>
  
    <div class="form-group">
-    <label for="description">Description</label>
-    <input type="text" class="form-control" id="description" th:value="${Bike.description}" /> <!-- th:field="*{description}"/>-->
+    <label for="fromDate">From Date</label>
+   <input type="text" class="form-control" id="fromDate" th:value="${oldBike.fromDate}" /> <!-- th:field="*{fromDate}" th:field="*{description}"/>-->
+  </div>
+
+  <div class="form-group">
+    <label for="toDate">To Date</label>
+    <input type="text" class="form-control" id="toDate" th:value="${oldBike.toDate}"/> <!-- th:field="*{description}"  th:field="*{toDate}"/>-->
   </div>
   
    <div class="form-group">
     <label for="bikeCode">Bike Code</label>
-    <input type="text" class="form-control" id="bikeCode" th:value="${Bike.bikeCode}" /> <!--th:field="*{bikeCode}"/>-->
+    <input type="text" class="form-control" id="bikeCode"  th:value="${oldBike.bikeCode}" /> <!--th:field="*{bikeCode}" th:field="*{bikeCode}"/>-->
   </div>
   
-  <button id="submit" type="submit" class="btn btn-default">Update</button>
+  <button id="submit" type="submit" class="btn btn-default" onclick="updateBikeAjax()">Update</button>
 </form>
 
 <script src ="/js/jquery-1.11.1.min.js"></script>
 <script src ="/js/bootstrap.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-
-
  <script>
- var geocoder;
- var map;
- geocoder = new google.maps.Geocoder();
- 
-function codeAddress() {
-
-var address = document.getElementById('location').value;
-var fromdate = $('#fromdate').val();
-var toDate = $('#todate').val();
-	  geocoder.geocode( { 'address': address}, function(results, status) {
-	    if (status == google.maps.GeocoderStatus.OK) {
-	    	
-	    	var latitude = results[0].geometry.location.lat();
-	    	var longitude = results[0].geometry.location.lng();
-	    	document.getElementById("latitude").value = latitude;
-	    	document.getElementById("Longitude").value = longitude;
-
-		  alert("User Address "+results[0].geometry.location);
-	    } else {
-	      alert('Geocode was not successful for the following reason: ' + status);
-	    }
-	  });
-	}
-</script>
- 
-  
+  function updateBikeAjax() {  
+    var address = $('#address').val();
+    var bikeId = $('#bikeId').val();
+    var accessories = $('#accessories').val();
+    var userEmail = $('#userEmail').val();
+     var fromDate = $('#fromDate').val();
+      var toDate = $('#toDate').val();
+       var bikeCode = $('#bikeCode').val();
+    //alert ("verification code has been sent to your mobile.");
+    
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:8080/api/v1/bike/updateBike",
+      contentType: 'application/json',
+     
+      data:JSON.stringify({address:address,bikeId:bikeId,accessories:accessories,userEmail:userEmail,fromDate:fromDate,toDate:toDate,bikeCode:bikeCode}),
+      dataType: "json"
+     })
+      .done(function( ) {
+        alert( "Data Saved: ");
+	console.log("Bike updated");
+      })
+      .fail(function() {
+	console.log("Bike could not be updated");
+       });
+    
+  }
+    
+  </script>
 </body>
 </html>
