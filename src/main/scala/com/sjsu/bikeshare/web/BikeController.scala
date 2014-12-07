@@ -42,31 +42,35 @@ def createBikes(@ModelAttribute bike:Bike, model:Model,@ModelAttribute userLogin
    }
 
 
-     @RequestMapping(value = Array("/rent"), method = Array(RequestMethod.GET))
-  def getRentForm(model: Model,@ModelAttribute bike:Bike) = {
+   @RequestMapping(value = Array("/rent"), method = Array(RequestMethod.PUT))
+  def getRentForm(@ModelAttribute userLogin:UserLogin,model: Model) = {
    // added to get the user email
-       model.addAttribute("bike", new Bike())
-       model.addAttribute("userEmail", bike.userEmail)
+       println("userLogin "+userLogin.getEmail)
+       model.addAttribute("rentBike", new RentBike())
+       model.addAttribute("userLogin", userLogin)
     println("In rent")
     "rent"
   }
   
-//shwetha cod e
-   @RequestMapping(value = Array("/getAllBikes"),method = Array(RequestMethod.PUT))
+@RequestMapping(method = Array(RequestMethod.PUT))
   @ResponseStatus(value = HttpStatus.CREATED)
-  def getAllBikes(@Valid bike: Bike, bindingResult: BindingResult, model: Model) = {
+  def getAllBikes(@Valid rentBike: RentBike,bindingResult: BindingResult, userLogin: UserLogin, model: Model) = {
     println("In get All bikes")
     if (bindingResult.hasErrors()) {
+      // model.addAttribute("rentBike", new RentBike())
+       //model.addAttribute("userLogin", userLogin)
       "rent"
     } else {
-      var bikeList = BikeRepository.getAllBikes(bike.getLatitude, bike.getLongitude, bike.getBikeType, bike.getSearchRange, bike.getFromDate, bike.getToDate)
+      var bikeList = BikeRepository.getAllBikes(rentBike.getLatitude, rentBike.getLongitude, rentBike.getBikeType, rentBike.getSearchRange, rentBike.getFromDate, rentBike.getToDate)
       println("After get All bikes")
+     // println("User "+userLogin.getEmail)
       model.addAttribute("bikeList", bikeList)
-      model.addAttribute("userLatitude", bike.getLatitude)
-      model.addAttribute("userLongitude", bike.getLongitude)
-      model.addAttribute("userFromDate", bike.getFromDate)
-      model.addAttribute("userToDate", bike.getToDate)
-      model.addAttribute("rentedBike", new Bike())
+      model.addAttribute("userLatitude", rentBike.getLatitude)
+      model.addAttribute("userLongitude", rentBike.getLongitude)
+      model.addAttribute("userFromDate", rentBike.getFromDate)
+      model.addAttribute("userToDate", rentBike.getToDate)
+      model.addAttribute("rentedBike", new RentBike())
+      model.addAttribute("userLogin", userLogin)
       "distance"
     }
 
@@ -110,36 +114,41 @@ def updateBikes(@PathVariable email:String,@PathVariable bike_id:String,@Request
 //Rent a Bike will have ownerId,requestorId,fromDate and toDate.
     //update the bike collection
     //update the notification collection
-    @RequestMapping(value=Array("/rent"),method = Array(RequestMethod.PUT))
-    def rentBike(@ModelAttribute bike:Bike,model:Model)=
+    @RequestMapping(value=Array("/rent"),method = Array(RequestMethod.POST))
+    def rentBike(@ModelAttribute rentedBike:RentBike,userLogin: UserLogin,model:Model)=
               {
                 println("I am in rentBike")
                 val dateFormat:DateFormat   = new SimpleDateFormat("MM-dd-yyyy");
-                var fromDate: Date = dateFormat.parse(bike.getToDate)
+                var fromDate: Date = dateFormat.parse(rentedBike.getToDate)
                 println(fromDate)
-                println(bike.bikeId)
-		var bikeId=bike.bikeId
+                println("email "+rentedBike.getUserEmail)
+                println(rentedBike.bikeId)
+                var bikeId=rentedBike.bikeId
                 val c = Calendar.getInstance()
                 c.setTime(fromDate)
                 c.add(Calendar.DATE,1)
                 
                 var newFromDate = dateFormat.format(c.getTime())
                 println(newFromDate)
-                bike.setFromDate(newFromDate) 
+                rentedBike.setFromDate(newFromDate) 
                 
                 //bike.setBikeId(bike.bikeId)
                 //bike.setAccessories(bike.accessories)
               //BikeRepository.updateBikes(bikeId,bike)
               
               var notification:Notification = new Notification
-              notification.setFromDate(bike.getFromDate)
-              notification.setToDate(bike.getToDate)
-              notification.setOwnerId(bike.getUserEmail)
-              notification.setRequestorId(bike.getRequesterEmail)
+              notification.setFromDate(rentedBike.getFromDate)
+              notification.setToDate(rentedBike.getToDate)
+              notification.setOwnerId(rentedBike.getUserEmail)
+              notification.setRequestorId(userLogin.getEmail)
+              notification.setStatus("0")
+              notification.setBikeId(rentedBike.getBikeId)
             //have to setRequestorId
               //notification.setRequestorNotificationSent(true)
             
               NotificationRepository.save(notification)
+               model.addAttribute("userLogin", userLogin)
+               "homepage"
               }
     
 //Goudamy
