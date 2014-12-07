@@ -113,15 +113,17 @@
      })
       .done(function( ) {
         alert( "Data Saved: ");
-	console.log("Bike updated");
+	      console.log("Bike updated");
       })
       .fail(function() {
-	console.log("Bike could not be updated");
+	      console.log("Bike could not be updated");
        });
      // reload the update page to reflect changes
-     window.location.reload(false);
-     window.location.reload(false);
-     window.location.reload(false);
+     location.reload(true);
+     location.reload(false);
+     //window.location.reload(false);
+     //window.location.reload(false);
+     //window.location.reload(false);
   }
     
   </script>

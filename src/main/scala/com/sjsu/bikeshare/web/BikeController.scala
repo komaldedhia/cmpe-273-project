@@ -170,7 +170,10 @@ def updateBikes(@PathVariable email:String,@PathVariable bike_id:String,@Request
        println(bike1.bikeId)
      
    //Kiran plz start from here
-       "homepage"  
+   model.addAttribute("mybikeid", bike1.bikeId) 
+      "redirect:/api/v1/bike/update/{mybikeid}"
+      //updateBikeForm(bike1.bikeId, model)
+      //"homepage"  
     }
 //Returning
  @RequestMapping(value = Array("/return"), method = Array(RequestMethod.GET))
