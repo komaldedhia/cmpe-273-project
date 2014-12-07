@@ -12,23 +12,22 @@ import org.springframework.boot.SpringApplication
 import scala.beans._
 import org.hibernate.validator.constraints.NotEmpty
 
-@Entity
-class Bike {
- 
-val dateFormat:DateFormat   = new SimpleDateFormat("yyyy-MM-dd");
-//dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"))
+class RentBike {
+
+val dateFormat:DateFormat   = new SimpleDateFormat("MM-dd-yyyy");
+dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"))
 
 @BeanProperty
 var bikeId: String =_
 
 @BeanProperty
+@NotEmpty
 var searchRange: String =_
+
 
 @BeanProperty
 var userEmail: String =_
 
-@BeanProperty
-var requesterEmail: String =_
 
 @BeanProperty
 var address: String = _
@@ -38,19 +37,18 @@ var accessories: String = _
 
 
 @BeanProperty
-//@NotEmpty
+@NotEmpty
 var latitude: String = _
 
-//@Column(nullable = true)
 @BeanProperty
-//@NotEmpty
+@NotEmpty
 var longitude: String = _
 
 @BeanProperty
 var description: String = _
 
 @BeanProperty
-//@NotEmpty
+@NotEmpty
 var bikeType: String = _
 
 @BeanProperty
@@ -60,16 +58,17 @@ var image: String = _
 var bikeCode: String = _
 
 @BeanProperty
-//@NotEmpty
+@NotEmpty
 var fromDate: String = dateFormat.format(new Date)
 
 @BeanProperty
-//@NotEmpty
+@NotEmpty
 var toDate: String = dateFormat.format(new Date)
 
 @BeanProperty
 //var bikeReviews: ArrayList[Review]  = _
 var bikeReviews: String = _
+
 
 //TODOadded for bike Range
 //@BeanProperty

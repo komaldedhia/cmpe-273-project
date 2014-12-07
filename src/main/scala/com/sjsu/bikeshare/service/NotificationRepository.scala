@@ -17,8 +17,8 @@ import java.util.{ TimeZone, Formatter }
 
 def save(notification: Notification): Notification = {
 
-    var dbObject = MongoDBObject("ownerID" -> notification.ownerId, "requestorId" -> notification.requestorId, "RequestorNotificationSent" -> notification.RequestorNotificationSent, "CodeRecieved" -> notification.CodeRecieved, "OwnerApproves" -> notification.OwnerApproves,
-    "fromDate" -> notification.fromDate,"toDate"->notification.toDate)
+    var dbObject = MongoDBObject("ownerID" -> notification.getOwnerId, "requestorId" -> notification.requestorId, 
+    "fromDate" -> notification.fromDate,"toDate"->notification.toDate,"status" -> notification.status,"bikeId" -> notification.bikeId)
 
     MongoFactory.notificationCollection.insert(dbObject,WriteConcern.Safe)
       

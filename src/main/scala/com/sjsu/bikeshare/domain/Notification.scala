@@ -36,16 +36,19 @@ var OwnerApproves: Boolean = _
 
 @BeanProperty
 @NotEmpty
+var status: String = _
+
+
+@BeanProperty
+@NotEmpty
+var bikeId: String = _
+
+@BeanProperty
+@NotEmpty
 var fromDate: String = dateFormat.format(new Date)
 
 @BeanProperty
 @NotEmpty
 var toDate: String = dateFormat.format(new Date)
-
-@BeanProperty
-var bikeId: String = _
-
-@BeanProperty
-var status: String = _
 
 }
