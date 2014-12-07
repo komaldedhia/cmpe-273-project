@@ -17,10 +17,16 @@
    <!-- <script  th:src="@{../js/bootstrap-rating-input.js}"></script>-->
     <script src="../js/bootstrap-rating-input.min.js"></script>
     <style>
-      body {
+      /*body {
         font-size: 20px;
         padding: 50px;
-      }
+        margin: 0;
+     background: url('/images/generic_bg_img.jpg');
+     background-size: 100%;
+     background-repeat:no-repeat;
+     display: compact;
+     font: 13px/18px "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }*/
     </style>
    
   </head>
@@ -48,8 +54,10 @@
  </nav>
 
 <!--<p th:text="'email: ' + ${oldBike.userEmail}"/> -->
-
+<div class="col-md-6 col-md-offset-3"> 
+<div class="panel panel-default">
 <form id="reviewForm" role="form"  method="post" th:action="@{/api/v1/bike/reviewBike}" th:object="${review}"  ><!--method="post" th:action="@{/api/v1/bike/reviewBike}" th:object="${review}" action="#"-->
+<div class="panel-body">
   <div class="form-group">
     <label for="userEmail">User Email</label>
     <input type="text" class="form-control" id="userEmail"  name="userEmail" th:field="*{userEmail}" /> <!--th:field="*{bikeId}" th:field="*{userEmail}" th:value="${oldBike.userEmail}"   th:value="${oldBike.bikeId}"-->
@@ -71,7 +79,11 @@
   </div>
 
   <button id="submit" type="submit" class="btn btn-default" >Submit</button><!-- onclick="reviewBikeAjax()"-->
+  </div>
 </form>
+</div>
+</div>
+
 
    <script src ="/js/jquery-1.11.1.min.js"></script>
 <script src ="/js/bootstrap.min.js"></script>
