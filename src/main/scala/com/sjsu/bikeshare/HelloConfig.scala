@@ -42,4 +42,9 @@ class HelloConfig {
   def reservations():String = { 
  return "reservations"
   }
+
+  @RequestMapping(Array("/about"))
+  def about():String = { 
+ return "about"
+  }
 }
