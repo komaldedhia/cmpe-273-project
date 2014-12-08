@@ -48,7 +48,9 @@
   <div class="col-md-1" style="margin-left:5%;">
  <form action="#" th:action="@{/api/v1/bike/List}" th:object="${Bike}" method="post" role="form">
  <div class="form-group">
-  <input type="hidden" name="userEmail" id="userEmail" th:value="${userLogin.email}"/>
+ <!-- Commneted by Kokil and added a line below by kokil-->
+ <!-- <input type="hidden" name="userEmail" id="userEmail" th:value="${userLogin.email}"/>-->
+  <input type="hidden" name="userEmail" id="userEmail" th:value="${User.email}"/>
  </div>
  <button id="submit" type="submit" class="btn btn-default">List a Bike</button>
 </form>
@@ -59,7 +61,9 @@
 <!-- ADD rent a bikes object name ,correct api names,method=post/get,send any hidden attributes or values to be sent -->
 <form action="#" th:action="@{/api/v1/bike/rent}" th:method="put" role="form">
   <div class="form-group">
- <input type="hidden" name="email" id="userEmail" th:value="${userLogin.email}" />
+   <!-- Commneted by Kokil and added a line below by kokil -->
+ <!--<input type="hidden" name="email" id="userEmail" th:value="${userLogin.email}" />-->
+   <input type="hidden" name="userEmail" id="userEmail" th:value="${User.email}"/>
  </div>
   <button id="submit" type="submit" class="btn btn-default">Rent a Bike</button>
 </form>

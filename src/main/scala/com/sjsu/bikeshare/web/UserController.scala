@@ -47,6 +47,7 @@ def createUser(@Valid @RequestBody user:User) = {
  
 }
 /*** Kokil Awasthi ***/
+ 
  @RequestMapping(value=Array("/signup"),method = Array(RequestMethod.GET))
   def SignUpForm( model:Model) = {
   model.addAttribute("User", new User())
@@ -55,25 +56,28 @@ def createUser(@Valid @RequestBody user:User) = {
  
  
  @RequestMapping(value=Array("/signupnow"),method = Array(RequestMethod.POST))
-  def SignUpSubmit(@ModelAttribute user:User,@ModelAttribute code:String,model:Model) = {
+  def SignUpSubmit(@ModelAttribute user:User,@ModelAttribute rcode:String,model:Model) = {
   model.addAttribute("User", user)
-  //model.addAttribute("code",1234)
+  model.addAttribute("rcode",randomCode)
   
- println("twiliocde: " +twilioCode)
+ println("randomcode: " +randomCode)
  println("user.getTwiliocode : " + user.getTwiliocode )
  println("user.getname : " + user.getFirstName )
  println("user.email : " + user.getEmail )
-  if ( twilioCode == user.getTwiliocode.toString ){
+  if ( randomCode == user.getTwiliocode.toString ){
     createUser(user)
-    "reservations"
+    "homepage"
   }
   else
   {
-  "redirect:/error"
-  }
+    println ("codes not matched")
+    println("twiliocde: " +randomCode)
+    println("user.getTwiliocode : " + user.getTwiliocode )
+    model.addAttribute("user", new User())
+    "SignUp"
+   }
   }  
-  
- 
+   
   @RequestMapping(value=Array("/sendcode"),method = Array(RequestMethod.POST))
  def sendSMS(@RequestBody contactNo:User) = {
     val AUTH_TOKEN = "b62e99e1cc3899f53f48e8a5f89d1628"  
@@ -84,17 +88,18 @@ def createUser(@Valid @RequestBody user:User) = {
     val account = client.getAccount 
     val messageFactory = account.getMessageFactory 
     val params = new ArrayList[NameValuePair]() 
-    val tempCode = 5678
-    twilioCode = tempCode.toString()
+   //val tempCode = 5678
+    val random  = new Random()
+    val tempCode = random.nextInt(9999)
+    randomCode = tempCode.toString()
    
     params.add(new BasicNameValuePair("To", PHONE_NUMBER)) 
     params.add(new BasicNameValuePair("From", "+13095175765"))
-    params.add(new BasicNameValuePair("Body", "Congrats! Your code# is " +tempCode))
+    params.add(new BasicNameValuePair("Body", "Congrats! Your code# is " +randomCode))
     val sms = messageFactory.create(params) 
-    
-   "redirect:/Signup"
+     
  }
- 
+ //**********Kokil Awasthi*****************
  @RequestMapping(value=Array("/userlogin"),method = Array(RequestMethod.GET))
   def userLoginForm( model:Model) = {
    model.addAttribute("userLogin", new UserLogin())
