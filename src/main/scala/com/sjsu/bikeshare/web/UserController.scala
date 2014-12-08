@@ -37,7 +37,7 @@ class UserController {
   
 
 private var UserObj: User = new User()
-private var twilioCode : String = ""
+private var randomCode : String = ""
  
 @RequestMapping(method = Array(RequestMethod.POST))
 @ResponseStatus(value = HttpStatus.CREATED)
