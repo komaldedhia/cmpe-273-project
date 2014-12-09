@@ -24,20 +24,30 @@ import org.springframework.validation.BindingResult
 @RequestMapping(value = Array("/api/v1/bike"))
 class BikeController {
 @RequestMapping(value=Array("/save"),method = Array(RequestMethod.POST))
-def createBikes(@ModelAttribute bike:Bike, model:Model,@ModelAttribute userLogin:UserLogin) = {
-   println("I am in save api ")
-   println("got hidden value"+bike.userEmail);
-   model.addAttribute("userEmail", bike.userEmail)
-   BikeRepository.InsertBikes(bike)
+def createBikes(@Valid bike:Bike,bindingResult:BindingResult, userLogin: UserLogin, model: Model) = {
+  if (bindingResult.hasErrors()) 
+   {
+    println("yup have errors")
+   //model.addAttribute("bike",new Bike())
+   //model.addAttribute("userEmail", bike.userEmail)
+      "ListBike"
+   }
+  else
+  {
+   println("I am in save api")
+  BikeRepository.InsertBikes(bike, userLogin)
+   println("got hidden value"+userLogin.getEmail());
+   model.addAttribute("userLogin", userLogin)
    "homepage"
+  }
 
 }
  @RequestMapping(value=Array("/List"),method = Array(RequestMethod.POST))
-  def userLoginForm( model:Model,@ModelAttribute bike:Bike) = {
+  def userLoginForm( model:Model,@ModelAttribute userLogin:UserLogin) = {
       println("here I am in list bike api ")
-   model.addAttribute("Bike", new Bike())
-   model.addAttribute("userEmail", bike.userEmail)
-   println("got user email before list bike page here"+bike.userEmail);
+   model.addAttribute("bike", new Bike())
+    model.addAttribute("userLogin", userLogin)
+   println("got user email before list bike page here"+userLogin.getEmail());
   "ListBike"
    }
 
@@ -153,15 +163,19 @@ def updateBikes(@PathVariable email:String,@PathVariable bike_id:String,@Request
     
 //Goudamy
 //listing bikes
- @RequestMapping(value = Array("/getListedBike"), method = Array(RequestMethod.GET))
- def List(@ModelAttribute bike:Bike, model:Model) = {
+ @RequestMapping(value = Array("/getListedBike"), method = Array(RequestMethod.POST))
+ def List(@ModelAttribute bike:Bike, model:Model,@ModelAttribute userLogin: UserLogin) = {
        println("here I am ")
-       val  email = "test1@gmail.com"
-        println(email)
-       val list =  BikeRepository.listingBikes(email,bike)       
+       val  email = userLogin.email
+       println(email)
+       val list =  BikeRepository.listingBikes(email,bike)
+       val rented =  BikeRepository.rentedBikes(email)
        model.addAttribute("bike",list) 
+       model.addAttribute("owner",rented)
+       model.addAttribute("userLogin", userLogin)
        model.addAttribute("bike1", new Bike())
        println(list)
+       println(rented)
       "bikeList"
     }
   @RequestMapping(value = Array("/listing"), method = Array(RequestMethod.POST))
@@ -175,27 +189,36 @@ def updateBikes(@PathVariable email:String,@PathVariable bike_id:String,@Request
       //updateBikeForm(bike1.bikeId, model)
       //"homepage"  
     }
-//Returning
- @RequestMapping(value = Array("/return"), method = Array(RequestMethod.GET))
- def returnBike(@ModelAttribute notification:Notification, model:Model) = {
+  
+@RequestMapping(value = Array("/return"), method = Array(RequestMethod.POST))
+ def returnBike(model:Model,@ModelAttribute userLogin: UserLogin) = {
        println("here I am ")
-       val  email = "ram"
-       val list =  BikeRepository.returnBikes(email,notification)
-       val rented =  BikeRepository.rentedBikes(email,notification)
+       val  email = userLogin.getEmail().toString()
+       val list =  BikeRepository.returnBikes(email)
+      // val rented =  BikeRepository.rentedBikes(email)
        model.addAttribute("notification",list)
-       model.addAttribute("owner",rented)
+      // model.addAttribute("owner",rented)
+       model.addAttribute("userLogin", userLogin)
        model.addAttribute("note", new Notification())
+       model.addAttribute("mode",1)
        println(list)
-      "bikeReturn"
+      "homepage"
     }
 
- @RequestMapping(value = Array("/returning"), method = Array(RequestMethod.POST))
- def returningBike(@ModelAttribute @RequestBody  note:Notification, model:Model ) = {
-       println("here I am ")
-       println(note.bikeId)     
-       val ret =  BikeRepository.returning(note)
-       "homepage"  
-    }
+@RequestMapping(value = Array("/returning"), method = Array(RequestMethod.POST))
+def returningBike(@ModelAttribute note:Notification,userLogin:UserLogin, model:Model ) = {
+      println("here I am ")
+      val  email = userLogin.getEmail()
+      println(note.bikeId)
+      println("loaded from returning"+userLogin.getEmail())
+      val list =  BikeRepository.returnBikes(email)
+      // val rented =  BikeRepository.rentedBikes(email)
+      val ret =  BikeRepository.returning(note)
+      model.addAttribute("notification",list)
+       model.addAttribute("note",new Notification())
+      model.addAttribute("userLogin", userLogin)
+      "homepage"  
+   }
 
 
 /**_---------------------------review bike starts here--------**/

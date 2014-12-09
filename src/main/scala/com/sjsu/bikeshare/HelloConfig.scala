@@ -27,6 +27,12 @@ class HelloConfig {
  
   }
   
+   @RequestMapping(Array("/logout"))
+  def logOut():String = { 
+ return "bikeshare"
+ 
+  }
+  
    @RequestMapping(Array("/SignUp"))
   def signUp():String = { 
  return "SignUp"
@@ -38,9 +44,9 @@ class HelloConfig {
  return "login"
   }
 
-  @RequestMapping(Array("/reservations"))
+  @RequestMapping(Array("/homepage"))
   def reservations():String = { 
- return "reservations"
+ return "homepage"
   }
 
   @RequestMapping(Array("/about"))

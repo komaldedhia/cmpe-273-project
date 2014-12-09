@@ -35,8 +35,6 @@ import java.lang._
 @RequestMapping(value = Array("/api/v1/users"))
 class UserController {
   
-
-private var UserObj: User = new User()
 private var randomCode : String = ""
  
 @RequestMapping(method = Array(RequestMethod.POST))
@@ -51,15 +49,17 @@ def createUser(@Valid @RequestBody user:User) = {
  @RequestMapping(value=Array("/signup"),method = Array(RequestMethod.GET))
   def SignUpForm( model:Model) = {
   model.addAttribute("User", new User())
+  model.addAttribute("userLogin", new UserLogin())
   "SignUp"
   } 
  
  
  @RequestMapping(value=Array("/signupnow"),method = Array(RequestMethod.POST))
-  def SignUpSubmit(@ModelAttribute user:User,@ModelAttribute rcode:String,model:Model) = {
+  def SignUpSubmit(@ModelAttribute user:User,@ModelAttribute rcode:String,model:Model,userLogin:UserLogin) = {
   model.addAttribute("User", user)
   model.addAttribute("rcode",randomCode)
-  
+  userLogin.email=user.email
+  model.addAttribute("userLogin",userLogin)
  println("randomcode: " +randomCode)
  println("user.getTwiliocode : " + user.getTwiliocode )
  println("user.getname : " + user.getFirstName )
@@ -99,7 +99,8 @@ def createUser(@Valid @RequestBody user:User) = {
     val sms = messageFactory.create(params) 
      
  }
- //**********Kokil Awasthi*****************
+ 
+  
  @RequestMapping(value=Array("/userlogin"),method = Array(RequestMethod.GET))
   def userLoginForm( model:Model) = {
    model.addAttribute("userLogin", new UserLogin())
@@ -107,20 +108,24 @@ def createUser(@Valid @RequestBody user:User) = {
  
   
  @RequestMapping(value=Array("/userval"),method = Array(RequestMethod.POST))
-  def getUser(@ModelAttribute userLogin:UserLogin,model:Model) = {
- 
-  if (UserRepository.validateUser(userLogin).equalsIgnoreCase("Success"))
+  def getUser(@ModelAttribute @Valid userLogin:UserLogin,bindingResult: BindingResult,model:Model) = {
+   if (bindingResult.hasErrors()) 
    {
-    model.addAttribute("userLogin", userLogin)
-   "homepage"
+      "login"
+    }
+   else
+   {
+      if (UserRepository.validateUser(userLogin).equalsIgnoreCase("Success"))   {
+        model.addAttribute("userLogin", userLogin)
+       "homepage"
+       }
+      else 
+      {
+        println("Not a success case,so returning to login page again")
+        model.addAttribute("userLogin", new UserLogin())
+        "login"     
+      }
    }
-  else 
-  {
-    println("Not a success case,so returning to login page again")
-    model.addAttribute("userLogin", new UserLogin())
-    "login"
-        
-  }
   } 
    
 
@@ -130,12 +135,6 @@ def getBikes(@PathVariable email:String) = {
 BikeRepository.getBikes(email)
 }
 
-@RequestMapping(value=Array("/logout"),method = Array(RequestMethod.GET))
-  def userLogOut(model:Model) = 
-  {
-  "redirect:/bikeshare"
-   }  
- 
 @RequestMapping(value=Array("/dashboard"),method = Array(RequestMethod.GET))
   def dashboard(model:Model) = 
   {

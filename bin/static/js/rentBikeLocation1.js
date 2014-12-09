@@ -38,14 +38,15 @@ function initialize() {
 		var owner = json[i].userEmail;
 		var latitude = json[i].loc.coordinates[1];
 		var longitude = json[i].loc.coordinates[0];
+		
 		alert("bikeId " + bikeId + " bikeAddress " + bikeAddress
 				+ " accessories " + accessories + " bikeCode " + bikeCode);
 		alert(" description " + description + " owner " + owner + " latitude "
 				+ latitude + " longitude " + longitude);
-		alert("Hiiii");
+		
 		bikeDesc[i] = new bike(bikeId, bikeAddress, accessories, bikeCode,
 				description, owner, latitude, longitude);
-		alert(bikeDesc[i].owner);
+		
 	}
 	var userLatLng = new google.maps.LatLng(userLat, userLong);
 	var mapOptions = {
@@ -55,15 +56,15 @@ function initialize() {
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 	for (var i = 0; i < bikeDesc.length; i++) {
-		alert("Owner before "+bikeDesc[i].owner);
+		
 		createMarker(bikeDesc[i]);
 	}
 }
 
 function createMarker(staion) {
 
-	//var image = '/images/bicycle_parking1.png';
-	//alert (place.lat+" "+place.lng)
+	var image = '/images/bicycle_parking1.png';
+	
 	var placeLoc = new google.maps.LatLng(staion.lat, staion.lng);
 	var marker = new google.maps.Marker({
 		map : map,
@@ -75,11 +76,11 @@ function createMarker(staion) {
 		infowindow.setContent(staion.description + '\n' + staion.addr);
 		infowindow.open(map, this);
 	});
-	alert("About to go in listner ");
+	
 	google.maps.event.addListener(marker, 'click', function(i) {
-		alert("in listner ");
+		
 		document.getElementById("address").value = staion.addr;
-		alert("Owner "+staion.owner);
+		
 		document.getElementById("bikeId").value = staion.bikeId;
 		document.getElementById("userEmail").value = staion.owner;
 		document.getElementById("dateRange").value = document

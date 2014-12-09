@@ -6,16 +6,16 @@ import com.sjsu.bikeshare.domain.Notification
 import scala.collection.mutable._
 import java.util.{ List, ArrayList }
 import com.mongodb.casbah.Imports._
-//import com.mongodb.casbah.
-import com.mongodb.casbah.commons.Imports.DBObject 
+import com.mongodb.casbah.commons.Imports.DBObject
 import com.sjsu.bikeshare.exception.{InValidInput,MongoException}
-import java.util.Date;
+import java.util.Date
 import java.util.{List,TimeZone}
 import java.lang._
-import java.text.SimpleDateFormat;
-import java.text.DateFormat;
+import java.text.SimpleDateFormat
+import java.text.DateFormat
 import java.lang.Double
 import com.sjsu.bikeshare.domain.Review;
+import com.sjsu.bikeshare.domain.UserLogin
 
 object BikeRepository {
   val dateFormat:DateFormat   = new SimpleDateFormat("yyyy-MM-dd");
@@ -45,7 +45,7 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"))
    
   }
 
-def InsertBikes(bike:Bike) = {
+def InsertBikes(bike:Bike,userLogin:UserLogin) = {
 
    val formatter:DateFormat = new SimpleDateFormat("yyyy-MM-dd")
    formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
@@ -77,7 +77,7 @@ def InsertBikes(bike:Bike) = {
     val loc=MongoDBObject("geometry" ->MongoDBObject("type" -> "Point","coordinates" ->(GeoCoords(longitude,latitude))))
      println("this is geosphere "+loc)
      
-     val bike_info = MongoDBObject("bikeId" ->create_id.toString(),"userEmail" -> bike.userEmail, "accessories" -> bike.accessories,"address" -> bike.address,
+     val bike_info = MongoDBObject("bikeId" ->create_id.toString(),"userEmail" -> userLogin.email, "accessories" -> bike.accessories,"address" -> bike.address,
                   "bikeType"->bike.bikeType,"description"->bike.description,"fromDate" ->frmdate,
                    "toDate"->todate,"bikeCode"->bike.bikeCode,"loc"->MongoDBObject("type" -> "Point","coordinates" ->(GeoCoords(longitude,latitude))))
       
@@ -228,10 +228,8 @@ def addReviewToBike(bike_id: String, review:Review) = {
     }
     // getBike(bike_id)
 }
-//Goudamy
 
-
-def rentedBikes(email : String,notification:Notification) ={  
+def rentedBikes(email : String) ={  
     var list:List[DBObject] = new ArrayList()
     val fetch_user = MongoDBObject("ownerId" -> email ,"status" -> "0")
     println(fetch_user)
@@ -243,14 +241,14 @@ def rentedBikes(email : String,notification:Notification) ={
     list
   }  
  
- def returnBikes(email : String,notification:Notification) ={  
+  def returnBikes(email : String) ={  
     var list:List[DBObject] = new ArrayList()
-    val fetch_user = MongoDBObject("requesterId" -> email ,"status" -> "0")
+    val fetch_user = MongoDBObject("requesterId"->email,"status" -> "0")
     println(fetch_user)
     val user_get=  MongoFactory.notificationCollection.find(fetch_user)
     for(doc <- user_get) {
       list.add(doc)
-          }
+     }
     println(list)
     list
   } 
@@ -268,7 +266,7 @@ def rentedBikes(email : String,notification:Notification) ={
     list
   } 
  
- def returning(note:Notification) ={  
+  def returning(note:Notification) ={  
    println(note.bikeId)
    println(note.status)
    println(note.fromDate)

@@ -1,12 +1,12 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
-  <title>Community Bike Share Web Application</title> 
+   <title>Community Bike Share Web Application</title> 
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
-    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
-    <style>
+   <link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+	 <style>
    
    body {
      margin: 0;
@@ -32,8 +32,8 @@
      
 	      <ul class="nav navbar-nav navbar-right">
 	
-	        <li><a href="AboutUs.html">About Us</a></li>
-	        <li class="active"><a href="#" th:href="@{/api/v1/users/logout}">LogOut</a></li>
+	        <li><a href="#" th:href="@{/about}">About Us</a></li>
+	        <li class="active"><a href="#" th:href="@{/logout}">LogOut</a></li>
 	      </ul>
     	</div>   
     
@@ -43,22 +43,23 @@
 
 
 <!-- <p th:text="'email: ' + ${bike.userEmail}"/> -->
-<p th:text="'email: ' + ${userEmail}"/>
+<p th:text="'email: ' + ${userLogin.email}"/>
 <div class="col-md-6 col-md-offset-3">
   <div class="panel panel-default">
     <div class="panel-heading">Sign Up</div>
      <div class="panel-body">
-		<form action="#" th:action="@{/api/v1/bike/save/}" th:object="${Bike}" method="post" id="form" role="form">
+		<form action="#" th:action="@{/api/v1/bike/save/}" th:object="${bike}" method="post" role="form">
   			<div class="row">
 			  <div class="col-xs-6 col-md-offset-3">
-		    	<label for="address" >Address/Zip Code</label>
+		    	<label for="address" >Address/Zip Code *</label>
 		    	<input type="text" class="form-control" id="location" placeholder="Enter address" th:field="*{address}"/>
+		    	<p style="color:red;" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Name Error</p>
   			  </div>
    			</div>
 	<br></br>
 	<div class="row">
 		<div class="col-xs-6 col-md-offset-3">
-		<label for="option">Verify Address</label> <input id="option" type="checkbox" onclick="codeAddress()"/>
+		<label for="option">Verify Address *</label> <input id="option" type="checkbox" onclick="codeAddress()"/>
 		</div>
    </div>
 	<br></br>
@@ -70,54 +71,60 @@
 	  </div>
    </div>
 	<br></br>
-	
-  <input type="hidden" name="userEmail" id="userEmail" th:value="${userEmail}"/>
+
+  <!-- <input type="hidden" name="userEmail" id="userEmail" th:value="${userLogin.getEmail()}"/> -->
+  <input type="hidden" name="email" id="userEmail" th:value="${userLogin.email}"/>
   
 	<div class="row">
 	  <div class="col-xs-6 col-md-offset-3">
-	    <label for="description">Description</label>
+	    <label for="description">Description *</label>
 	    <input type="text" class="form-control" id="description" placeholder="description" th:field="*{description}"/>
+	    <p style="color:red;" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Name Error</p> 
 	  </div>
    </div>
 	<br></br>  
  
 	<div class="row">
 		<div class="col-xs-6 col-md-offset-3">
-	    <label for="bikeCode">Bike Code</label>
+	    <label for="bikeCode">Bike Code *</label>
 	    <input type="text" class="form-control" id="bikeCode" placeholder="bikeCode" th:field="*{bikeCode}"/>
+	    <p style="color:red;" th:if="${#fields.hasErrors('bikeCode')}" th:errors="*{bikeCode}">Name Error</p>
 	  </div>
    </div>
 	<br></br>
   
    <div class="row">
 		<div class="col-xs-6 col-md-offset-3">
-	     <label for="fromDate">From Date</label>
+	     <label for="fromDate">From Date *</label>
 	     <input type="date" class="form-control" id="fromDate" placeholder="MM/DD/YYYY" th:field="*{fromDate}"/>
+	     <p style="color:red;" th:if="${#fields.hasErrors('fromDate')}" th:errors="*{fromDate}">Name Error</p>
 	    </div>
 	</div>
 	<br></br>
   
    <div class="row">
 	  <div class="col-xs-6 col-md-offset-3">
-    	<label for="toDate">To date</label>
+    	<label for="toDate">To date *</label>
     	<input type="date" class="form-control" id="toDate" placeholder="To date" th:field="*{toDate}"/>
+    	<p style="color:red;" th:if="${#fields.hasErrors('toDate')}" th:errors="*{toDate}">Name Error</p>
   		</div>
   </div>
-  
+  <br></br>
   <div class="row">
 	<div class="col-xs-6 col-md-offset-3">
-		<label for="bikeType">Bike Type</label>
+		<label for="bikeType">Bike Type *</label>
 			<select class="form-control" name="bikeType" id="bikeType" th:field="*{bikeType}">
 			 <option value="">Select your bike type</option>
-			 <option value="mountainbike">Mountain Bike</option>
-			 <option value="RoadBike">Road Bike</option>
-			 <option value="CruiserBike">Cruiser Bike</option>
-			 <option value="FixedGear">Fixed Gear</option>
-			 <option value="FoldingBike">Folding Bike</option>
-			 <option value="TandemBike">Tandem Bike</option>
-			 <option value="TriathlonBike">Triathlon Bike</option>
-			 <option value="TricycleBike">Tricycle Bike</option>
+			 <option value="mountain">Mountain Bike</option>
+			 <option value="Road">Road Bike</option>
+			 <option value="cruiser">Cruiser Bike</option>
+			 <option value="fixedGear">Fixed Gear</option>
+			 <option value="folding">Folding Bike</option>
+			 <option value="tandem">Tandem Bike</option>
+			 <option value="triathlon">Triathlon Bike</option>
+			 <option value="tricycle">Tricycle Bike</option>
 			 </select>
+			 <p style="color:red;" th:if="${#fields.hasErrors('bikeType')}" th:errors="*{bikeType}">Name Error</p>
 	</div>
    </div>
 	<br></br>

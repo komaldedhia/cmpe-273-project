@@ -33,8 +33,8 @@
      
 	      <ul class="nav navbar-nav navbar-right">
 	
-	        <li><a href="AboutUs.html">About Us</a></li>
-	        <li class="active"><a href="#" th:href="@{/api/v1/users/logout}">LogOut</a></li>
+	       <li><a href="#" th:href="@{/about}">About Us</a></li>
+	       <li class="active"><a href="#" th:href="@{/logout}">LogOut</a></li>
 	      </ul>
     	</div>   
     
@@ -42,8 +42,8 @@
 
  </nav>
 <!-- passing the user email --> 
-   <p th:text="'email: ' + ${userEmail}"/>
-	<form action="#" th:action="@{'/api/v1/bike'}" th:object="${bike}"
+   <p th:text="'email: ' + ${userLogin.email}"/>
+	<form action="#" th:action="@{'/api/v1/bike'}" th:object="${rentBike}"
 		th:method="put" role="form">
 
 		<div class="form-group">
@@ -112,9 +112,12 @@
 			 <input class="form-control" id="VerifyError" type="text" th:readonly="readonly" placeholder="Verification Result" />
 			 <p th:if="${#fields.hasErrors('longitude')}" th:errors="*{longitude}">Please Verify Location</p>
 		</div>
-
-		<button type="submit" class="btn btn-default">Submit</button>
+		
+	<input type="hidden" name="email" id="userEmail" th:value="${userLogin.email}"/>
+		<button type="submit" class="btn btn-default" th:disabled="${#Longitude}">Submit</button>
 	</form>
+	
+	<div th:fragment="content"></div>
 
 
 

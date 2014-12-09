@@ -6,6 +6,17 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+    <style>
+   
+   /*body {
+       margin: 0;
+     background: url('/images/generic_bg_img.jpg');
+     background-size: 100%;
+     background-repeat:no-repeat;
+     display: compact;
+     font: 13px/18px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }*/
+  </style>
   </head>
 <body>
 <nav class="navbar navbar-default navbar-blue" role="navigation">
@@ -21,8 +32,8 @@
      
 	      <ul class="nav navbar-nav navbar-right">
 	
-	        <li><a href="AboutUs.html">About Us</a></li>
-	        <li class="active"><a href="#" th:href="@{/api/v1/users/logout}">LogOut</a></li>
+	        <li><a href="#" th:href="@{/about}">About Us</a></li>
+	        <li class="active"><a href="#" th:href="@{/logout}">LogOut</a></li>
 	      </ul>
     	</div>   
     
@@ -30,11 +41,13 @@
 
  </nav>
  
-<p th:text="'address: ' + ${oldBike.address}"/> 
+<!-- <p th:text="'address: ' + ${oldBike.address}"/> 
 <p th:text="'bikeCode: ' + ${oldBike.bikeCode}"/> 
- <p th:text="'email: ' + ${userEmail}"/> 
+ <p th:text="'email: ' + ${userEmail}"/> -->
+<div class="col-md-6 col-md-offset-3"> 
+<div class="panel panel-default">
 <form action="#"  th:object="${newBike}"  role="form"><!--method="post" th:action="@{/api/v1/bike/updateBike}" -->
-
+<div class="panel-body">
  <div class="form-group">
     <label for="bikeId" >Bike Id</label>
    <input type="text" class="form-control" id="bikeId"  th:value="${oldBike.bikeId}" /> <!--th:field="*{bikeId}"-->
@@ -51,18 +64,18 @@
   </div>
   
    <div class="form-group">
-   <label for="userEmail">User Email</label>
+   <label for="userEmail">User Email</label> <br/>
   <input type="text" name="userEmail" id="userEmail"  th:value="${oldBike.userEmail}"  /><!--th:field="*{userEmail}" -->
    </div>
  
    <div class="form-group">
     <label for="fromDate">From Date</label>
-   <input type="text" class="form-control" id="fromDate" th:value="${oldBike.fromDate}" /> <!-- th:field="*{fromDate}" th:field="*{description}"/>-->
+   <input type="text" class="form-control" id="fromDate" placeholder="MM-dd-yyyy"/> <!--th:value="${oldBike.fromDate}" --> <!-- th:field="*{fromDate}" th:field="*{description}"/>-->
   </div>
 
   <div class="form-group">
     <label for="toDate">To Date</label>
-    <input type="text" class="form-control" id="toDate" th:value="${oldBike.toDate}"/> <!-- th:field="*{description}"  th:field="*{toDate}"/>-->
+    <input type="text" class="form-control" id="toDate" placeholder="MM-dd-yyyy"/> <!-- th:field="*{description}"  th:field="*{toDate}" th:value="${oldBike.toDate}"/>-->
   </div>
   
    <div class="form-group">
@@ -71,8 +84,10 @@
   </div>
   
   <button id="submit" type="submit" class="btn btn-default" onclick="updateBikeAjax()">Update</button>
-</form>
-
+  </div>
+</form> 
+</div>
+</div>
 <script src ="/js/jquery-1.11.1.min.js"></script>
 <script src ="/js/bootstrap.min.js"></script>
  <script>
@@ -81,9 +96,11 @@
     var bikeId = $('#bikeId').val();
     var accessories = $('#accessories').val();
     var userEmail = $('#userEmail').val();
-     var fromDate = $('#fromDate').val();
-      var toDate = $('#toDate').val();
-       var bikeCode = $('#bikeCode').val();
+    var fromDate = $('#fromDate').val();
+    var toDate = $('#toDate').val();
+    var bikeCode = $('#bikeCode').val();
+
+    //var formatedfromDate=fromDate.getMonth()+1 + "-" + fromDate.getDate() + "-" + fromDate.getYear();
     //alert ("verification code has been sent to your mobile.");
     
     $.ajax({
@@ -96,12 +113,17 @@
      })
       .done(function( ) {
         alert( "Data Saved: ");
-	console.log("Bike updated");
+	      console.log("Bike updated");
       })
       .fail(function() {
-	console.log("Bike could not be updated");
+	      console.log("Bike could not be updated");
        });
-    
+     // reload the update page to reflect changes
+     location.reload(true);
+     location.reload(false);
+     //window.location.reload(false);
+     //window.location.reload(false);
+     //window.location.reload(false);
   }
     
   </script>

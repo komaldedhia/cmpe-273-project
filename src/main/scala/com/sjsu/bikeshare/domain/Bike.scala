@@ -22,15 +22,13 @@ val dateFormat:DateFormat   = new SimpleDateFormat("yyyy-MM-dd");
 var bikeId: String =_
 
 @BeanProperty
-var searchRange: String =_
-
-@BeanProperty
 var userEmail: String =_
 
 @BeanProperty
 var requesterEmail: String =_
 
 @BeanProperty
+@NotEmpty
 var address: String = _
 
 @BeanProperty
@@ -38,42 +36,37 @@ var accessories: String = _
 
 
 @BeanProperty
-//@NotEmpty
 var latitude: String = _
 
-//@Column(nullable = true)
 @BeanProperty
 //@NotEmpty
 var longitude: String = _
 
 @BeanProperty
+@NotEmpty
 var description: String = _
 
 @BeanProperty
-//@NotEmpty
+@NotEmpty
 var bikeType: String = _
 
 @BeanProperty
 var image: String = _
 
 @BeanProperty
+@NotEmpty
 var bikeCode: String = _
 
 @BeanProperty
-//@NotEmpty
-var fromDate: String = dateFormat.format(new Date)
+@NotEmpty
+var fromDate: String = _//dateFormat.format(new Date)
 
 @BeanProperty
-//@NotEmpty
-var toDate: String = dateFormat.format(new Date)
+@NotEmpty
+var toDate: String = _//dateFormat.format(new Date)
 
 @BeanProperty
 //var bikeReviews: ArrayList[Review]  = _
 var bikeReviews: String = _
-
-//TODOadded for bike Range
-//@BeanProperty
-//val bikeRange = _
-
 
 }

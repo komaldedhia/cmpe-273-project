@@ -3,17 +3,17 @@ package com.sjsu.bikeshare.domain
 
 import javax.validation.constraints.NotNull
 import scala.beans._;
+import org.hibernate.validator.constraints.NotEmpty
 import javax.persistence.Entity
 @Entity
 class UserLogin {
   
-  @NotNull
   @BeanProperty
+  @NotEmpty
    var email:String =_ 
  
- 
- @NotNull
   @BeanProperty
+  @NotEmpty
    var password:String =_ 
    
 }

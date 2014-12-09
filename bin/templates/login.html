@@ -24,7 +24,7 @@
 <nav class="navbar navbar-default" role="navigation">
  		<div class="container-fluid">
     			<div class="navbar-header">
-     			 <a class="navbar-brand" href="#" th:href="@{/api/v1/users/bikeshare}">Bike Share</a>
+     			 <a class="navbar-brand" href="#" th:href="@{/bikeshare}">Bike Share</a>
     		</div>
 
     		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">    
@@ -32,7 +32,7 @@
        
       		<ul class="nav navbar-nav navbar-right">
 
-		        <li><a href="AboutUs.html">About Us</a></li>
+		        <li><a href="#" th:href="@{/about}">About Us</a></li>
 		        <li><a href="#" th:href="@{/api/v1/users/signup}">Sign up</a></li>
       		</ul>
     		</div>
@@ -51,16 +51,18 @@
   <div class="row">
   <div class="col-xs-6 col-md-4"></div>
   <div class="col-xs-6">
-    <label for="email" >Email address</label>
+    <label for="email" >Email address *</label>
     <input type="email" class="form-control" id="email" placeholder="Enter email" th:field="*{email}"/>
+    <p style="color:red;" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name Error</p>
     </div>
   </div>
 	<br></br>
   <div class="row">
   <div class="col-xs-6 col-md-4"></div>
   <div class="col-xs-6">
-    <label for="password">Password</label>
+    <label for="password">Password *</label>
     <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}"/>
+    <p style="color:red;" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</p>
   </div>
   </div>
   <br></br>

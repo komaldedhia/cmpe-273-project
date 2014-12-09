@@ -25,15 +25,14 @@
      
       <ul class="nav navbar-nav navbar-right">
 
-        <li><a href="AboutUs.html">About Us</a></li>
-        <li class="active"><a href="#" th:href="@{/api/v1/users/logout}">LogOut</a></li>
+        <li><a href="#" th:href="@{/about}">About Us</a></li>
+        <li class="active"><a href="#" th:href="@{/logout}">LogOut</a></li>
       </ul>
     </div>   
     
  </div><!-- /.container-fluid -->
 
 </nav>
- <!-- <p th:text="'email: ' + ${userLogin.email}"/> -->
 
 <h2 style="text-align:center;">Welcome to Bike Share</h2>
  <h3 style="text-align:center;">Get Started !! Rent or List a bike </h3>
@@ -41,40 +40,112 @@
  <div class="row">
   <div class="col-xs-6 col-md-4"><img src="/images/listImage.png" height="250" width="250" class="img-responsive" alt="Responsive image"></img></div>
   <div class="col-xs-6 col-md-4" style="margin-top:1%;"><img src="/images/images.jpg" height="230" width="230" class="img-circle" alt="Responsive image"></img></div>
+  <div class="col-xs-6 col-md-4" style="margin-top:1%;"><img src="/images/vintage-bike.jpg" height="230" width="230" class="img-circle" alt="Responsive image"></img></div>
  </div>
- 
- <!-- Refer this as example for sending hidden values -->
+<!-- <p th:text="'email: ' + ${userLogin.getEmail()}"/> --> 
+
  <div class="row">
-  <div class="col-md-1" style="margin-left:5%;">
- <form action="#" th:action="@{/api/v1/bike/List}" th:object="${Bike}" method="post" role="form">
+  <div class="col-md-1" style="margin-left:4%;">
+ <form action="#" th:action="@{/api/v1/bike/List}" method="post" role="form">
  <div class="form-group">
-  <input type="hidden" name="userEmail" id="userEmail" th:value="${userLogin.email}"/>
+  <input type="hidden" name="email" id="userEmail" th:value="${userLogin.email}"/>
  </div>
  <button id="submit" type="submit" class="btn btn-default">List a Bike</button>
 </form>
 </div>
 
 <div class="col-md-1 col-md-offset-3" style="margin-top:1%;">
-
-<!-- ADD rent a bikes object name ,correct api names,method=post/get,send any hidden attributes or values to be sent -->
-<form action="#" th:action="@{/api/v1/bike/rent}" th:object="${bike}" method="put" role="form">
+<form action="#" th:action="@{/api/v1/bike/rent}" th:method="put" role="form">
   <div class="form-group">
- <input type="hidden" name="userEmail" id="userEmail" th:value="${userLogin.email}"/>
+ <input type="hidden" name="email" id="userEmail" th:value="${userLogin.email}" />
  </div>
   <button id="submit" type="submit" class="btn btn-default">Rent a Bike</button>
 </form>
+</div>
 
+<div class="col-md-1 col-md-offset-3" style="margin-top:1%;">
+<form action="#" th:action="@{/api/v1/bike/getListedBike}" th:method="post" role="form">
+  <div class="form-group">
+ <input type="hidden" name="email" id="userEmail" th:value="${userLogin.email}" />
+ </div>
+  <button id="submit" type="submit" class="btn btn-default">View Listed/Rented Bikes</button>
+</form>
+</div>
+
+</div>
+<br></br>
+ <hr/>
+ <br></br>
+ <!-- <p style="color:blue;margin-left:5%;font-size: 30px;font-family:Comic Sans MS">
+ To Return a bike please click here.:::<a href="#" th:href="@{/api/v1/bike/return}">Return a Bike</a></p> -->
+ 
+ <form action="#" th:action="@{/api/v1/bike/return}" th:method="post" role="form">
+  <div class="form-group">
+ <input type="hidden" name="email" id="userEmail" th:value="${userLogin.email}" />
+ </div>
+ 
+  <p style="font-size: 30px;font-family:Comic Sans MS" class="text-center">
+ To Return a bike please click here. <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+ <button style="color:blue;font-size: 20px;" id="submit1" type="submit" class="btn btn-link">Return a Bike</button></p>
+</form>
+<br></br>
+
+<div id="returnHide">
+<form action="#" th:action="@{/api/v1/bike/returning}" th:object="${note}" method="POST" role="form">
+ <input type="hidden" name="email" id="userEmail" th:value="${userLogin.email}" />
+<div class="container">
+  <div class="table-responsive">   
+<table class="table">
+<thead>
+          <tr>
+            <th>BikeID</th>
+            <th>Owner ID</th>
+            <th>From Date</th>
+            <th> To Date</th>
+             <th>Bike Code</th>
+          </tr>
+ </thead>
+ <tbody>
+<tr th:each="noti : ${notification}">
+       <td th:text="${noti.bikeId}" ></td>
+       <td th:text="${noti.ownerId}"></td>
+       <td th:text="${noti.fromDate}"></td>
+       <td th:text="${noti.toDate}"></td> 
+       <td> <input type = "radio" th:field="*{bikeId}" th:value = "${noti.bikeId}"/></td>  
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
-<p><a href="#" th:href="@{/api/v1/bike/rent}">Rent a Bike</a></p>
- <p><a href="#" th:href="@{/api/v1/bike/return}">Return a Bike</a></p>
- <p><a href="#" th:href="@{/api/v1/bike/getListedBike}">Listed Bikes</a></p>
- <p><a href="#" th:href="@{/api/v1/notify}">Notification</a></p>
+  <br></br>
+ <div class="row">
+ <div class="col-xs-6 col-md-4"></div>
+  <div class="col-xs-6 col-md-4">
+<button id="submit" type="submit" class="btn btn-default">Submit</button>
+<button style="margin-left: 20px;" id="submit2" type="submit" class="btn btn-default">close</button>
+</div>
+  </div>
+  <input type="hidden" name="mode" id="mode" th:value="${mode}" />
+</form>
+ </div>
+
+ <!-- <p><a href="#" th:href="@{/api/v1/bike/getListedBike}">Listed Bikes</a></p> -->
     
 <script src ="/js/jquery-1.11.1.min.js"></script>
 <script src ="/js/bootstrap.min.js"></script>
-
+<script>
+$(document).ready(function(){
+	var modeval =$("#mode").val();
+	if(modeval!=1)
+	{
+	$("#returnHide").hide();
+	}
+	$("#submit2").click(function(){
+	});
+	
+});
+</script>
 </body>
 
 
