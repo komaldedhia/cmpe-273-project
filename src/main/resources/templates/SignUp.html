@@ -1,13 +1,13 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
- <title>Community Bike Share Web Application</title> 
+   <title>Community Bike Share Web Application</title> 
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-   <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap.min.css}" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
-	<link rel="stylesheet" th:href="@{/css/application.css}" href="/css/application.css" />
+   <link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
 	 <style>
-   
+  
    body {
      margin: 0;
      background: url('/images/generic_bg_img.jpg');
@@ -47,39 +47,44 @@
   <div class="panel panel-default">
     <div class="panel-heading">Sign Up</div>
      <div class="panel-body">
-  <form action="#" th:action="@{/api/v1/users/signupnow}" th:object="${User}" method="post" role="form">
+  <form action="#" th:action="@{/api/v1/users/signupnow}" th:object="${user}" method="post" role="form">
   <div class="row">
 	  <div class="col-xs-6 col-md-offset-3">
-	    <label for="fname">First Name</label>
+	    <label for="fname">First Name *</label>
 	    <input type="text" class="form-control" id="fname" placeholder="Enter your first name" th:field="*{firstName}" />
+	    <p style="color:red;" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Name Error</p>
 	  </div>
   </div>
 	<br></br>
   <div class="row">
 	  <div class="col-xs-6 col-md-offset-3">
-	    <label for="lname">Last Name</label>
+	    <label for="lname">Last Name *</label>
 	    <input type="text" class="form-control" id="lname" placeholder="Enter your last name" th:field="*{lastName}"/>
+	    <p style="color:red;" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Name Error</p>
 	  </div>
   </div>
 	<br></br>
   <div class="row">
 	  <div class="col-xs-6 col-md-offset-3">
-	    <label for="email">Email address</label>
+	    <label for="email">Email address *</label>
 	    <input type="email" class="form-control" id="email" placeholder="Enter email" th:field="*{email}"/>
+	    <p style="color:red;" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name Error</p>
 	  </div>
   </div>
 	<br></br>
   <div class="row">
 	  <div class="col-xs-6 col-md-offset-3">
-	    <label for="password">Password</label>
+	    <label for="password">Password *</label>
 	    <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}"/>
+	    <p style="color:red;" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</p>
 	  </div>
   </div>
 	<br></br>
   <div class="row">
 	  <div class="col-xs-6 col-md-offset-3">
-	    <label for="contact">Contact Number</label>
+	    <label for="contact">Contact Number *</label>
 	    <input type="text" class="form-control" id="contact" placeholder="Phone Number" th:field="*{contactNo}" />
+	    <p style="color:red;" th:if="${#fields.hasErrors('contactNo')}" th:errors="*{contactNo}">Name Error</p>
 	  </div>
   </div>
 	<br></br>
@@ -91,8 +96,9 @@
 	<br></br>
   <div class="row">
 	  <div class="col-xs-6 col-md-offset-3">
-	    <label for="twiliocode">verification code</label>
+	    <label for="twiliocode">verification code *</label>
 	    <input type="text" class="form-control" id="code" placeholder="Verification code" th:field="*{twiliocode}"   />
+	    <!-- <p style="color:red;" th:if="${#fields.hasErrors('twiliocode')}" th:errors="*{twiliocode}">Name Error</p>-->
 	  </div>
  </div>
 	<br></br>

@@ -15,34 +15,14 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
 </head>
 
 <body>
 
-  <nav class="navbar navbar-default navbar-blue" role="navigation">
-    <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
+	<div th:include="header"></div>
 
-	    <div class="navbar-header">
-	       <a class="navbar-brand" href="#">Bike Share</a>
-	      <a class="navbar-brand">Welcome User</a>
-	    </div>
-    
-     	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-     
-	      <ul class="nav navbar-nav navbar-right">
-	
-	       <li><a href="#" th:href="@{/about}">About Us</a></li>
-	       <li class="active"><a href="#" th:href="@{/logout}">LogOut</a></li>
-	      </ul>
-    	</div>   
-    
-	 </div><!-- /.container-fluid -->
 
- </nav>
-<!-- passing the user email --> 
-   <p th:text="'email: ' + ${userLogin.email}"/>
+	<!-- <p th:text="'email: ' + ${userLogin.email}" /> -->
 	<form action="#" th:action="@{'/api/v1/bike'}" th:object="${rentBike}"
 		th:method="put" role="form">
 
@@ -50,80 +30,84 @@
 			<label for="fromdate">From Date</label> <input type="date"
 				class="form-control" id="fromdate"
 				placeholder="Enter Date to rent a bike" th:field="*{fromDate}"></input>
-				<p th:if="${#fields.hasErrors('fromDate')}" th:errors="*{fromDate}">Name Error</p>
+			<p th:if="${#fields.hasErrors('fromDate')}" th:errors="*{fromDate}">Name
+				Error</p>
 		</div>
 		<div class="form-group">
 			<label for="todate">To Date</label> <input type="date"
 				class="form-control" id="todate"
 				placeholder="Enter Date to return the bike" th:field="*{toDate}"></input>
-				<p th:if="${#fields.hasErrors('toDate')}" th:errors="*{toDate}">Name Error</p>
+			<p th:if="${#fields.hasErrors('toDate')}" th:errors="*{toDate}">Name
+				Error</p>
 		</div>
 		<div class="form-group">
 			<label for="searchRange">Bike Range</label> <input type="text"
 				class="form-control" id="searchRange"
 				placeholder="Enter the range in miles" th:field="*{searchRange}"></input>
-				<p th:if="${#fields.hasErrors('searchRange')}" th:errors="*{searchRange}">Name Error</p>
+			<p th:if="${#fields.hasErrors('searchRange')}"
+				th:errors="*{searchRange}">Name Error</p>
 		</div>
-		<div class="form-group">
-			<label for="location">Bike Location</label> <input type="text"
-				class="form-control" id="location" placeholder="Enter bike location"
-				th:field="*{address}"></input>
-				<p th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Name Error</p>
-		</div>
-	<!--	<div class="form-group">
+
+		<!--	<div class="form-group">
 			<label for="type">Bike Type</label> <input type="text"
 				class="form-control" id="type" placeholder="Enter bike type"
 				th:field="*{bikeType}"></input>
 		</div>-->
 
-		 <div class="form-group">
+		<div class="form-group">
 			<label for="type">Bike Type</label> <select name="bikeType"
 				th:field="*{bikeType}">
 				<option th:value="mountain">Mountain Bike</option>
 				<option th:value="Road">Road Bike</option>
-				 <option th:value="cruiser" >Cruiser Bike</option>
-				<option th:value="fixedGear" >Fixed Gear</option>
-				<option th:value="folding" >Folding Bike</option>
-				<option th:value="tandem" >Tandem Bike</option>
-				<option th:value="triathlon" >Triathlon Bike</option>
-				<option th:value="tricycle" >Tricycle Bike</option>
+				<option th:value="cruiser">Cruiser Bike</option>
+				<option th:value="fixedGear">Fixed Gear</option>
+				<option th:value="folding">Folding Bike</option>
+				<option th:value="tandem">Tandem Bike</option>
+				<option th:value="triathlon">Triathlon Bike</option>
+				<option th:value="tricycle">Tricycle Bike</option>
 			</select>
-			<p th:if="${#fields.hasErrors('bikeType')}" th:errors="*{bikeType}">Name Error</p>
+			<p th:if="${#fields.hasErrors('bikeType')}" th:errors="*{bikeType}">Name
+				Error</p>
 
 		</div>
- 
-		<label for="latitude"></label> <input type="hidden"
-				class="form-control" id="latitude" placeholder="Latitude"
-				th:field="*{latitude}"></input>
-		
 
-		<label for="longitude"></label> <input type="hidden"
-				class="form-control" id="Longitude" placeholder="Longitude"
-				th:field="*{longitude}"></input>
-		
-		<div>
+		<div class="form-group">
+			<label for="location">Bike Location</label> <input type="text"
+				class="form-control" id="location" placeholder="Enter bike location"
+				th:field="*{address}"></input>
+			<p th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Name
+				Error</p>
+		</div>
+
+		<div class="form-group">
 			<label for="option">Verify Location</label> <input id="option"
 				type="checkbox" onclick="codeAddress()" />
-				
+
 		</div>
 
-		<div>
-		<label for="option">Verification Result</label>
-			 <input class="form-control" id="VerifyError" type="text" th:readonly="readonly" placeholder="Verification Result" />
-			 <p th:if="${#fields.hasErrors('longitude')}" th:errors="*{longitude}">Please Verify Location</p>
+		<div class="form-group">
+			<label for="option">Verification Result</label> <input
+				class="form-control" id="VerifyError" type="text"
+				th:readonly="readonly" placeholder="Verification Result" />
+				<p th:if="${#fields.hasErrors('longitude')}" th:errors="*{longitude}">Please
+				Verify Location</p>
 		</div>
 		
-	<input type="hidden" name="email" id="userEmail" th:value="${userLogin.email}"/>
-		<button type="submit" class="btn btn-default" th:disabled="${#Longitude}">Submit</button>
+			
+		
+
+		<input type="hidden" name="email" id="userEmail"
+			th:value="${userLogin.email}" /> <input type="hidden"
+			class="form-control" id="latitude" placeholder="Latitude"
+			th:field="*{latitude}"></input> <label for="longitude"></label> <input
+			type="hidden" class="form-control" id="Longitude"
+			placeholder="Longitude" th:field="*{longitude}"></input>
+		<div class="form-group">
+		<button type="submit" class="btn btn-default"
+			th:disabled="${#Longitude}">Get All Bikes</button>
+			</div>
 	</form>
-	
-	<div th:fragment="content"></div>
-
-
-
-
 
 </body>
-
 
 </html>

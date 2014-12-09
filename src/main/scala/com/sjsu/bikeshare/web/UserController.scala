@@ -44,37 +44,44 @@ def createUser(@Valid @RequestBody user:User) = {
  UserRepository.populateUser(user)
  
 }
-/*** Kokil Awasthi ***/
  
  @RequestMapping(value=Array("/signup"),method = Array(RequestMethod.GET))
   def SignUpForm( model:Model) = {
-  model.addAttribute("User", new User())
+  model.addAttribute("user", new User())
   model.addAttribute("userLogin", new UserLogin())
   "SignUp"
   } 
  
  
  @RequestMapping(value=Array("/signupnow"),method = Array(RequestMethod.POST))
-  def SignUpSubmit(@ModelAttribute user:User,@ModelAttribute rcode:String,model:Model,userLogin:UserLogin) = {
-  model.addAttribute("User", user)
-  model.addAttribute("rcode",randomCode)
-  userLogin.email=user.email
-  model.addAttribute("userLogin",userLogin)
- println("randomcode: " +randomCode)
- println("user.getTwiliocode : " + user.getTwiliocode )
- println("user.getname : " + user.getFirstName )
- println("user.email : " + user.getEmail )
-  if ( randomCode == user.getTwiliocode.toString ){
-    createUser(user)
-    "homepage"
-  }
-  else
-  {
-    println ("codes not matched")
-    println("twiliocde: " +randomCode)
-    println("user.getTwiliocode : " + user.getTwiliocode )
-    model.addAttribute("user", new User())
-    "SignUp"
+  def SignUpSubmit(@Valid user:User,bindingResult:BindingResult,model:Model,userLogin:UserLogin) = {
+    if (bindingResult.hasErrors()) 
+   {
+      println("in here")
+      "SignUp"
+    }
+   else
+   {
+      model.addAttribute("user",user)
+      model.addAttribute("rcode",randomCode)
+      userLogin.email=user.email
+      model.addAttribute("userLogin",userLogin)
+     println("randomcode: " +randomCode)
+     println("user.getTwiliocode : " + user.getTwiliocode )
+     println("user.getname : " + user.getFirstName )
+     println("user.email : " + user.getEmail )
+          if ( randomCode == user.getTwiliocode.toString ){
+            createUser(user)
+            "homepage"
+          }
+          else
+          {
+            println ("codes not matched")
+            println("twiliocde: " +randomCode)
+            println("user.getTwiliocode : " + user.getTwiliocode )
+            model.addAttribute("user", new User())
+            "SignUp"
+           }
    }
   }  
    
@@ -104,6 +111,7 @@ def createUser(@Valid @RequestBody user:User) = {
  @RequestMapping(value=Array("/userlogin"),method = Array(RequestMethod.GET))
   def userLoginForm( model:Model) = {
    model.addAttribute("userLogin", new UserLogin())
+   
   "login"}  
  
   

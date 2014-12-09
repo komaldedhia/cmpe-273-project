@@ -24,7 +24,7 @@ function initialize() {
 	var bikeList = document.getElementById('bikeList').value;
 	var userLat = document.getElementById('userLatitude').value;
 	var userLong = document.getElementById('userLongitude').value;
-	alert("bikeList " + bikeList);
+	//alert("bikeList " + bikeList);
 	//alert("userLat " + userLat);
 	//alert("userLong " + userLong);
 	//alert("hiddenFomDate " + document.getElementById('userFromDate').value);
@@ -92,7 +92,6 @@ function createMarker(staion) {
 		document.getElementById("dateRange").innerHTML = document.getElementById('userFromDate').value
 				+ " to " + document.getElementById('userToDate').value;
 		document.getElementById("accessories").innerHTML = staion.accessories;
-		// $('#enableButton').enabled;
 		document.getElementById("enableButton").disabled=false;
 	});
 }

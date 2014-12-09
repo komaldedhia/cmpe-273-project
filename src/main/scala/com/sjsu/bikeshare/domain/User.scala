@@ -5,39 +5,37 @@ package com.sjsu.bikeshare.domain
  *
  */
 
-import javax.validation.constraints.NotNull
-import scala.beans._;
+import scala.beans._
 import javax.persistence.Entity
+import org.hibernate.validator.constraints.NotEmpty
 @Entity
 class User {
   
 @BeanProperty
   var userId :String = _ ;  
-  
- @NotNull
-  @BeanProperty
+
+ @BeanProperty
+ @NotEmpty
   var email:String =_ ;
  
- 
- @NotNull
-  @BeanProperty
-    var firstName:String =_ 
-   
-
- @NotNull
-  @BeanProperty
+ @BeanProperty
+ @NotEmpty
+  var firstName:String =_ 
+  
+@BeanProperty
+@NotEmpty
   var lastName:String =_ ;
-   
- 
- @NotNull
-  @BeanProperty
+
+ @BeanProperty
+  @NotEmpty
   var password:String =_ ;
 
  
-  @BeanProperty
+ @BeanProperty
+ @NotEmpty
  var contactNo:String =_ ;
    
-  @BeanProperty
+ @BeanProperty
  var twiliocode:Int =_ ;
  
  @BeanProperty

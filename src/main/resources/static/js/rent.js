@@ -19,8 +19,6 @@ function codeAddress() {
 							document.getElementById("latitude").value = latitude;
 							document.getElementById("Longitude").value = longitude;
 
-							alert("User Address "
-									+ results[0].geometry.location)
 							document.getElementById("VerifyError").value = "Address Verified";
 
 						} else {
