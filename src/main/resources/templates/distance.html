@@ -4,24 +4,24 @@
 <title>Community Bike Share Web Application</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap.min.css}" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
 <style>
 html, body, #map-canvas {
 	height: 90%;
 	margin: 0px;
-	padding: 0px
+	padding: 0px;
+	top:0px;
+	bottom:0;
 }
 
 #panel {
 	position: absolute;
-	top: 5px;
+	top: 0px;
 	left: 50%;
 	margin-left: -180px;
-	z-index: 5;
+	z-index: 0;
 	background-color: #fff;
-	padding: 5px;
-	border: 1px solid #999;
+	padding: 0px;
 }
 </style>
 <script th:src="@{https://maps.googleapis.com/maps/api/js?v=3.exp}"
@@ -29,12 +29,38 @@ html, body, #map-canvas {
 <script
 	th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js}"
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" th:src="@{/js/rentBikeLocation1.js}"
+<script type="text/javascript" th:inline="javascript">/*<![CDATA[*/
+ image = "\'' +[[@{/images/bicycle_parking1.png}]] + '\'";
+/*]]>*/</script>
+<script type="text/javascript" th:inline="javascript" th:src="@{/js/rentBikeLocation1.js}"
 	src="../static/js/rentBikeLocation1.js"></script>
 </head>
 
 <body>
+	
+<nav class="navbar navbar-default navbar-blue" role="navigation">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
 
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Bike Share</a>
+			</div>
+
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+
+				<ul class="nav navbar-nav navbar-right">
+
+					<li><a href="AboutUs.html">About Us</a></li>
+					<li class="active"><a href="#"
+						th:href="@{/api/v1/users/logout}">LogOut</a></li>
+				</ul>
+			</div>
+
+		</div>
+		<!-- /.container-fluid -->
+
+	</nav>
 
 
 	<input type="hidden" id="bikeList" th:value="${bikeList}" />
@@ -42,30 +68,49 @@ html, body, #map-canvas {
 	<input type="hidden" id="userLongitude" th:value="${userLongitude}" />
 	
 	<div id="map-canvas"></div>
+	<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><label >Click on the bike marker on map to select</label></h3>
+  </div>
+  <div class="panel-body">
+   
+  
+  <table class="table">
+         <tbody>
+          <tr>
+            <td><span><label > Bike Location</label></span> </td>
+            <td><span id="address"></span></td>
+          </tr>
+          <tr>
+           <td><span><label >Bike Rented Dates</label></span> </td>
+            <td><span id="dateRange"></span></td>
+          </tr>
+          <tr>
+           <td><span><label >Bike Description</label></span> </td>
+            <td><span id="description"></span></td>
+          </tr>
+           <tr>
+           <td><span><label >Bike Code</label></span> </td>
+            <td><span id="bikeCode"></span></td>
+          </tr>
+          <tr>
+           <td><span><label >Bike Accessories</label></span> </td>
+            <td><span id="accessories"></span></td>
+          </tr>
+        </tbody>
+      </table>
+  
+       </div>
+           </div>
 	<form action="#" th:action="@{'/api/v1/bike/rent'}"
 		th:object="${rentedBike}" th:method="post" role="form">
-
-		<div class="form-group">
-			<p>Click on the bike marker on map to select it</p>
-		</div>
-		<div class="form-group">
-			<label for="address">Bike Location</label> <input type="text"
-				class="form-control" id="address" placeholder="Bike Location"
-				th:field="${rentedBike.address}" th:value="${rentedBike.address}"
-				th:readonly="readonly"></input>
-		</div>
-		<div class="form-group">
-			<label>Bike Rented Dates</label> <input type="text"
-				class="form-control" id="dateRange" placeholder="Date rent"
-				th:readonly="readonly"></input>
-		</div>
 
 		<input type="hidden" id="bikeId" name="bikeId"></input> <input
 			type="hidden" id="userFromDate" name="fromDate" th:value="${userFromDate}" /> <input
 			type="hidden" id="userToDate" name="toDate" th:value="${userToDate}" /> <input
 			type="hidden"  id="userEmail" name="userEmail"  /> <input
 			 type="hidden"	name="email" id="requesterEmail" th:value="${userLogin.email}" />
-		<button type="submit" class="btn btn-default" th:disabled="${#dateRange}">Submit</button>
+		<button id="enableButton" type="submit" class="btn btn-default">Rent Bike</button>
 	</form>
 
 </body>

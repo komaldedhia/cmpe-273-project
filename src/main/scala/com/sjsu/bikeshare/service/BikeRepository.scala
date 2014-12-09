@@ -30,16 +30,17 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"))
     var todate: Date = dateFormat.parse(toDate)
     val long = Double.parseDouble(longitude);
     val lat = Double.parseDouble(latitude);
-    val maxRange:Int =  range.toInt
-    println("fromDate "+fromDate+" bikeType "+bikeType + "long "+long+" lat "+lat + " range "+ maxRange);
+    var maxRange:Int =  range.toInt
+    //Converting from miles to meters
+    val maxRangeMeters=1609.34*maxRange
+    println("fromDate "+fromDate+" bikeType "+bikeType + "long "+long+" lat "+lat + " range "+ maxRangeMeters);
     val q1 = MongoDBObject("loc" -> MongoDBObject("$nearSphere" -> MongoDBObject( 
-        "type" -> "Point","coordinates" ->  MongoDBList(long,lat)), "$maxDistance" -> maxRange)) 
+        "type" -> "Point","coordinates" ->  MongoDBList(long,lat)), "$maxDistance" -> maxRangeMeters)) 
       
     val query = ("fromDate" $lte fromdate) ++("toDate" $gte todate) ++ q1++( "bikeType" -> bikeType)
-    //val dbObject = MongoDBObject("toDate" -> MongoDBObject("$gte"-> todate),"fromDate" ->MongoDBObject( "$lte" -> fromdate), "bikeType" -> bikeType,"loc" -> MongoDBObject("$nearSphere" -> MongoDBObject( 
-       // "type" -> "Point","coordinates" ->  MongoDBList(long,lat)), "$maxDistance" -> range))
-    val fieldObject = MongoDBObject("_id" -> 0)
+     val fieldObject = MongoDBObject("_id" -> 0)
     for (x <- MongoFactory.BikesCollection.find(query, fieldObject)) { bikeList.add(x) }
+    println (bikeList)
     bikeList
   
    
@@ -241,7 +242,9 @@ def rentedBikes(email : String) ={
     list
   }  
  
+
   def returnBikes(email : String) ={  
+
     var list:List[DBObject] = new ArrayList()
     val fetch_user = MongoDBObject("requesterId"->email,"status" -> "0")
     println(fetch_user)

@@ -1,4 +1,7 @@
 /*<![CDATA[*/
+$(document).ready(function(){
+	document.getElementById("enableButton").disabled=true;
+});
 var geocoder;
 var map;
 var bikes;
@@ -22,31 +25,29 @@ function initialize() {
 	var userLat = document.getElementById('userLatitude').value;
 	var userLong = document.getElementById('userLongitude').value;
 	alert("bikeList " + bikeList);
-	alert("userLat " + userLat);
-	alert("userLong " + userLong);
-	alert("hiddenFomDate " + document.getElementById('userFromDate').value);
-	alert("hiddenToDate " + document.getElementById('userToDate').value);
+	//alert("userLat " + userLat);
+	//alert("userLong " + userLong);
+	//alert("hiddenFomDate " + document.getElementById('userFromDate').value);
+	//alert("hiddenToDate " + document.getElementById('userToDate').value);
 	// alert("Length "+bikeLoc.length)
 	var json = JSON.parse(bikeList);
 
 	for (var i = 0; i < json.length; i++) {
 		var bikeId = json[i].bikeId;
 		var bikeAddress = json[i].address;
-		var accessories = json[i].accesories;
+		var accessories = json[i].accessories;
 		var bikeCode = json[i].bikeCode;
 		var description = json[i].description;
 		var owner = json[i].userEmail;
 		var latitude = json[i].loc.coordinates[1];
 		var longitude = json[i].loc.coordinates[0];
-		
-		alert("bikeId " + bikeId + " bikeAddress " + bikeAddress
-				+ " accessories " + accessories + " bikeCode " + bikeCode);
-		alert(" description " + description + " owner " + owner + " latitude "
-				+ latitude + " longitude " + longitude);
-		
+
+		//alert("bikeId " + bikeId + " bikeAddress " + bikeAddress+ " accessories " + accessories + " bikeCode " + bikeCode);
+		//alert(" description " + description + " owner " + owner + " latitude "+ latitude + " longitude " + longitude);
+
 		bikeDesc[i] = new bike(bikeId, bikeAddress, accessories, bikeCode,
 				description, owner, latitude, longitude);
-		
+
 	}
 	var userLatLng = new google.maps.LatLng(userLat, userLong);
 	var mapOptions = {
@@ -56,36 +57,43 @@ function initialize() {
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 	for (var i = 0; i < bikeDesc.length; i++) {
-		
+
 		createMarker(bikeDesc[i]);
 	}
 }
 
 function createMarker(staion) {
 
-	var image = '/images/bicycle_parking1.png';
-	
+	//var image ="http://www.google.com/mapfiles/ms/micons/cycling.png";
+	var image ="https://spinlister-belvedere-assets.spinlister.com/spinlister/map/map-marker-bike-0b12dab4d6debbdb5507f9fe5a6afe0a.png"
+	//image.src ="http://www.google.com/mapfiles/ms/micons/cycling.png"
+
 	var placeLoc = new google.maps.LatLng(staion.lat, staion.lng);
 	var marker = new google.maps.Marker({
 		map : map,
 		position : placeLoc,
-		title : "Bike Location"
+		title : "Bike Location",
+		icon: image
 	});
 
 	google.maps.event.addListener(marker, 'mouseover', function(i) {
-		infowindow.setContent(staion.description + '\n' + staion.addr);
+		infowindow.setContent(staion.description + ' Located at ' + staion.addr);
 		infowindow.open(map, this);
 	});
-	
+
 	google.maps.event.addListener(marker, 'click', function(i) {
+
+		document.getElementById("address").innerHTML = staion.addr;
 		
-		document.getElementById("address").value = staion.addr;
-		
+		document.getElementById("bikeCode").innerHTML = staion.bikeCode;
+		document.getElementById("description").innerHTML = staion.description;
 		document.getElementById("bikeId").value = staion.bikeId;
 		document.getElementById("userEmail").value = staion.owner;
-		document.getElementById("dateRange").value = document
-				.getElementById('userFromDate').value
+		document.getElementById("dateRange").innerHTML = document.getElementById('userFromDate').value
 				+ " to " + document.getElementById('userToDate').value;
+		document.getElementById("accessories").innerHTML = staion.accessories;
+		// $('#enableButton').enabled;
+		document.getElementById("enableButton").disabled=false;
 	});
 }
 

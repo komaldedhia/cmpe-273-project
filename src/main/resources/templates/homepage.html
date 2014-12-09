@@ -12,27 +12,9 @@
 
 <body>
 
-<nav class="navbar navbar-default navbar-blue" role="navigation">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
 
-    <div class="navbar-header">
-       <a class="navbar-brand" href="#" th:href="@{/api/v1/users/dashboard}">Bike Share</a>
-      <a class="navbar-brand">Welcome User</a>
-    </div>
-    
-     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-     
-      <ul class="nav navbar-nav navbar-right">
-
-        <li><a href="#" th:href="@{/about}">About Us</a></li>
-        <li class="active"><a href="#" th:href="@{/logout}">LogOut</a></li>
-      </ul>
-    </div>   
-    
- </div><!-- /.container-fluid -->
-
-</nav>
+<div th:include="header"></div>
+ <!-- <p th:text="'email: ' + ${userLogin.email}"/> -->
 
 <h2 style="text-align:center;">Welcome to Bike Share</h2>
  <h3 style="text-align:center;">Get Started !! Rent or List a bike </h3>
@@ -118,7 +100,7 @@
 </div>
 </div>
 
-  <br></br>
+ <br></br>
  <div class="row">
  <div class="col-xs-6 col-md-4"></div>
   <div class="col-xs-6 col-md-4">
@@ -131,6 +113,7 @@
  </div>
 
  <!-- <p><a href="#" th:href="@{/api/v1/bike/getListedBike}">Listed Bikes</a></p> -->
+
     
 <script src ="/js/jquery-1.11.1.min.js"></script>
 <script src ="/js/bootstrap.min.js"></script>

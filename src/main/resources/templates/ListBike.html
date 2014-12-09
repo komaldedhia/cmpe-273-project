@@ -19,31 +19,12 @@
 	</style>
   </head>
 <body>
-<nav class="navbar navbar-default navbar-blue" role="navigation">
-    <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
 
-	    <div class="navbar-header">
-	       <a class="navbar-brand" href="#">Bike Share</a>
-	      <a class="navbar-brand">Welcome User</a>
-	    </div>
-    
-     	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-     
-	      <ul class="nav navbar-nav navbar-right">
-	
-	        <li><a href="#" th:href="@{/about}">About Us</a></li>
-	        <li class="active"><a href="#" th:href="@{/logout}">LogOut</a></li>
-	      </ul>
-    	</div>   
-    
-	 </div><!-- /.container-fluid -->
-
- </nav>
-
+<div th:include="header"></div>
 
 <!-- <p th:text="'email: ' + ${bike.userEmail}"/> -->
-<p th:text="'email: ' + ${userLogin.email}"/>
+<!-- <p th:text="'email: ' + ${userEmail}"/> -->
+
 <div class="col-md-6 col-md-offset-3">
   <div class="panel panel-default">
     <div class="panel-heading">Sign Up</div>
@@ -139,7 +120,7 @@
 <input type="hidden" class="form-control" id="longitude" placeholder="Longitude" th:field="*{longitude}"></input>
 </div>
   <div class="col-xs-6 col-sm-4 col-md-offset-4">
-  <button id="submit" type="submit" class="btn btn-default">Submit</button></div>
+  <button id="submit" type="submit" class="btn btn-default">List My Bike</button></div>
 </form>
 </div>
 </div>
