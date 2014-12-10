@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -6,41 +5,53 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <link rel="stylesheet"
-	th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap.min.css}"
-	href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+       th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap.min.css}"
+       href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
 <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js}"
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+       src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-<script type="text/javascript" th:src="@{/js/rent.js}"	src="../static/js/rent.js"></script>
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/js/rent.js}"        src="../static/js/rent.js"></script>
+<script        src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
 
 <body>
 
-	<nav class="navbar navbar-default navbar-blue" role="navigation">
-		<div class="container-fluid">
-			<!-- Brand and toggle get grouped for better mobile display -->
+       <nav class="navbar navbar-default navbar-blue" role="navigation">
+               <div class="container-fluid">
+                       <!-- Brand and toggle get grouped for better mobile display -->
 
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#" th:href="@{/api/v1/users/dashboard}">Bike Share</a> 
-				<a class="navbar-brand">Welcome User</a>
-			</div>
+                       <div class="navbar-header">
+                               <!-- <a class="navbar-brand" href="#" th:href="@{/api/v1/users/dashboard}">Bike Share</a> --> 
+                              
+                             <p class="navbar-brand">Welcome User</p> 
+                       </div>
 
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
+                       <div class="collapse navbar-collapse"
+                               id="bs-example-navbar-collapse-1">
 
-				<ul class="nav navbar-nav navbar-right">
+                               <ul class="nav navbar-nav navbar-right">
+								<li>
+								
+								 <form action="#" th:action="@{/api/v1/users/dashboard}" th:method="post" role="form">
+                                 
+                                <input type="hidden" name="email" id="userEmail" th:value="${userLogin.email}" />
+                               
+                                <button style="font-size:20px;margin-top:4%;" id="submit1" type="submit" class="btn btn-link">
+                                Bike Share</button>
+                               </form>
+								
+								</li>
 
-					<li><a href="#" th:href="@{/about}">About Us</a></li>
-					<li class="active"><a href="#" th:href="@{/logout}">LogOut</a></li>
-				</ul>
-			</div>
+                                       <li><a href="#" th:href="@{/about}">About Us</a></li>
+                                       <li class="active"><a href="#" th:href="@{/logout}">LogOut</a></li>
+                               </ul>
+                       </div>
 
-		</div>
+               </div>
 
-	</nav>
-	
-	
+       </nav>
+       
+       
 </body>
 
 </html>

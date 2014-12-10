@@ -115,7 +115,7 @@ def updateBikes(@PathVariable email:String,@PathVariable bike_id:String,@Request
     //update the bike collection
     //update the notification collection
     @RequestMapping(value=Array("/rent"),method = Array(RequestMethod.POST))
-    def rentBike(@ModelAttribute rentedBike:RentBike,userLogin: UserLogin,model:Model)=
+    def rentBike(rentedBike:RentBike,userLogin: UserLogin,model:Model)=
               {
                 println("I am in rentBike")
              
@@ -129,6 +129,7 @@ def updateBikes(@PathVariable email:String,@PathVariable bike_id:String,@Request
                 c.add(Calendar.DATE,1)
                 var newFromDate = formatter.format(c.getTime()); 
                 println("newFromDate "+newFromDate)
+                println("bike code "+rentedBike.getBikeCode )
                
                 BikeRepository.updateRentBikes(rentedBike.getBikeId,newFromDate)
               

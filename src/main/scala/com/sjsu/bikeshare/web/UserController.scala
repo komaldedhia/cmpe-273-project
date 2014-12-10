@@ -143,8 +143,8 @@ def getBikes(@PathVariable email:String) = {
 BikeRepository.getBikes(email)
 }
 
-@RequestMapping(value=Array("/dashboard"),method = Array(RequestMethod.GET))
-  def dashboard(model:Model,userLogin:UserLogin) = 
+@RequestMapping(value=Array("/dashboard"),method = Array(RequestMethod.POST))
+  def dashboard(userLogin:UserLogin,model:Model) = 
   {
   model.addAttribute("userLogin",userLogin)
   println("email frm header"+userLogin.getEmail())
