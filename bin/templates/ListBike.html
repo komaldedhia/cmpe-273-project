@@ -10,7 +10,7 @@
    
    body {
      margin: 0;
-     background: url('/images/img2.jpg');
+     background: url('/images/generic_bg_img.jpg');
      background-size: 100%;
      background-repeat:no-repeat;
      display: compact;
@@ -25,13 +25,13 @@
 <!-- <p th:text="'email: ' + ${bike.userEmail}"/> -->
 <!-- <p th:text="'email: ' + ${userEmail}"/> -->
 
-<div class="col-md-6 col-md-offset-3">
+<div class="col-md-5 col-md-offset-3" style="margin-top:3%;">
   <div class="panel panel-default">
     <div class="panel-heading">Sign Up</div>
      <div class="panel-body">
 		<form action="#" th:action="@{/api/v1/bike/save/}" th:object="${bike}" method="post" role="form">
   			<div class="row">
-			  <div class="col-xs-6 col-md-offset-3">
+			  <div class="col-xs-7 col-md-offset-2">
 		    	<label for="address" >Address/Zip Code *</label>
 		    	<input type="text" class="form-control" id="location" placeholder="Enter address" th:field="*{address}"/>
 		    	<p style="color:red;" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Name Error</p>
@@ -39,14 +39,14 @@
    			</div>
 	<br></br>
 	<div class="row">
-		<div class="col-xs-6 col-md-offset-3">
+		<div class="col-xs-7 col-md-offset-2">
 		<label for="option">Verify Address *</label> <input id="option" type="checkbox" onclick="codeAddress()"/>
 		</div>
    </div>
 	<br></br>
 		
   <div class="row">
-	  <div class="col-xs-6 col-md-offset-3">
+	  <div class="col-xs-7 col-md-offset-2">
 	    <label for="accessories">Accessories</label>
 	    <input type="text" class="form-control" id="accessories" placeholder="accessories" th:field="*{accessories}"/>
 	  </div>
@@ -57,7 +57,7 @@
   <input type="hidden" name="email" id="userEmail" th:value="${userLogin.email}"/>
   
 	<div class="row">
-	  <div class="col-xs-6 col-md-offset-3">
+	  <div class="col-xs-7 col-md-offset-2">
 	    <label for="description">Description *</label>
 	    <input type="text" class="form-control" id="description" placeholder="description" th:field="*{description}"/>
 	    <p style="color:red;" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Name Error</p> 
@@ -66,7 +66,7 @@
 	<br></br>  
  
 	<div class="row">
-		<div class="col-xs-6 col-md-offset-3">
+		<div class="col-xs-7 col-md-offset-2">
 	    <label for="bikeCode">Bike Code *</label>
 	    <input type="text" class="form-control" id="bikeCode" placeholder="bikeCode" th:field="*{bikeCode}"/>
 	    <p style="color:red;" th:if="${#fields.hasErrors('bikeCode')}" th:errors="*{bikeCode}">Name Error</p>
@@ -75,7 +75,7 @@
 	<br></br>
   
    <div class="row">
-		<div class="col-xs-6 col-md-offset-3">
+		<div class="col-xs-7 col-md-offset-2">
 	     <label for="fromDate">From Date *</label>
 	     <input type="date" class="form-control" id="fromDate" placeholder="MM/DD/YYYY" th:field="*{fromDate}"/>
 	     <p style="color:red;" th:if="${#fields.hasErrors('fromDate')}" th:errors="*{fromDate}">Name Error</p>
@@ -84,7 +84,7 @@
 	<br></br>
   
    <div class="row">
-	  <div class="col-xs-6 col-md-offset-3">
+	  <div class="col-xs-7 col-md-offset-2">
     	<label for="toDate">To date *</label>
     	<input type="date" class="form-control" id="toDate" placeholder="To date" th:field="*{toDate}"/>
     	<p style="color:red;" th:if="${#fields.hasErrors('toDate')}" th:errors="*{toDate}">Name Error</p>
@@ -92,7 +92,7 @@
   </div>
   <br></br>
   <div class="row">
-	<div class="col-xs-6 col-md-offset-3">
+	<div class="col-xs-7 col-md-offset-2">
 		<label for="bikeType">Bike Type *</label>
 			<select class="form-control" name="bikeType" id="bikeType" th:field="*{bikeType}">
 			 <option value="">Select your bike type</option>
@@ -114,13 +114,12 @@
 <label for="latitude"></label>
 <input type="hidden" class="form-control" id="latitude" placeholder="Latitude" th:field="*{latitude}"></input>
 </div>
-
+<div class="col-xs-7 col-sm-4 col-md-offset-4">
+  <button id="submit" type="submit" class="btn btn-default">List My Bike</button></div>
 <div class="form-group">
 <label for="longitude"></label>
 <input type="hidden" class="form-control" id="longitude" placeholder="Longitude" th:field="*{longitude}"></input>
 </div>
-  <div class="col-xs-6 col-sm-4 col-md-offset-4">
-  <button id="submit" type="submit" class="btn btn-default">List My Bike</button></div>
 </form>
 </div>
 </div>

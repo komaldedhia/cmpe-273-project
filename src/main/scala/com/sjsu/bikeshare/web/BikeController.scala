@@ -158,11 +158,12 @@ def updateBikes(@PathVariable email:String,@PathVariable bike_id:String,@Request
             
               NotificationRepository.save(notification)
                model.addAttribute("userLogin", userLogin)
+               model.addAttribute("bikecode", rentedBike.bikeCode)
+               model.addAttribute("code","1")
                "homepage"
               }
     
-//Goudamy
-//listing bikes
+
  @RequestMapping(value = Array("/getListedBike"), method = Array(RequestMethod.POST))
  def List(@ModelAttribute bike:Bike, model:Model,@ModelAttribute userLogin: UserLogin) = {
        println("here I am ")
@@ -177,17 +178,6 @@ def updateBikes(@PathVariable email:String,@PathVariable bike_id:String,@Request
        println(list)
        println(rented)
       "bikeList"
-    }
-  @RequestMapping(value = Array("/listing"), method = Array(RequestMethod.POST))
-  def listingBike(@ModelAttribute @RequestBody  bike1:Bike, model:Model ) = {
-       println("here I am ")
-       println(bike1.bikeId)
-     
-   //Kiran plz start from here
-   model.addAttribute("mybikeid", bike1.bikeId) 
-      "redirect:/api/v1/bike/update/{mybikeid}"
-      //updateBikeForm(bike1.bikeId, model)
-      //"homepage"  
     }
   
 @RequestMapping(value = Array("/return"), method = Array(RequestMethod.POST))
@@ -254,37 +244,65 @@ def reviewABike(@ModelAttribute review: Review,model:Model) = {
 }
 /**_---------------------------review bike ends here--------**/
 
-@RequestMapping(value = Array("/updateBike"),method = Array(RequestMethod.POST))
-@ResponseStatus(value = HttpStatus.CREATED)
-//@ModelAttribute newBike: Bike,model:Model
-def updateBike(@RequestBody newBike: Bike) = {
-      println("---In update bike contorller---")
-      println("bike id "+newBike.bikeId)
-      println("address "+newBike.address)
-      println(" accessories"+newBike.accessories)
-      println("userEmail "+newBike.getUserEmail)
-      println("fromDate"+newBike.getFromDate)
-      println("toDate"+newBike.getToDate)
-      println("Bike code "+newBike.getBikeCode)
-      BikeRepository.updateBikesv1(newBike.bikeId, newBike)
-      println("---end of bike contorller function ----")
-      //var userLogin = new UserLogin()
-      //model.addAttribute("userLogin", userLogin)
-     //"homepage"
-      //newBike
-}
 
 @RequestMapping(value=Array("/update/{bike_id}"),method = Array(RequestMethod.GET))
 def updateBikeForm( @PathVariable bike_id:String,model:Model) = {
       print("update bike id api called ")
       println(bike_id)
      var oldBike= BikeRepository.getBike(bike_id)
-     // var bike = getBike(bike_id)
-      //get bike from bike id
+     
+      val df:DateFormat = new SimpleDateFormat("MM-dd-yyyy'T'HH:mm:ss.SSSZ");  
+     val frm = df.format(oldBike.get("fromDate"));    
+     val to = df.format(oldBike.get("toDate"))
+     val fromResult:String = frm.substring(0, 10)
+     val toResult:String = to.substring(0,10)
+      oldBike.put("fromDate",fromResult)
+      oldBike.put("toDate",toResult)
+          //get bike from bike id
       model.addAttribute("oldBike", oldBike)
       model.addAttribute("newBike", new Bike())
      // var newBike = new Bike()
       "UpdateBike"
   }
+
+@RequestMapping(value = Array("/listing"), method = Array(RequestMethod.POST))
+  def listingBike(@ModelAttribute @RequestBody  bike1:Bike, model:Model,userLogin: UserLogin) = {
+       println("yeah in newly modified method and working fine ")
+       println(bike1.bikeId)
+       println("got email id in listing bike of controlelr"+userLogin.email)
+      model.addAttribute("userLogin",userLogin)
+       // "redirect:/api/v1/bike/update/{mybikeid}"
+      
+      var oldBike= BikeRepository.getBike(bike1.bikeId)
+     
+      val df:DateFormat = new SimpleDateFormat("MM-dd-yyyy'T'HH:mm:ss.SSSZ");  
+     val frm = df.format(oldBike.get("fromDate"));    
+     val to = df.format(oldBike.get("toDate"))
+     val fromResult:String = frm.substring(0, 10)
+     val toResult:String = to.substring(0,10)
+      oldBike.put("fromDate",fromResult)
+      oldBike.put("toDate",toResult)
+      model.addAttribute("oldBike", oldBike)
+      //model.addAttribute(attributeName, attributeValue)
+      model.addAttribute("newBike", new Bike())
+      "UpdateBike"
+    }
+
+@RequestMapping(value = Array("/userUpdateBike"),method = Array(RequestMethod.POST))
+def userUpdateBike(@ModelAttribute newBike:Bike,model:Model,userLogin:UserLogin) = {
+      println("---In update bike contorller---")
+      println("address "+newBike.address)
+      println(" accessories"+newBike.accessories)
+      println("userEmail "+userLogin.email)
+      println("fromDate"+newBike.getFromDate)
+      println("toDate"+newBike.getToDate)
+      println("Bike code "+newBike.getBikeId())
+      BikeRepository.updateBikesv1(newBike,userLogin)
+      println("---end of bike contorller function ----")
+      model.addAttribute("userLogin", userLogin)
+      "homepage"
+      //homepage
+}
+
 
 }

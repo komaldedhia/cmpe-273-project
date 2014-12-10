@@ -43,13 +43,13 @@
 </nav>
 
 
-<div class="col-md-6 col-md-offset-3">
+<div class="col-md-5 col-md-offset-3" style="margin-top:3%;">
   <div class="panel panel-default">
     <div class="panel-heading">Sign Up</div>
      <div class="panel-body">
   <form action="#" th:action="@{/api/v1/users/signupnow}" th:object="${user}" method="post" role="form">
   <div class="row">
-	  <div class="col-xs-6 col-md-offset-3">
+	  <div class="col-xs-7 col-md-offset-2">
 	    <label for="fname">First Name *</label>
 	    <input type="text" class="form-control" id="fname" placeholder="Enter your first name" th:field="*{firstName}" />
 	    <p style="color:red;" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Name Error</p>
@@ -57,7 +57,7 @@
   </div>
 	<br></br>
   <div class="row">
-	  <div class="col-xs-6 col-md-offset-3">
+	  <div class="col-xs-7 col-md-offset-2">
 	    <label for="lname">Last Name *</label>
 	    <input type="text" class="form-control" id="lname" placeholder="Enter your last name" th:field="*{lastName}"/>
 	    <p style="color:red;" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Name Error</p>
@@ -65,7 +65,7 @@
   </div>
 	<br></br>
   <div class="row">
-	  <div class="col-xs-6 col-md-offset-3">
+	  <div class="col-xs-7 col-md-offset-2">
 	    <label for="email">Email address *</label>
 	    <input type="email" class="form-control" id="email" placeholder="Enter email" th:field="*{email}"/>
 	    <p style="color:red;" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name Error</p>
@@ -73,7 +73,7 @@
   </div>
 	<br></br>
   <div class="row">
-	  <div class="col-xs-6 col-md-offset-3">
+	  <div class="col-xs-7 col-md-offset-2">
 	    <label for="password">Password *</label>
 	    <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}"/>
 	    <p style="color:red;" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</p>
@@ -81,7 +81,7 @@
   </div>
 	<br></br>
   <div class="row">
-	  <div class="col-xs-6 col-md-offset-3">
+	  <div class="col-xs-7 col-md-offset-2">
 	    <label for="contact">Contact Number *</label>
 	    <input type="text" class="form-control" id="contact" placeholder="Phone Number" th:field="*{contactNo}" />
 	    <p style="color:red;" th:if="${#fields.hasErrors('contactNo')}" th:errors="*{contactNo}">Name Error</p>
@@ -89,20 +89,20 @@
   </div>
 	<br></br>
   <div class="row">
-	   <div class="col-xs-6 col-md-offset-3">
+	   <div class="col-xs-7 col-md-offset-2">
 		  <label for="option">check me to get verification code  </label> <input id="option" type="checkbox" onclick="sendCode()"/>
 	  </div>
    </div>
 	<br></br>
   <div class="row">
-	  <div class="col-xs-6 col-md-offset-3">
+	  <div class="col-xs-7 col-md-offset-2">
 	    <label for="twiliocode">verification code *</label>
 	    <input type="text" class="form-control" id="code" placeholder="Verification code" th:field="*{twiliocode}"   />
 	    <!-- <p style="color:red;" th:if="${#fields.hasErrors('twiliocode')}" th:errors="*{twiliocode}">Name Error</p>-->
 	  </div>
  </div>
 	<br></br>
-  <div class="col-xs-6 col-sm-4 col-md-offset-4">
+  <div class="col-xs-7 col-sm-4 col-md-offset-4">
     <button id="submit" type="submit" class="btn btn-default">Submit</button>
   </div>
     

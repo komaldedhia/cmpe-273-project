@@ -137,47 +137,56 @@ val fetch_user = MongoDBObject("bike_id" -> bike_id)
  //user_get.toString()
 
  }
-def updateBikesv1(bike_id: String,bike:Bike)={
-   println("---in bike repo---")
-   println("bike id " +bike_id)
-   println("bike string"+bike.toString)
-   println("bike code "+bike.bikeCode)
-   println("bike get codde"+bike.getBikeCode)
-   println("bike from date"+bike.fromDate)
-   //added for date format
-   val shformat:DateFormat   = new SimpleDateFormat("MM-dd-yyyy");
-   shformat.setTimeZone(TimeZone.getTimeZone("GMT"))
-   //var formatter:DateFormat = new SimpleDateFormat("yyyy-MM-dd")
+def updateBikesv1(bike:Bike,userLogin:UserLogin)={
+    println("bike from date"+bike.fromDate)
+    println("bike to date"+bike.toDate)
+    println("bikeid"+bike.bikeId)
+    
+    val formatter:DateFormat = new SimpleDateFormat("MM-dd-yyyy")
    //formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
-   val frmdate:Date = shformat.parse(bike.fromDate)
-   println("shwetha bike from date"+ frmdate)
-   val todate:Date = shformat.parse(bike.toDate)
-   println("shwetha bike from date"+ todate)
-  /*val dateStr = bike.fromDate
-    val formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy")
-    val date = formatter.parse(dateStr).asInstanceOf[Date]
-    println("date parsed "+date)*/
+  println("bike.fr"+bike.fromDate.toString())
+   val frmdate:Date = formatter.parse(bike.fromDate)
+   val toDate:Date = formatter.parse(bike.toDate)
+   println("date is"+frmdate)
+   
+  val df:DateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    val frm = df.format(frmdate);
+    val to = df.format(toDate);
+      
+    println("second formatter"+frm)
+   // println("from result"+fromResult)
+   
+   val formatter2:DateFormat = new SimpleDateFormat("yyyy-MM-dd")
+  formatter2.setTimeZone(TimeZone.getTimeZone("GMT"))
+  
+   val newfrmdate:Date = formatter2.parse(frm)
+   val newtodate:Date = formatter2.parse(to)
+   println("new from date::"+newfrmdate)
 
-   val fetch_bike_query = MongoDBObject("bikeId" -> bike_id)
+   
+   val longitude=Double.parseDouble(bike.longitude)
+   val latitude=  Double.parseDouble(bike.latitude)
+   val fetch_bike_query = MongoDBObject("bikeId" -> bike.bikeId)
    val dbBike =  MongoFactory.BikesCollection.findOne(fetch_bike_query)
+   println(dbBike.toString())
    if(dbBike!=null)
     {
-        val dbBikeReview = dbBike.get("bikeReviews")
-        val userUpdt= MongoFactory.BikesCollection.update(fetch_bike_query,MongoDBObject("bikeId" -> bike_id,
+          val userUpdt= MongoFactory.BikesCollection.update(fetch_bike_query,MongoDBObject("bikeId" -> bike.bikeId,
           "address" -> bike.address,
+          "userEmail" -> userLogin.email,
            "accessories" -> bike.accessories,
-          "fromDate" -> frmdate,
-          "toDate" -> todate, 
-          "userEmail" -> bike.userEmail,
+           "description" ->dbBike.get("description").toString(),
+          "fromDate" -> newfrmdate,
+          "toDate" -> newtodate,
           "bikeCode"->bike.bikeCode,
-          "bikeReviews"->dbBikeReview))
+          "loc"->MongoDBObject("type" -> "Point","coordinates" ->(GeoCoords(longitude,latitude)))
+          ))
      }
     
    println("updated bike")
  }
 
 
-//Get a particular bike
 def getBike(bike_id: String) = {
     println("Shwetha, Trying to get a bike")
     val bikeQuery = MongoDBObject("bikeId"->bike_id)
@@ -237,8 +246,8 @@ def rentedBikes(email : String) ={
     val user_get=  MongoFactory.notificationCollection.find(fetch_user)
     for(doc <- user_get) {
       list.add(doc)
-          }
-    println(list)
+     }
+   // println(list)
     list
   }  
  
@@ -252,17 +261,26 @@ def rentedBikes(email : String) ={
     for(doc <- user_get) {
       list.add(doc)
      }
-    println(list)
+    //println(list)
     list
   } 
  
   def listingBikes(email : String,bike:Bike) ={  
-    var list:List[DBObject] = new ArrayList()
+    var list = new java.util.ArrayList[DBObject]()
+  
+    list.clear()
     println(email+"i have come a long way")
     val fetch_user = MongoDBObject("userEmail" -> email )
     println(fetch_user)
     val user_get=  MongoFactory.BikesCollection.find(fetch_user)
     for(doc <- user_get) {
+     val df:DateFormat = new SimpleDateFormat("MM-dd-yyyy'T'HH:mm:ss.SSSZ");  
+     val frm = df.format(doc.get("fromDate"));    
+     val to = df.format(doc.get("toDate"))
+     val fromResult:String = frm.substring(0, 10)
+     val toResult:String = to.substring(0,10)
+      doc.put("fromDate",fromResult)
+      doc.put("toDate",toResult)
       list.add(doc)
           }
     println(list)

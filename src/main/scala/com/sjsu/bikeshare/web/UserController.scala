@@ -144,8 +144,9 @@ BikeRepository.getBikes(email)
 }
 
 @RequestMapping(value=Array("/dashboard"),method = Array(RequestMethod.GET))
-  def dashboard(model:Model) = 
+  def dashboard(model:Model,userLogin:UserLogin) = 
   {
+  model.addAttribute("userLogin", userLogin)
   "redirect:/homepage"
    }  
 

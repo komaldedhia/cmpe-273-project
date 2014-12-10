@@ -22,8 +22,8 @@
 			<!-- Brand and toggle get grouped for better mobile display -->
 
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Bike Share</a> <a
-					class="navbar-brand">Welcome User</a>
+				<a class="navbar-brand" href="#" th:href="@{/api/v1/users/dashboard}">Bike Share</a> 
+				<a class="navbar-brand">Welcome User</a>
 			</div>
 
 			<div class="collapse navbar-collapse"
@@ -31,9 +31,8 @@
 
 				<ul class="nav navbar-nav navbar-right">
 
-					<li><a href="AboutUs.html">About Us</a></li>
-					<li class="active"><a href="#"
-						th:href="@{/api/v1/users/logout}">LogOut</a></li>
+					<li><a href="#" th:href="@{/about}">About Us</a></li>
+					<li class="active"><a href="#" th:href="@{/logout}">LogOut</a></li>
 				</ul>
 			</div>
 
