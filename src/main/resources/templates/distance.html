@@ -35,7 +35,7 @@ html, body, #map-canvas {
 
 <body>
 	
-<div th:include="header"></div>
+<!-- <div th:include="header"></div> -->
 
 
 	<input type="hidden" id="bikeList" th:value="${bikeList}" />
@@ -64,10 +64,10 @@ html, body, #map-canvas {
            <td><span><label >Bike Description :</label></span> </td>
             <td><span id="description"></span></td>
           </tr>
-          <!--  <tr>
+          <tr>
            <td><span><label >Bike Code :</label></span> </td>
             <td><span id="bikeCode"></span></td>
-          </tr> -->
+          </tr>
           <tr>
            <td><span><label >Bike Accessories :</label></span> </td>
             <td><span id="accessories"></span></td>
@@ -83,9 +83,9 @@ html, body, #map-canvas {
 		<input type="hidden" id="bikeId" name="bikeId"></input> <input
 			type="hidden" id="userFromDate" name="fromDate" th:value="${userFromDate}" /> <input
 			type="hidden" id="userToDate" name="toDate" th:value="${userToDate}" /> <input
-			type="hidden"  id="userEmail" name="userEmail"  /> <input
+		  type="hidden" id="userEmail1" name="userEmail"  /> <input
 			 type="hidden"	name="email" id="requesterEmail" th:value="${userLogin.email}" />
-			  <input name="bikeCode" id="bikeCode"  />
+			  <input type="hidden" name="bikeCode" id="bikeCode"  />
 		<button id="enableButton" type="submit" class="btn btn-default" style="margin-left:25%;">Rent Bike</button>
 	</form>
 

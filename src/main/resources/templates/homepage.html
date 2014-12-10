@@ -15,7 +15,6 @@
 
 <div th:include="header"></div>
  <!-- <p th:text="'email: ' + ${userLogin.email}"/> -->
-
 <h2 style="text-align:center;">Welcome to Bike Share</h2>
  <h3 style="text-align:center;">Get Started !! Rent or List a bike </h3>
  <hr/>
@@ -43,6 +42,7 @@
  </div>
   <button id="submit" type="submit" class="btn btn-default">Rent a Bike</button>
   <input type="hidden" name="mode" id="code" th:value="${code}" />
+   <input type="hidden" name="bikecode" id="bikecode" th:value="${bikecode}" />
 </form>
 </div>
 
@@ -117,21 +117,24 @@
 
  <!-- <p><a href="#" th:href="@{/api/v1/bike/getListedBike}">Listed Bikes</a></p> -->
 
-    
+<script type="text/javascript" th:src="@{/js/jquery.alerts.js}"	src="../static/js/jquery.alerts.js"></script>
+<script type="text/javascript" th:src="@{/js/jquery.ui.draggable.js}"	src="../static/js/jquery.ui.draggable.js"></script>
 <script src ="/js/jquery-1.11.1.min.js"></script>
 <script src ="/js/bootstrap.min.js"></script>
 <script>
 $(document).ready(function(){
 	var modeval =$("#mode").val();
 	var rentcode = $("#code").val();
+	var bikeCde = $("#bikecode").val();
 	if(modeval!=1)
 	{
 	$("#returnHide").hide();
 	}
-	if(rentcode=='alert')
+	/*if(rentcode=='alert')
 		{
-		alert("You have rented bike successfully.Please use this code to unlock the bike ");
-		}
+		alert("You have rented bike successfully.Please use this code to unlock the bike "+bikeCde);
+		jAlert('Example of a basic alert box in jquery'+bikeCde, 'bike Code alert');
+		}*/
 	$("#submit2").click(function(){
 	});
 	

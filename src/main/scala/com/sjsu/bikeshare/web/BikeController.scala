@@ -143,8 +143,9 @@ def updateBikes(@PathVariable email:String,@PathVariable bike_id:String,@Request
            
             
               NotificationRepository.save(notification)
+              val bikeCode=rentedBike.getBikeCode
                model.addAttribute("userLogin", userLogin)
-               model.addAttribute("bikecode", rentedBike.bikeCode)
+               model.addAttribute("bikecode",bikeCode)
                model.addAttribute("code","alert")
                "homepage"
               }
@@ -266,19 +267,20 @@ def updateBikeForm( @PathVariable bike_id:String,model:Model) = {
      val toResult:String = to.substring(0,10)
       oldBike.put("fromDate",fromResult)
       oldBike.put("toDate",toResult)
+      println("got bike id"+oldBike.get("bikeId"))
       model.addAttribute("oldBike", oldBike)
       model.addAttribute("userLogin",userLogin)
-      model.addAttribute("newBike", new Bike())
+      model.addAttribute("bike", new Bike())
       "UpdateBike"
     }
 
 @RequestMapping(value = Array("/userUpdateBike"),method = Array(RequestMethod.POST))
-def userUpdateBike(@ModelAttribute newBike:Bike,model:Model,userLogin:UserLogin) = {
-      
-      BikeRepository.userUpdateBike(newBike,userLogin)
+def userUpdateBike(@ModelAttribute bike:Bike,bindingResult: BindingResult,model:Model,userLogin:UserLogin) = {
+    
+      BikeRepository.userUpdateBike(bike,userLogin)
       model.addAttribute("userLogin", userLogin)
       "homepage"
-}
+   }
 
 
 }

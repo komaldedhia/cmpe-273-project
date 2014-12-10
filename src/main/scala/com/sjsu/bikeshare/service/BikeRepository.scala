@@ -167,6 +167,7 @@ def userUpdateBike(bike:Bike,userLogin:UserLogin)={
           "fromDate" -> newfrmdate,
           "toDate" -> newtodate,
           "bikeCode"->bike.bikeCode,
+          "bikeType"->bike.bikeType,
           "loc"->MongoDBObject("type" -> "Point","coordinates" ->(GeoCoords(longitude,latitude)))
           ))
      }
@@ -180,8 +181,6 @@ def updateRentBikes(bikeId: String,fromDate:String)
     println("fromdate in updateRentBikes "+fromdate)
      val query = MongoDBObject("bikeId"-> bikeId)
    val update = $set("fromDate" ->fromdate)
-  //  val u1= MongoFactory.notificationCollection.findOne(query)
-   // println(u1)
    val res1 = MongoFactory.BikesCollection.update( query, update)
    println("Update: " + res1)
  }

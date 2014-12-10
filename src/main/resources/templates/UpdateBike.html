@@ -10,7 +10,7 @@
    
    body {
      margin: 0;
-     background: url('/images/imgup6.jpg');
+     background: url('/images/img1.jpg');
      background-size: 100%;
      background-repeat:no-repeat;
      display: compact;
@@ -20,17 +20,15 @@
   </head>
 <body>
 
-<div th:include="header"></div>
-
- 
+<div th:include="header"></div> 
 <!-- <p th:text="'address: ' + ${oldBike.address}"/> 
-<p th:text="'bikeCode: ' + ${oldBike.bikeCode}"/> 
+<p th:text="'bikeCode: ' + ${oldBike.bikeId}"/> 
  <p th:text="'email: ' + ${userEmail}"/> -->
 <div class="col-md-5 col-md-offset-3" style="margin-top:3%;">
   <div class="panel panel-default">
     <div class="panel-heading">Update Bike</div>
      <div class="panel-body">
-<form action="#" th:action="@{/api/v1/bike/userUpdateBike}" th:object="${newBike}" method="post" role="form"><!--method="post" th:action="@{/api/v1/bike/updateBike}" -->
+<form action="#" th:action="@{/api/v1/bike/userUpdateBike}" th:object="${bike}" method="post" role="form"><!--method="post" th:action="@{/api/v1/bike/updateBike}" -->
  <div class="row">
 	<div class="col-xs-7 col-md-offset-2">
     <label for="bikeId" >Bike Id</label>
@@ -51,8 +49,15 @@
 		<label for="option">Verify Address *</label> <input id="option" type="checkbox" onclick="codeAddress()"/>
 		</div>
    </div>
-	<br></br> 
-	
+	<br></br>
+		<div class="row">
+			<div class="col-xs-7 col-md-offset-2">
+				<label for="option">Verification Result</label> <input
+					class="form-control" id="VerifyError" type="text"
+					th:readonly="readonly" placeholder="Verification Result" />
+			</div>
+		</div>
+		<br></br>
   <div class="row">
 	<div class="col-xs-7 col-md-offset-2">
     <label for="accessories">Accessories</label>
@@ -60,6 +65,14 @@
   </div>
   </div>
    <br></br>
+
+<div class="row">
+	  <div class="col-xs-7 col-md-offset-2">
+	    <label for="description">Description *</label>
+	    <input type="text" class="form-control" name="description" id="description" th:value="${oldBike.description}"/>
+	  </div>
+   </div>
+	<br></br> 
 
   <div class="row">
 	<div class="col-xs-7 col-md-offset-2">
@@ -71,7 +84,8 @@
   <div class="row">
 	<div class="col-xs-7 col-md-offset-2">
     <label for="toDate">To Date</label>
-    <input type="text" class="form-control" name="toDate" id="toDate" placeholder="MM/dd/yyyy" th:value="${oldBike.toDate}"/> <!-- th:field="*{description}"  th:field="*{toDate}" th:value="${oldBike.toDate}"/>-->
+    <input type="text" class="form-control" name="toDate" id="toDate" placeholder="MM/dd/yyyy" th:value="${oldBike.toDate}"/> 
+   
   </div>
   </div>
   <br></br>
@@ -82,6 +96,24 @@
     <input type="text" class="form-control" name="bikeCode" id="bikeCode"  th:value="${oldBike.bikeCode}" /> <!--th:field="*{bikeCode}" th:field="*{bikeCode}"/>-->
   </div>
   </div>
+  <div class="row">
+	<div class="col-xs-7 col-md-offset-2">
+		<label for="bikeType">Bike Type *</label>
+			<select class="form-control" name="bikeType" id="bikeType"  th:value="${oldBike.bikeType}">
+			 <option value="">Select your bike type</option>
+			 <option value="mountain">Mountain Bike</option>
+			 <option value="Road">Road Bike</option>
+			 <option value="cruiser">Cruiser Bike</option>
+			 <option value="fixedGear">Fixed Gear</option>
+			 <option value="folding">Folding Bike</option>
+			 <option value="tandem">Tandem Bike</option>
+			 <option value="triathlon">Triathlon Bike</option>
+			 <option value="tricycle">Tricycle Bike</option>
+			 </select>
+	</div>
+   </div>
+	<br></br>
+  
   <div class="form-group">
 <label for="latitude"></label>
 <input type="hidden" class="form-control" id="latitude" placeholder="Latitude" th:field="*{latitude}"></input>
@@ -99,7 +131,6 @@
 </div>
 <script src ="/js/jquery-1.11.1.min.js"></script>
 <script src ="/js/bootstrap.min.js"></script>
-
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
  <script>
  var geocoder;
@@ -119,8 +150,11 @@ var toDate = $('#todate').val();
 	    	var bikeIdStore = $("#bikeId").val();
 	    	document.getElementById("latitude").value = latitude;
 	    	document.getElementById("longitude").value = longitude;
-	  	    } else {
-	      alert('Geocode was not successful for the following reason: ' + status);
+	    	document.getElementById("VerifyError").value = "Address Verified";
+		} else {
+			alert('Geocode was not successful for the following reason: '
+					+ status);
+			document.getElementById("VerifyError").value = "Incorrect Address";
 	    }
 	  });
 	}

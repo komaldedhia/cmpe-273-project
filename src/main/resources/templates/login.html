@@ -50,8 +50,7 @@
      <div class="panel-body">
 <form action="#" th:action="@{/api/v1/users/userval}" th:object="${userLogin}" method="post" role="form">
   <div class="row">
-  <div class="col-xs-6 col-md-4"></div>
-  <div class="col-xs-6">
+  <div class="col-xs-6 col-md-offset-3">
     <label for="email" >Email address *</label>
     <input type="email" class="form-control" id="email" placeholder="Enter email" th:field="*{email}"/>
     <p style="color:red;" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name Error</p>
@@ -59,8 +58,7 @@
   </div>
 	<br></br>
   <div class="row">
-  <div class="col-xs-6 col-md-4"></div>
-  <div class="col-xs-6">
+  <div class="col-xs-6 col-md-offset-3">
     <label for="password">Password *</label>
     <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}"/>
     <p style="color:red;" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</p>
@@ -68,8 +66,7 @@
   </div>
   <br></br>
  <div class="row">
- <div class="col-xs-6 col-md-4"></div>
-  <div class="col-xs-6">
+ <div class="col-xs-6 col-md-offset-3">
   <button id="submit" type="submit" class="btn btn-default">Submit</button>
   </div>
   </div>
@@ -80,11 +77,9 @@
 <form th:action="@{/connect/facebook}" th:method="POST">
 			<input type="hidden" name="scope" value="email,public_profile" />
 			<div class="formInfo">
-			<div class="col-xs-6 col-md-4"></div>
-			<div class="col-xs-6">
-			<p><button type="submit" class="btn btn-primary" style="margin-left:30%;">Connect to Facebook</button></p>
+				<p>You aren't connected to Facebook yet. Click the button to connect this application with your Facebook account.</p>
 			</div>
-			</div>
+			 <p><button type="submit" class="btn btn-primary" style="margin-left:30%;">Connect to Facebook</button></p>
 		</form>
 		</div>
 
