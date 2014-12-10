@@ -12,6 +12,7 @@ private val USER = "users"
 private val BIKES = "bikes"
 private val BikeTypes = "bikeTypes"
 private val Notification = "notification"
+private val COUNTERS = "counters"
   
 val uriString = "mongodb://cmpe273_team12:Cmpe273team@ds053090.mongolab.com:53090/bikeshare"
 val userName = "cmpe273_team12"
@@ -26,6 +27,8 @@ dbName.authenticate(userName,passWord )
  val BikesCollection = dbName(BIKES)
  val bikeTypeCollection = dbName(BikeTypes)
  val notificationCollection = dbName(Notification)
+ val counterCollection = dbName(COUNTERS)
+ 
  
 /*val userCollection = connection(USER)
  val BikesCollection = connection(BIKES)

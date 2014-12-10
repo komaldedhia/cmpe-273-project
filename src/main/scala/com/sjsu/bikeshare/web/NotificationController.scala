@@ -37,7 +37,7 @@ class NotificationController {
   @RequestMapping(value = Array("/notify"),method =Array(RequestMethod.POST))
   def saveNotification(@RequestBody @Valid notification: Notification): Notification = {
 
-  	notification.RequestorNotificationSent = true 
+  	 
     var newNotification: Notification = NotificationRepository.save(notification)
     newNotification
   }

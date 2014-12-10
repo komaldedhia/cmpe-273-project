@@ -26,17 +26,12 @@ var ownerId: String =_
 var requestorId: String =_
 
 @BeanProperty
-var RequestorNotificationSent: Boolean = _
-
-@BeanProperty
-var CodeRecieved: Boolean = _
-
-@BeanProperty
-var OwnerApproves: Boolean = _
+@NotEmpty
+var status: String = _
 
 @BeanProperty
 @NotEmpty
-var status: String = _
+var noteId: Int = _
 
 
 @BeanProperty

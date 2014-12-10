@@ -1,0 +1,41 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head> 
+ <title>Community Bike Share Web Application</title> 
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+   <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap.min.css}" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+	<link rel="stylesheet" th:href="@{/css/application.css}" href="/css/application.css" />
+	 <style>
+   
+   body {
+     margin: 0;
+     background: url('/images/login_bg.jpg');
+     background-size: 100%;
+     background-repeat:no-repeat;
+     display: compact;
+     font: 13px/18px "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+div{color:red;
+}
+   
+   </style> 	
+	
+</head>
+	<body>
+			
+		<div id="para" style="margin-top:10%;margin-left: 50%;">
+		<p style="font-size: 30px;font-family:Comic Sans MS" class="text-center">
+			Congratulations!!!<br/><br/>
+			 You are connected successfully		</p>
+			 <br/><br/>
+			<p style="font-size: 30px;font-family:Comic Sans MS" class="text-center"> Welcome to Community bike share </p>
+		</div>
+		<div class="col-md-3 col-md-offset-3" style="margin-top:2%;margin-left: 70%;">
+		<form th:action="@{/api/v1/connect/facebook}" th:method="GET">
+			<p><button type="submit">My Home Page</button></p>
+		</form>
+		</div>
+	</body>
+</html>

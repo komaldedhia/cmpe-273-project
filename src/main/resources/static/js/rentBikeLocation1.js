@@ -54,7 +54,19 @@ function initialize() {
 		zoom : 12,
 		center : userLatLng
 	};
+	
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+	
+	var userMarker = new google.maps.Marker({
+		map : map,
+		position : userLatLng,
+		title : "You Are Here"
+		});
+	
+	google.maps.event.addListener(userMarker, 'mouseover', function(i) {
+		infowindow.setContent( "You Are Here");
+		infowindow.open(map, this);
+	});
 
 	for (var i = 0; i < bikeDesc.length; i++) {
 

@@ -21,6 +21,7 @@
 
   </head>
 <body>
+
 <nav class="navbar navbar-default" role="navigation">
  		<div class="container-fluid">
     			<div class="navbar-header">
@@ -72,14 +73,21 @@
   <button id="submit" type="submit" class="btn btn-default">Submit</button>
   </div>
   </div>
+   <br></br>
 </form>
+<form th:action="@{/connect/facebook}" th:method="POST">
+			<input type="hidden" name="scope" value="email,public_profile" />
+			<div class="formInfo">
+				<p>You aren't connected to Facebook yet. Click the button to connect this application with your Facebook account.</p>
+			</div>
+			<p><button type="submit">Connect to Facebook</button></p>
+		</form>
 
 </div>
 </div>
 </div>
  <script src ="/js/jquery-1.11.1.min.js"></script>
 <script src ="/js/bootstrap.min.js"></script>
- 
 
 </body>
 </html>

@@ -14,8 +14,9 @@ import java.lang._
 import java.text.SimpleDateFormat
 import java.text.DateFormat
 import java.lang.Double
-import com.sjsu.bikeshare.domain.Review;
+import com.sjsu.bikeshare.domain.Review
 import com.sjsu.bikeshare.domain.UserLogin
+import org.joda.time.format.ISODateTimeFormat
 
 object BikeRepository {
   val dateFormat:DateFormat   = new SimpleDateFormat("yyyy-MM-dd");
@@ -132,6 +133,7 @@ val fetch_user = MongoDBObject("bike_id" -> bike_id)
  //user_get.toString()
 
  }
+
 def userUpdateBike(bike:Bike,userLogin:UserLogin)={
      val formatter:DateFormat = new SimpleDateFormat("MM-dd-yyyy")
    val frmdate:Date = formatter.parse(bike.fromDate)
@@ -150,8 +152,6 @@ def userUpdateBike(bike:Bike,userLogin:UserLogin)={
    val newfrmdate:Date = formatter2.parse(frm)
    val newtodate:Date = formatter2.parse(to)
    println("new from date::"+newfrmdate)
-
-   
    val longitude=Double.parseDouble(bike.longitude)
    val latitude=  Double.parseDouble(bike.latitude)
    val fetch_bike_query = MongoDBObject("bikeId" -> bike.bikeId)
@@ -174,6 +174,31 @@ def userUpdateBike(bike:Bike,userLogin:UserLogin)={
    println("updated bike")
  }
 
+def updateRentBikes(bikeId: String,fromDate:String)
+ {
+    var fromdate: Date = dateFormat.parse(fromDate)
+    println("fromdate in updateRentBikes "+fromdate)
+     val query = MongoDBObject("bikeId"-> bikeId)
+   val update = $set("fromDate" ->fromdate)
+  //  val u1= MongoFactory.notificationCollection.findOne(query)
+   // println(u1)
+   val res1 = MongoFactory.BikesCollection.update( query, update)
+   println("Update: " + res1)
+ }
+ 
+ def updateReturnBikes(noteId: Int,fromDate:String)= {
+
+    println("NoteId in updateReturnBikes " +noteId)
+    val dbObject = MongoDBObject("noteId" -> noteId)
+    val feildObject = MongoDBObject("_id" -> 0,"bikeId"->1)
+    val bikeIdColl=  MongoFactory.notificationCollection.findOne(dbObject,feildObject).get
+    val bikeId=bikeIdColl.get("bikeId").asInstanceOf[String]
+    println("bikeId in updateReturnBikes " +bikeId + "Date "+fromDate)
+     var fromdate: Date = dateFormat.parse(fromDate)
+     val query = MongoDBObject("bikeId"-> bikeId)
+     val update = $set("fromDate" ->fromdate)
+     val res1 = MongoFactory.BikesCollection.update( query, update)
+  }
 
 def getBike(bike_id: String) = {
     val bikeQuery = MongoDBObject("bikeId"->bike_id)
@@ -272,9 +297,22 @@ def rentedBikes(email : String) ={
   } 
  
   def returning(note:Notification) ={  
-   val query = MongoDBObject("bikeId"-> note.bikeId)
+
+   println(note.bikeId)
+   println(note.status)
+   println(note.fromDate)
+   println(note.toDate)
+   println(note.noteId)
+   /*val initial = MongoDBObject("bikeId"-> note.bikeId)
+   println(initial)
+   val result = MongoFactory.notificationCollection.update(MongoDBObject("bikeId"-> note.bikeId), $set("status" -> "1") )
+   println(result)*/
+   val query = MongoDBObject("noteId"-> note.noteId)
+
    val update = $set("status" ->"1")
-   val res1 = MongoFactory.notificationCollection.findAndModify(query = query, update = update)
-   println("findAndModify: " + res1)
+   // val u1= MongoFactory.notificationCollection.findOne(query)
+   // println(u1)
+   val res1 = MongoFactory.notificationCollection.update( query, update)
+   println("Update: " + res1)
   } 
   }

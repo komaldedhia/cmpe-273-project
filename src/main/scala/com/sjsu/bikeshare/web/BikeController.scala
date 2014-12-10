@@ -19,6 +19,7 @@ import java.util.Date
 import java.util.Calendar
 import java.text.SimpleDateFormat
 import org.springframework.validation.BindingResult
+import java.util.TimeZone
 
 @Controller
 @RequestMapping(value = Array("/api/v1/bike"))
@@ -117,23 +118,19 @@ def updateBikes(@PathVariable email:String,@PathVariable bike_id:String,@Request
     def rentBike(@ModelAttribute rentedBike:RentBike,userLogin: UserLogin,model:Model)=
               {
                 println("I am in rentBike")
-                val dateFormat:DateFormat   = new SimpleDateFormat("MM-dd-yyyy");
-                var fromDate: Date = dateFormat.parse(rentedBike.getToDate)
-                println(fromDate)
-                println("email "+rentedBike.getUserEmail)
-                println(rentedBike.bikeId)
-                var bikeId=rentedBike.bikeId
+             
+               val formatter:DateFormat = new SimpleDateFormat("yyyy-MM-dd")
+              
+                  println("Input To date " + rentedBike.getToDate)
+                  println("Input From date " + rentedBike.getFromDate)
+    
                 val c = Calendar.getInstance()
-                c.setTime(fromDate)
+                c.setTime(formatter.parse(rentedBike.getToDate))
                 c.add(Calendar.DATE,1)
-                
-                var newFromDate = dateFormat.format(c.getTime())
-                println(newFromDate)
-                rentedBike.setFromDate(newFromDate) 
-                
-                //bike.setBikeId(bike.bikeId)
-                //bike.setAccessories(bike.accessories)
-              //BikeRepository.updateBikes(bikeId,bike)
+                var newFromDate = formatter.format(c.getTime()); 
+                println("newFromDate "+newFromDate)
+               
+                BikeRepository.updateRentBikes(rentedBike.getBikeId,newFromDate)
               
               var notification:Notification = new Notification
               notification.setFromDate(rentedBike.getFromDate)
@@ -142,8 +139,7 @@ def updateBikes(@PathVariable email:String,@PathVariable bike_id:String,@Request
               notification.setRequestorId(userLogin.getEmail)
               notification.setStatus("0")
               notification.setBikeId(rentedBike.getBikeId)
-            //have to setRequestorId
-              //notification.setRequestorNotificationSent(true)
+           
             
               NotificationRepository.save(notification)
                model.addAttribute("userLogin", userLogin)
@@ -178,19 +174,26 @@ def updateBikes(@PathVariable email:String,@PathVariable bike_id:String,@Request
        model.addAttribute("userLogin", userLogin)
        model.addAttribute("note", new Notification())
        model.addAttribute("mode",1)
-       println(list)
+       //println(list)
       "homepage"
     }
 
 @RequestMapping(value = Array("/returning"), method = Array(RequestMethod.POST))
-def returningBike(@ModelAttribute note:Notification,userLogin:UserLogin, model:Model ) = {
-      println("here I am ")
+def returningBike(note:Notification,userLogin:UserLogin, model:Model ) = {
+      println("In Returning")
       val  email = userLogin.getEmail()
-      println(note.bikeId)
+      println("Note Id "+note.noteId)
       println("loaded from returning"+userLogin.getEmail())
-      val list =  BikeRepository.returnBikes(email)
-      // val rented =  BikeRepository.rentedBikes(email)
+     
+       
       val ret =  BikeRepository.returning(note)
+       var sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy
+      sdfDate.setTimeZone(TimeZone.getTimeZone("GMT"))
+      var now = new Date();
+      var strDate = sdfDate.format(now);
+      println("In Returning Date "+strDate);
+       BikeRepository.updateReturnBikes(note.getNoteId,strDate)
+       val list =  BikeRepository.returnBikes(email)
       model.addAttribute("notification",list)
        model.addAttribute("note",new Notification())
       model.addAttribute("userLogin", userLogin)
