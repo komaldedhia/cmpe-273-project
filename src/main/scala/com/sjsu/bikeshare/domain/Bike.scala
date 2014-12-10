@@ -36,10 +36,11 @@ var accessories: String = _
 
 
 @BeanProperty
+@NotEmpty
 var latitude: String = _
 
 @BeanProperty
-//@NotEmpty
+@NotEmpty
 var longitude: String = _
 
 @BeanProperty

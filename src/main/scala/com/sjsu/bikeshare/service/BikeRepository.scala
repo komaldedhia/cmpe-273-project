@@ -89,11 +89,6 @@ def InsertBikes(bike:Bike,userLogin:UserLogin) = {
  }
 
  def getBikes(email :String) ={  
-   /* val q = MongoDBObject("_id"->0)
-    val r = MongoDBObject("user_email" -> email)
-    val printUser = coll.findOne(r,q).get
-    println(printUser)
-    printUser*/
    println(email)
     val fetch_user = MongoDBObject("user_email" -> email)
     println(fetch_user)
@@ -137,14 +132,8 @@ val fetch_user = MongoDBObject("bike_id" -> bike_id)
  //user_get.toString()
 
  }
-def updateBikesv1(bike:Bike,userLogin:UserLogin)={
-    println("bike from date"+bike.fromDate)
-    println("bike to date"+bike.toDate)
-    println("bikeid"+bike.bikeId)
-    
-    val formatter:DateFormat = new SimpleDateFormat("MM-dd-yyyy")
-   //formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
-  println("bike.fr"+bike.fromDate.toString())
+def userUpdateBike(bike:Bike,userLogin:UserLogin)={
+     val formatter:DateFormat = new SimpleDateFormat("MM-dd-yyyy")
    val frmdate:Date = formatter.parse(bike.fromDate)
    val toDate:Date = formatter.parse(bike.toDate)
    println("date is"+frmdate)
@@ -154,9 +143,8 @@ def updateBikesv1(bike:Bike,userLogin:UserLogin)={
     val to = df.format(toDate);
       
     println("second formatter"+frm)
-   // println("from result"+fromResult)
-   
-   val formatter2:DateFormat = new SimpleDateFormat("yyyy-MM-dd")
+ 
+    val formatter2:DateFormat = new SimpleDateFormat("yyyy-MM-dd")
   formatter2.setTimeZone(TimeZone.getTimeZone("GMT"))
   
    val newfrmdate:Date = formatter2.parse(frm)
@@ -188,7 +176,6 @@ def updateBikesv1(bike:Bike,userLogin:UserLogin)={
 
 
 def getBike(bike_id: String) = {
-    println("Shwetha, Trying to get a bike")
     val bikeQuery = MongoDBObject("bikeId"->bike_id)
     val bikeObj = MongoFactory.BikesCollection.findOne(bikeQuery).get
     bikeObj
@@ -247,7 +234,6 @@ def rentedBikes(email : String) ={
     for(doc <- user_get) {
       list.add(doc)
      }
-   // println(list)
     list
   }  
  
@@ -261,41 +247,31 @@ def rentedBikes(email : String) ={
     for(doc <- user_get) {
       list.add(doc)
      }
-    //println(list)
     list
   } 
  
-  def listingBikes(email : String,bike:Bike) ={  
+  def listingBikes(email : String) ={  
     var list = new java.util.ArrayList[DBObject]()
-  
     list.clear()
-    println(email+"i have come a long way")
     val fetch_user = MongoDBObject("userEmail" -> email )
     println(fetch_user)
     val user_get=  MongoFactory.BikesCollection.find(fetch_user)
-    for(doc <- user_get) {
-     val df:DateFormat = new SimpleDateFormat("MM-dd-yyyy'T'HH:mm:ss.SSSZ");  
-     val frm = df.format(doc.get("fromDate"));    
-     val to = df.format(doc.get("toDate"))
-     val fromResult:String = frm.substring(0, 10)
-     val toResult:String = to.substring(0,10)
-      doc.put("fromDate",fromResult)
-      doc.put("toDate",toResult)
-      list.add(doc)
-          }
-    println(list)
+    for(doc <- user_get)
+    {
+        val df:DateFormat = new SimpleDateFormat("MM-dd-yyyy'T'HH:mm:ss.SSSZ");  
+        df.setTimeZone(TimeZone.getTimeZone("GMT"))
+         val frm = df.format(doc.get("fromDate"));    
+         val to = df.format(doc.get("toDate"))
+         val fromResult:String = frm.substring(0, 10)
+         val toResult:String = to.substring(0,10)
+         doc.put("fromDate",fromResult)
+         doc.put("toDate",toResult)
+          list.add(doc)
+      }
     list
   } 
  
   def returning(note:Notification) ={  
-   println(note.bikeId)
-   println(note.status)
-   println(note.fromDate)
-   println(note.toDate)
-   /*val initial = MongoDBObject("bikeId"-> note.bikeId)
-   println(initial)
-   val result = MongoFactory.notificationCollection.update(MongoDBObject("bikeId"-> note.bikeId), $set("status" -> "1") )
-   println(result)*/
    val query = MongoDBObject("bikeId"-> note.bikeId)
    val update = $set("status" ->"1")
    val res1 = MongoFactory.notificationCollection.findAndModify(query = query, update = update)

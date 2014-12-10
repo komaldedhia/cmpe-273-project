@@ -10,7 +10,7 @@
    
    body {
      margin: 0;
-     background: url('/images/generic_bg_img.jpg');
+     background: url('/images/imgup6.jpg');
      background-size: 100%;
      background-repeat:no-repeat;
      display: compact;
@@ -43,8 +43,18 @@
 		<label for="option">Verify Address *</label> <input id="option" type="checkbox" onclick="codeAddress()"/>
 		</div>
    </div>
-	<br></br>
 		
+	<br></br>
+		<div class="row">
+			<div class="col-xs-7 col-md-offset-2">
+				<label for="option">Verification Result</label> <input
+					class="form-control" id="VerifyError" type="text"
+					th:readonly="readonly" placeholder="Verification Result" />
+				<p style="color:red;" th:if="${#fields.hasErrors('longitude')}"
+					th:errors="*{longitude}">Please Verify Location</p>
+			</div>
+		</div>
+		<br></br>
   <div class="row">
 	  <div class="col-xs-7 col-md-offset-2">
 	    <label for="accessories">Accessories</label>
@@ -147,9 +157,13 @@ var toDate = $('#todate').val();
 	    	var longitude = results[0].geometry.location.lng();
 	    	document.getElementById("latitude").value = latitude;
 	    	document.getElementById("longitude").value = longitude;
-	    } else {
-	      alert('Geocode was not successful for the following reason: ' + status);
-	    }
+	    	document.getElementById("VerifyError").value = "Address Verified";
+		} else {
+			alert('Geocode was not successful for the following reason: '
+					+ status);
+			document.getElementById("VerifyError").value = "Incorrect Address";
+			
+		}
 	  });
 	}
 </script>
