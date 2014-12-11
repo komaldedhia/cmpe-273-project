@@ -47,8 +47,10 @@ object UserRepository {
         println(userLogin.password);
            if(userLogin.password.equalsIgnoreCase(originalPassword))
            {
+             val firstName =printUser.get("first_name").toString()
              println("Success");
-            returnValue= "Success"
+              println(firstName);
+            returnValue= firstName
            }
            else
            {

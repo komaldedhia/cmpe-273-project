@@ -96,8 +96,8 @@ function createMarker(staion) {
 	google.maps.event.addListener(marker, 'click', function(i) {
 
 		document.getElementById("address").innerHTML = staion.addr;
-		alert("staionowner "+staion.owner)
-		document.getElementById("bikeCode").value = staion.bikeCode;
+	//	alert("staionowner "+staion.owner)
+		document.getElementById("bikeCode").innerHTML = staion.bikeCode;
 		document.getElementById("description").innerHTML = staion.description;
 		document.getElementById("bikeId").value = staion.bikeId;
 		document.getElementById("userEmail1").value = staion.owner;

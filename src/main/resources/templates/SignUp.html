@@ -85,6 +85,7 @@
 	    <label for="contact">Contact Number *</label>
 	    <input type="text" class="form-control" id="contact" placeholder="Phone Number" th:field="*{contactNo}" />
 	    <p style="color:red;" th:if="${#fields.hasErrors('contactNo')}" th:errors="*{contactNo}">Name Error</p>
+	     <p id="contactNum" style="color:red;"></p>
 	  </div>
   </div>
 	<br></br>
@@ -94,6 +95,7 @@
 	  </div>
    </div>
 	<br></br>
+	
   <div class="row">
 	  <div class="col-xs-7 col-md-offset-2">
 	    <label for="twiliocode">verification code *</label>
@@ -114,11 +116,19 @@
 	<script src ="/js/jquery-1.11.1.min.js"></script>
 	<script src ="/js/bootstrap.min.js"></script>
    <script>
+   $(document).ready(function(){
+		document.getElementById("submit").disabled=true;
+	});
   function sendCode() {
-    
+	  document.getElementById("contactNum").innerHTML ='';
     $('#code').enabled
     var contactno = $('#contact').val();
-    alert ("verification code has been sent to your mobile.");
+    if (! contactno) {
+    	document.getElementById("contactNum").innerHTML ='Please Enter Valid Mobile Num';
+    } else {
+        
+    
+   // alert ("verification code has been sent to your mobile.");
     
     $.ajax({
       type: "POST",
@@ -126,12 +136,28 @@
       contentType: 'application/json',
      
       data:JSON.stringify({contactNo:contactno}),
-      dataType: "json"
+      dataType: "json",
+      success: function (response) {
+    	  document.getElementById("contactNum").innerHTML ='verification code has been sent to your mobile';
+        },
+    error: function (xhr, ajaxOptions, thrownError) {
+    	if(xhr.status==500){
+    	document.getElementById("contactNum").innerHTML ='Please Enter Valid Mobile Num';
+        document.getElementById("submit").disabled=true;}
+    	else{ document.getElementById("contactNum").innerHTML ='Verification code has been sent to your mobile';}
+    }
     })
       .done(function( msg ) {
         alert( "Data Saved: ");
+        
       });
+    document.getElementById("submit").disabled=false;
+    }
     
+   /*  $( document ).ajaxError(function( event, request, settings ) {
+    document.getElementById("contactNum").innerHTML ='Please Enter Valid Mobile Num';
+    document.getElementById("submit").disabled=true;
+    }); */
   }
     
   </script>

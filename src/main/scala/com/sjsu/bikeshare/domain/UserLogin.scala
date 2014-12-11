@@ -11,6 +11,9 @@ class UserLogin {
   @BeanProperty
   @NotEmpty
    var email:String =_ 
+   
+   @BeanProperty
+   var name:String =_ 
  
   @BeanProperty
   @NotEmpty

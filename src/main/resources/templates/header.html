@@ -23,7 +23,8 @@
                        <div class="navbar-header">
                                <!-- <a class="navbar-brand" href="#" th:href="@{/api/v1/users/dashboard}">Bike Share</a> --> 
                               
-                             <p class="navbar-brand">Welcome User</p> 
+                            <!--  <p class="navbar-brand">Welcome User</p>  -->
+                             <p  class="navbar-brand" th:text="'Welcome ' + ${userLogin.getName()}"/> 
                        </div>
 
                        <div class="collapse navbar-collapse"
@@ -35,6 +36,7 @@
 								 <form action="#" th:action="@{/api/v1/users/dashboard}" th:method="post" role="form">
                                  
                                 <input type="hidden" name="email" id="userEmail" th:value="${userLogin.email}" />
+                                <input type="hidden" name="name" id="userName" th:value="${userLogin.name}" />
                                
                                 <button style="font-size:20px;margin-top:4%;" id="submit1" type="submit" class="btn btn-link">
                                 Bike Share</button>

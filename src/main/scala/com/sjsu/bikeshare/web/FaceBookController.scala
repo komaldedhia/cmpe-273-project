@@ -26,6 +26,7 @@ class FaceBookController@Inject
    //userLogin.s
    println("HI")
    var email=facebook.userOperations().getUserProfile().getEmail();
+   var name=facebook.userOperations().getUserProfile().getName();
    println(facebook.userOperations().getUserProfile().getEmail())
    println(facebook.userOperations().getUserProfile().getId())
    println(facebook.userOperations().getUserProfile().getName())
@@ -34,6 +35,7 @@ class FaceBookController@Inject
     //model.addAttribute("feed", homeFeed)
   
    	userLogin.setEmail(email)
+   	userLogin.setName(name)
     model.addAttribute("userLogin", userLogin)
     "homepage"
   }

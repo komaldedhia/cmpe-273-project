@@ -65,6 +65,7 @@ def createUser(@Valid @RequestBody user:User) = {
       model.addAttribute("user",user)
       model.addAttribute("rcode",randomCode)
       userLogin.email=user.email
+      userLogin.setName(user.getFirstName)
       model.addAttribute("userLogin",userLogin)
      println("randomcode: " +randomCode)
      println("user.getTwiliocode : " + user.getTwiliocode )
@@ -85,8 +86,8 @@ def createUser(@Valid @RequestBody user:User) = {
    }
   }  
    
-  @RequestMapping(value=Array("/sendcode"),method = Array(RequestMethod.POST))
- def sendSMS(@RequestBody contactNo:User) = {
+  @RequestMapping(value=Array("/sendcode"),method = Array(RequestMethod.POST),produces = Array("application/json"))
+ def sendSMS(@RequestBody contactNo:User,model:Model) = {
     val AUTH_TOKEN = "b62e99e1cc3899f53f48e8a5f89d1628"  
     val ACCOUNT_SID = "AC164368f1f5629e34ddb91d0378d9bd47" 
     var PHONE_NUMBER = contactNo.getContactNo
@@ -104,8 +105,9 @@ def createUser(@Valid @RequestBody user:User) = {
     params.add(new BasicNameValuePair("From", "+13095175765"))
     params.add(new BasicNameValuePair("Body", "Congrats! Your code# is " +randomCode))
     val sms = messageFactory.create(params) 
-     
- }
+     model.addAttribute("user", new User())
+            "SignUp"
+  }
  
   
  @RequestMapping(value=Array("/userlogin"),method = Array(RequestMethod.GET))
@@ -123,15 +125,18 @@ def createUser(@Valid @RequestBody user:User) = {
     }
    else
    {
-      if (UserRepository.validateUser(userLogin).equalsIgnoreCase("Success"))   {
-        model.addAttribute("userLogin", userLogin)
-       "homepage"
+      val userName=UserRepository.validateUser(userLogin)
+      if (userName.equalsIgnoreCase("Invalid User or password"))   {
+        println("Not a success case,so returning to login page again")
+        model.addAttribute("userLogin", new UserLogin())
+        "login"
        }
       else 
       {
-        println("Not a success case,so returning to login page again")
-        model.addAttribute("userLogin", new UserLogin())
-        "login"     
+        userLogin.setName(userName)
+        println(" userName "+userName)
+        model.addAttribute("userLogin", userLogin)
+       "homepage"
       }
    }
   } 

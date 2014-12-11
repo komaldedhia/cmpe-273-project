@@ -30,6 +30,7 @@
  <form action="#" th:action="@{/api/v1/bike/List}" method="post" role="form">
  <div class="form-group">
   <input type="hidden" name="email" id="userEmail" th:value="${userLogin.email}"/>
+  <input type="hidden" name="name" id="userName" th:value="${userLogin.name}" />
  </div>
  <button id="submit" type="submit" class="btn btn-default">List a Bike</button>
 </form>
@@ -39,6 +40,7 @@
 <form action="#" th:action="@{/api/v1/bike/rent}" th:method="put" role="form">
   <div class="form-group">
  <input type="hidden" name="email" id="userEmail" th:value="${userLogin.email}" />
+ <input type="hidden" name="name" id="userName" th:value="${userLogin.name}" />
  </div>
   <button id="submit" type="submit" class="btn btn-default">Rent a Bike</button>
   <input type="hidden" name="mode" id="code" th:value="${code}" />
@@ -50,6 +52,7 @@
 <form action="#" th:action="@{/api/v1/bike/getListedBike}" th:method="post" role="form">
   <div class="form-group">
  <input type="hidden" name="email" id="userEmail" th:value="${userLogin.email}" />
+ <input type="hidden" name="name" id="userName" th:value="${userLogin.name}" />
  </div>
   <button id="submit" type="submit" class="btn btn-default">View Listed/Rented Bikes</button>
 </form>
@@ -65,6 +68,7 @@
  <form action="#" th:action="@{/api/v1/bike/return}" th:method="post" role="form">
   <div class="form-group">
  <input type="hidden" name="email" id="userEmail" th:value="${userLogin.email}" />
+ <input type="hidden" name="name" id="userName" th:value="${userLogin.name}" />
  </div>
  
   <p style="font-size: 30px;font-family:Comic Sans MS" class="text-center">
@@ -76,6 +80,7 @@
 <div id="returnHide">
 <form action="#" th:action="@{/api/v1/bike/returning}" th:object="${note}" method="POST" role="form">
  <input type="hidden" name="email" id="userEmail" th:value="${userLogin.email}" />
+ <input type="hidden" name="name" id="userName" th:value="${userLogin.name}" />
 <div class="container">
   <div class="table-responsive">   
 <table class="table">
