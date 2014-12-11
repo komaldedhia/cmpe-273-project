@@ -258,6 +258,7 @@ def rentedBikes(email : String) ={
     for(doc <- user_get) {
       list.add(doc)
      }
+    println(list)
     list
   }  
  
